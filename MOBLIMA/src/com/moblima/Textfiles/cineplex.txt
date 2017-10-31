@@ -1,0 +1,9 @@
+JurongPoint|JurongPoint1|NORMAL\n
+JurongPoint|JurongPoint2|PLANTINUM\n
+JurongPoint|JurongPoint3|ELITE\n
+VivoCity|VivoCity1|NORMAL\n
+VivoCity|VivoCity2|PLANTINUM\n
+VivoCity|VivoCity3|ELITE\n
+JEM|JEM1|NORMAL\n
+JEM|JEM2|PLANTINUM\n
+JEM|JEM3|ELITE\n
