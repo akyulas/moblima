@@ -1,10 +1,11 @@
 package com.moblima.MovieSystem;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MovieListing {
+public class MovieListing implements Serializable{
 
     private HashMap<Timetable, Movie> movieListings;
 

@@ -1,7 +1,8 @@
 package com.moblima.BookingSystem;
 
+import java.io.Serializable;
 
-public class TransactionID {
+public class TransactionID implements Serializable{
 
     private final String code;
     private final int year;

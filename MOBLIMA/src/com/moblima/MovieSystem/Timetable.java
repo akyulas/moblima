@@ -1,8 +1,9 @@
 package com.moblima.MovieSystem;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Timetable {
+public class Timetable implements Serializable{
 
     private LocalDateTime startTiming;
     private LocalDateTime endTiming;
@@ -41,6 +42,10 @@ public class Timetable {
             return true;
         }
         return false;
+    }
+    
+    public String toString() {
+    	return "startTiming: " + startTiming + "endTiming: " + endTiming;
     }
 
 }

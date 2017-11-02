@@ -1,8 +1,9 @@
 package com.moblima.MovieSystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cinema {
+public class Cinema implements Serializable{
 
     private String code;
     private ArrayList<Seat> seats;
@@ -11,6 +12,7 @@ public class Cinema {
 
     public Cinema(String code, ClassType classType) {
         this.code = code;
+        seats = new ArrayList<Seat>();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 seats.add(new Seat(i, j));
@@ -31,6 +33,10 @@ public class Cinema {
     public ClassType getClassType() {
         return classType;
     }
+    
+    public MovieListing getMovieListing() {
+    	return movieList;
+    }
 
     public void setId(String code) {
         this.code = code;
@@ -46,6 +52,10 @@ public class Cinema {
 
     public void addMovieIntoList(Timetable timetable, Movie movie) {
         movieList.addMovie(timetable, movie);
+    }
+    
+    public String toString() {
+    	return code + "," + classType;
     }
 
 }

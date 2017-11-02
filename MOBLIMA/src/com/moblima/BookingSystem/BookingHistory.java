@@ -2,16 +2,18 @@ package com.moblima.BookingSystem;
 
 import com.moblima.LoginSystem.User;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BookingHistory {
+public class BookingHistory implements Serializable{
 
     private User user;
-    private Ticket ticket;
+    private ArrayList<Ticket> tickets;
 
-    public BookingHistory(User user, Ticket ticket) {
+    public BookingHistory(User user) {
         this.user = user;
-        this.ticket = ticket;
+        tickets = new ArrayList<Ticket>();
     }
 
 }

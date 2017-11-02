@@ -1,8 +1,10 @@
 package com.moblima.MovieSystem;
 
+import java.io.Serializable;
+
 import com.moblima.LoginSystem.User;
 
-public class Review {
+public class Review implements Serializable{
 
     private final String user;
     private final double rating;

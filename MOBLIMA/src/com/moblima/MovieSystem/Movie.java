@@ -1,8 +1,9 @@
 package com.moblima.MovieSystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Movie {
+public class Movie implements Serializable{
 
     private String name;
     private StatusType status;
@@ -126,6 +127,10 @@ public class Movie {
 
     public void decreaseTicketSales() {
         ticketSales--;
+    }
+    
+    public String toString() {
+    	return name + "," + status;
     }
 
 }

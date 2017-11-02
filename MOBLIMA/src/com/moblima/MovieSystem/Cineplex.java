@@ -1,8 +1,9 @@
 package com.moblima.MovieSystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cineplex {
+public class Cineplex implements Serializable{
 
     private ArrayList<Cinema> cinemas;
     private String name;
@@ -32,5 +33,6 @@ public class Cineplex {
         if (cinemas.contains(cinema))
             cinemas.remove(cinema);
     }
+   
 
 }

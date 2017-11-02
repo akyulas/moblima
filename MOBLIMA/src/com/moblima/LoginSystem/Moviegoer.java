@@ -1,6 +1,8 @@
 package com.moblima.LoginSystem;
 
-public class Moviegoer extends User{
+import java.io.Serializable;
+
+public class Moviegoer extends User implements Serializable {
 
     private int age;
     private String name;
@@ -20,5 +22,9 @@ public class Moviegoer extends User{
             return true;
         }
         return false;
+    }
+    
+    public String toString() {
+    	return super.getUsername();
     }
 }

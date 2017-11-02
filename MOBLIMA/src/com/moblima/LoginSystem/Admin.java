@@ -1,8 +1,9 @@
 package com.moblima.LoginSystem;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Admin extends User{
+public class Admin extends User implements Serializable{
 
     private int id;
 
@@ -20,6 +21,10 @@ public class Admin extends User{
             return false;
         }
         return false;
+    }
+    
+    public String toString() {
+    	return super.getUsername();
     }
 
 }
