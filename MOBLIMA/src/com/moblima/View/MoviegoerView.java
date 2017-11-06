@@ -1,6 +1,7 @@
 package com.moblima.View;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -293,8 +294,7 @@ public class MoviegoerView {
         int input = 0;
         while (continueLoop) {
             System.out.println("Please choose an input from the list.");
-            System.out.println("1. Check seat availability and selection of seats.");
-            System.out.println("2. Book and purchase ticket.");
+            System.out.println("1. Check seat availability and book seats.");
             System.out.println("0. Choose another movie listing from your search result.");
             try {
                 input = Integer.parseInt(reader.nextLine());
@@ -305,9 +305,6 @@ public class MoviegoerView {
                     case 1:
                         continueLoop = false;
                         break;
-                    case 2:
-                        continueLoop = false;
-                        break;
                     default:
                         System.out.println("Please give a valid input.");
                 }
@@ -316,6 +313,108 @@ public class MoviegoerView {
             }
         }
         return input;
+    }
+    
+    public void showUserSeats(ArrayList<String> seatingPlan) {
+    	System.out.println("========screen========");
+    	for (int i = 0; i < seatingPlan.size(); i++) {
+    		if (i != 0 && i % 5 == 0 && i % 10 != 0) {
+    			System.out.print("  ");
+    		}
+    		if (i % 10 == 0) {
+    			System.out.println();
+    		}
+    		System.out.print(seatingPlan.get(i));
+    	}
+    	System.out.println();
+    }
+    
+    public String askMovieGoerForSeats(ArrayList<String> chosenSeats) {
+    	System.out.print("The seats you have chosen so far: ");
+    	Iterator<String> iterator = chosenSeats.iterator();
+    	String input = "";
+    	if (chosenSeats.size() != 0) {
+    		String result = "";
+    		while (iterator.hasNext()) {
+    			result += iterator.next() + ", " ;
+    		}
+    		result = result.substring(0, result.length() - 2);
+    		System.out.println(result);
+    	} else {
+    		System.out.println();
+    	}
+    	System.out.println("XX represents a seat that is taken. OO represents a seat that you have already chosen");
+    	System.out.println("Seats are in the form: A1, A2, etc....");
+    	System.out.println("Please choose a seat. Press Y to proceed. Press 0 if you want to go back.");
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		try {
+    			input = reader.nextLine();
+    			if (input.equals("")) 
+    				throw new RuntimeException();
+    			continueLoop = false;
+    		} catch(RuntimeException e) {
+    			System.out.println("Please do not give an empty string.");
+    		}
+    	}
+    	return input;
+    }
+    
+    public void informUserToChooseASeat() {
+    	System.out.println("Please choose a seat first before you proceed.");
+    	System.out.println("Press any key to continue with the choosing process.");
+    	reader.nextLine();
+    }
+    
+    public void informUserSeatIsTaken() {
+    	System.out.println("That seat is already taken.");
+    	System.out.println("Press any key to continue with the choosing process.");
+    	reader.nextLine();
+    }
+    
+    public void informUserNoSuchSeatExist() {
+    	System.out.println("No such seat exist.");
+    	System.out.println("Please enter a proper seat name.");
+    	System.out.println("Press any key to continue with the choosing process.");
+    	reader.nextLine();
+    }
+    
+    public void informUserHeAlreadyChoseTheSeat() {
+    	System.out.println("Hello. The seat has already been chosen by you. Please choose another seat.");
+    	System.out.println("Press any key to continue with the choosing process.");
+    	reader.nextLine();
+    }
+    
+    public int askToProceedWithBooking(ArrayList<String> chosenSeats) {
+    	int input = 0;
+    	boolean continueLoop = true;
+    	while (continueLoop)  {
+    		System.out.print("The following seats have been chosen by you: ");
+    		String result = "";
+    		Iterator<String> iterator = chosenSeats.iterator();
+    		while (iterator.hasNext()) {
+    			result += iterator.next() + ", " ;
+    		}
+    		result = result.substring(0, result.length() - 2);
+    		System.out.println(result);
+    		System.out.println("Please press 1 if to confirm you want to book the tickets. Press 0 to go back and choose more seats.");
+    		try {
+    			input = Integer.parseInt(reader.nextLine());
+    			switch(input) {
+    				case 0:
+    					continueLoop = false;
+    					break;
+    				case 1:
+    					continueLoop = false;
+    					break;
+    				default:
+    					System.out.println("Please enter a valid input.");
+    			}
+    		} catch(Exception e) {
+    			System.out.println("Please enter an integer.");
+    		}
+    	}
+    	return input;
     }
 
     public  String breakLines(String input, int maxLineLength) {

@@ -1,6 +1,6 @@
 package com.moblima.Model.Control;
 
-public class BookingManager implements Manager {
+public class BookingManager implements IManager {
 
 	
 	

@@ -4,7 +4,7 @@ import com.moblima.Controller.ImportController;
 import com.moblima.Model.MovieSystem.*;
 import java.util.ArrayList;
 
-public class MovieManager implements Manager{
+public class MovieManager implements IManager{
 
     private ArrayList<Movie> movies;
     private String FileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/movies.dat";

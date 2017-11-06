@@ -1,6 +1,6 @@
 package com.moblima.Model.Control;
 
-public interface Manager {
+public interface IManager {
     public void importData();
 
     public void exportData();

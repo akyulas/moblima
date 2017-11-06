@@ -6,7 +6,7 @@ import com.moblima.Model.LoginSystem.Moviegoer;
 
 import java.util.ArrayList;
 
-public class UserManager implements Manager{
+public class UserManager implements IManager{
 
     private ArrayList<Admin> admins;
     private ArrayList<Moviegoer> moviegoers;

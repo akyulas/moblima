@@ -3,15 +3,22 @@ package com.moblima.Model.MovieSystem;
 import java.io.Serializable;
 
 public class Seat implements Serializable{
-
-    private int row;
-    private int column;
+	
+	private String code;
     private boolean occupied;
 
-    public Seat(int row, int column) {
-        this.row = row;
-        this.column = column;
+    public Seat(String code) {
+    	this.code = code;
         this.occupied = false;
+    }
+    
+    public String getCode() {
+    	return code;
+    }
+    
+    public boolean isOccupied() {
+    	return occupied;
     }
 
 }
+

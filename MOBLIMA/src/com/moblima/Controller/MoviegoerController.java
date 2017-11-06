@@ -8,6 +8,9 @@ import com.moblima.Model.LoginSystem.Moviegoer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -142,7 +145,7 @@ public class MoviegoerController {
         }
     }
 
-    public void giveMoviegoerReviews(Movie movie) {
+    private void giveMoviegoerReviews(Movie movie) {
         ArrayList<String> strings = new ArrayList<String>();
         for (Review review: movie.getReviews()) {
             double ratings = movie.getRating();
@@ -177,7 +180,7 @@ public class MoviegoerController {
         }
     }
 
-    public void searchByMovie() {
+    private void searchByMovie() {
         String movieName = moviegoerView.getMovieName();
         ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName);
         boolean continueStartingLoop = true;
@@ -200,19 +203,19 @@ public class MoviegoerController {
         }
     }
 
-    public void searchByCineplex() {
+    private void searchByCineplex() {
+    	
+    }
+
+    private void searchByMovieAndCineplex() {
 
     }
 
-    public void searchByMovieAndCineplex() {
+    private void searchByMovieAndCineplexAndTime() {
 
     }
 
-    public void searchByMovieAndCineplexAndTime() {
-
-    }
-
-    public void viewMovieListingDetail(MovieListing movieListing) {
+    private void viewMovieListingDetail(MovieListing movieListing) {
         boolean continueLoop = true;
         while (continueLoop) {
             input = moviegoerView.getInputForBookingPage();
@@ -221,11 +224,66 @@ public class MoviegoerController {
                     continueStartingLoop = false;
                     break;
                 case 1:
-                    break;
-                case 2:
+                	giveUserSeats(movieListing);
                     break;
             }
         }
+    }
+    
+    private void giveUserSeats(MovieListing movieListing) {
+    	HashMap<String, Seat> seats = movieListing.getSeats();
+    	ArrayList<String> seatPlan = new ArrayList<String>();
+    	ArrayList<String> seatNames = movieListing.getSeatNames();
+    	ArrayList<String> chosenSeats = new ArrayList<String>();
+    	for (int i = 0; i < seatNames.size(); i++) {
+    		String seat = seatNames.get(i);
+    		if (seats.get(seat).isOccupied())
+    			seatPlan.add("XX");
+    		else
+    			seatPlan.add(seat);
+    	}
+    	boolean continueLoop = true;
+    	String input;
+    	while (continueLoop) {
+    		moviegoerView.showUserSeats(seatPlan);
+    		input = moviegoerView.askMovieGoerForSeats(chosenSeats);
+    		if (input.equals("0")) { // user wants to go back
+    			continueLoop = false;
+    			break;
+    		} else if (input.equals("Y") || input.equals("y")) { // user wants to proceed with the booking
+    			if (chosenSeats.size() == 0) { // user wants to proceed but he have not chosen a seat
+    				moviegoerView.informUserToChooseASeat();
+    			} else { // proceed with the booking
+    				BookSeats(chosenSeats, movieListing);
+    				continueLoop = false;
+    				break;
+    			}
+    		} else if (chosenSeats.contains(input)) { // the seat he choose has already been chosen by him
+    			moviegoerView.informUserHeAlreadyChoseTheSeat();
+    		} else if (seatNames.contains(input)) { // the seatNames which contain the original sitting plan contains the input
+    			int index = seatNames.indexOf(input);
+    			if (seatPlan.get(index).equals("XX")) { // the seat has already been taken
+    				moviegoerView.informUserSeatIsTaken();
+    			} else { // the seat has no been taken and can be chosen by the user
+    				String newString = seatPlan.get(index).replace(input, "OO");
+    				seatPlan.set(index, newString);
+    				chosenSeats.add(input);
+    			}
+    		} else { // user enter an invalid seat
+    			moviegoerView.informUserNoSuchSeatExist();
+    		}
+    	}	
+    }
+    
+    public void BookSeats(ArrayList<String> chosenSeats, MovieListing movieListing) {
+    	int input = moviegoerView.askToProceedWithBooking(chosenSeats);
+    	switch(input) {
+    		case 0:
+    			break;
+    		case 1:
+    			
+    			System.out.println("Booking successful.");
+    	}
     }
 
     private void viewBookingHistory() {

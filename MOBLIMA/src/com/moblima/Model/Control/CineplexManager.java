@@ -5,7 +5,7 @@ import com.moblima.Model.MovieSystem.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CineplexManager implements Manager{
+public class CineplexManager implements IManager{
 
     private ArrayList<Cineplex> cineplexes;
     private String FileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/cineplex.dat";
