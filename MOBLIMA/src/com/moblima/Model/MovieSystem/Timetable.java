@@ -1,4 +1,4 @@
-package com.moblima.MovieSystem;
+package com.moblima.Model.MovieSystem;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -7,10 +7,12 @@ public class Timetable implements Serializable{
 
     private LocalDateTime startTiming;
     private LocalDateTime endTiming;
+    boolean isOccupied;
 
     public Timetable(LocalDateTime startTiming, LocalDateTime endTiming) {
         this.startTiming = startTiming;
         this.endTiming = endTiming;
+        this.isOccupied = true;
     }
 
     public LocalDateTime getStartTiming() {
@@ -37,11 +39,12 @@ public class Timetable implements Serializable{
         return true;
     }
 
-    public boolean timingClash(LocalDateTime timing) {
-        if (timing.isAfter(startTiming) && timing.isBefore(endTiming)) {
-            return true;
+    public boolean timingClash(LocalDateTime startTiming, LocalDateTime endTiming) {
+        if (endTiming.isBefore(this.startTiming) || endTiming.isEqual(this.startTiming) ||
+                startTiming.isAfter(this.endTiming) || startTiming.isEqual(this.endTiming)) {
+            return false;
         }
-        return false;
+        return true;
     }
     
     public String toString() {

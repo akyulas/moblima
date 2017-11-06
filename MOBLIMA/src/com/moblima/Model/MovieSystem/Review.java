@@ -1,8 +1,6 @@
-package com.moblima.MovieSystem;
+package com.moblima.Model.MovieSystem;
 
 import java.io.Serializable;
-
-import com.moblima.LoginSystem.User;
 
 public class Review implements Serializable{
 

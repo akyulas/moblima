@@ -1,7 +1,7 @@
-package com.moblima.BookingSystem;
+package com.moblima.Model.BookingSystem;
 
-import com.moblima.MovieSystem.Cinema;
-import com.moblima.MovieSystem.Movie;
+import com.moblima.Model.MovieSystem.Cinema;
+import com.moblima.Model.MovieSystem.Movie;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

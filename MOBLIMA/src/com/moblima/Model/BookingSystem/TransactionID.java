@@ -1,4 +1,4 @@
-package com.moblima.BookingSystem;
+package com.moblima.Model.BookingSystem;
 
 import java.io.Serializable;
 

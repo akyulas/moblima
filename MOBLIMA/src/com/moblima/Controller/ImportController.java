@@ -1,4 +1,4 @@
-package com.moblima.Control;
+package com.moblima.Controller;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

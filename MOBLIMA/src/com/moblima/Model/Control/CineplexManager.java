@@ -1,6 +1,7 @@
-package com.moblima.Control;
+package com.moblima.Model.Control;
 
-import com.moblima.MovieSystem.*;
+import com.moblima.Controller.ImportController;
+import com.moblima.Model.MovieSystem.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,9 +11,9 @@ public class CineplexManager implements Manager{
     private String FileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/cineplex.dat";
     private ImportController importController;
 
-    public CineplexManager() {
+    public CineplexManager(ImportController importController) {
         cineplexes = new ArrayList<Cineplex>();
-        importController = new ImportController();
+        this.importController = importController;
     }
 
     public void importData() {
@@ -34,18 +35,19 @@ public class CineplexManager implements Manager{
     public ArrayList<Cineplex> getCineplexes() {
     	return cineplexes;
     }
-    
-    public void printAllCinema() {
-    	for (Cineplex cineplex: cineplexes) {
-    		for (Cinema cinema: cineplex.getCinemas()) {
-    			System.out.println(cinema);
-    			HashMap<Timetable, Movie> movieList = cinema.getMovieListing().getMovieListings();
-    			for (Timetable timetable: movieList.keySet()) {
-    				System.out.println(timetable);
-    				System.out.println(movieList.get(timetable));
-    			}
-    		}
-    	}
+
+    public ArrayList<MovieListing> getMovieList(String movieName) {
+        ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
+        String tempString = movieName.toLowerCase();
+        for (Cineplex cineplex: cineplexes) {
+            for (MovieListing movieListing: cineplex.getMovieListing()) {
+                String tempMovieName = movieListing.getMovie().getName().toLowerCase();
+                if (tempMovieName.contains(tempString)) {
+                    temp.add(movieListing);
+                }
+            }
+        }
+        return temp;
     }
     
 

@@ -1,10 +1,9 @@
-package com.moblima.BookingSystem;
+package com.moblima.Model.BookingSystem;
 
-import com.moblima.LoginSystem.User;
+import com.moblima.Model.LoginSystem.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BookingHistory implements Serializable{
 

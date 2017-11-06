@@ -1,8 +1,8 @@
-package com.moblima.Control;
+package com.moblima.Model.Control;
 
-import com.moblima.LoginSystem.Admin;
-import com.moblima.LoginSystem.Moviegoer;
-import com.moblima.LoginSystem.User;
+import com.moblima.Controller.ImportController;
+import com.moblima.Model.LoginSystem.Admin;
+import com.moblima.Model.LoginSystem.Moviegoer;
 
 import java.util.ArrayList;
 
@@ -14,10 +14,10 @@ public class UserManager implements Manager{
     private final String MoviegoerString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/moviegoer.dat";
     private ImportController importController;
 
-    public UserManager() {
+    public UserManager(ImportController importController) {
         admins = new ArrayList<Admin>();
         moviegoers = new ArrayList<Moviegoer>();
-        importController = new ImportController();
+        this.importController = importController;
     }
 
     public void importData() {
@@ -56,20 +56,30 @@ public class UserManager implements Manager{
     	moviegoers.add(moviegoer);
     }
     
-    public boolean validateMovieGoerData(String username, String password) {
+    public Moviegoer validateMovieGoerData(String username, String password) {
     	for (Moviegoer moviegoer: moviegoers) {
     		if (moviegoer.verify(username, password))
-    			return true;
+    			return moviegoer;
     	}
-    	return false;
+    	return null;
     }
     
-    public boolean validateAdmin(String username, String password) {
+    public Admin validateAdmin(String username, String password, int id) {
     	for (Admin admin: admins) {
-    		if (admin.verify(username, password))
-    			return true;
+    		if (admin.verify(username, password, id))
+    			return admin;
     	}
-    	return false;
+    	return null;
+    }
+
+
+    public boolean checkIfMovieGoerUserNameExist(String username) {
+        for (Moviegoer moviegoer: moviegoers) {
+            if (moviegoer.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

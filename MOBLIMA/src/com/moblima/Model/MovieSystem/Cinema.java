@@ -1,6 +1,7 @@
-package com.moblima.MovieSystem;
+package com.moblima.Model.MovieSystem;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Cinema implements Serializable{
@@ -8,7 +9,7 @@ public class Cinema implements Serializable{
     private String code;
     private ArrayList<Seat> seats;
     private ClassType classType;
-    private MovieListing movieList;
+    private ArrayList<Timetable> timetables;
 
     public Cinema(String code, ClassType classType) {
         this.code = code;
@@ -19,7 +20,7 @@ public class Cinema implements Serializable{
             }
         }
         this.classType = classType;
-        this.movieList = new MovieListing();
+        timetables = new ArrayList<Timetable>();
     }
 
     public String getCode() {
@@ -32,10 +33,6 @@ public class Cinema implements Serializable{
 
     public ClassType getClassType() {
         return classType;
-    }
-    
-    public MovieListing getMovieListing() {
-    	return movieList;
     }
 
     public void setId(String code) {
@@ -50,12 +47,17 @@ public class Cinema implements Serializable{
         this.classType = classType;
     }
 
-    public void addMovieIntoList(Timetable timetable, Movie movie) {
-        movieList.addMovie(timetable, movie);
+    public boolean checkIfOccupied(LocalDateTime startTime, LocalDateTime endTime) {
+        for (Timetable timetable: timetables) {
+            if (timetable.timingClash(startTime, endTime)) {
+                return true;
+            }
+        }
+        return false;
     }
-    
-    public String toString() {
-    	return code + "," + classType;
+
+    public void addTimetable(Timetable timetable) {
+        timetables.add(timetable);
     }
 
 }

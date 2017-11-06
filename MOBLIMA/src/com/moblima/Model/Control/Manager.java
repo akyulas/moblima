@@ -1,4 +1,4 @@
-package com.moblima.Control;
+package com.moblima.Model.Control;
 
 public interface Manager {
     public void importData();

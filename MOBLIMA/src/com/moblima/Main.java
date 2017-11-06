@@ -1,6 +1,6 @@
 package com.moblima;
 
-import com.moblima.Control.MainController;
+import com.moblima.Controller.MainController;
 
 public class Main {
 

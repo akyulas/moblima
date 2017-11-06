@@ -1,6 +1,7 @@
-package com.moblima.Control;
+package com.moblima.Model.Control;
 
-import com.moblima.MovieSystem.*;
+import com.moblima.Controller.ImportController;
+import com.moblima.Model.MovieSystem.*;
 import java.util.ArrayList;
 
 public class MovieManager implements Manager{
@@ -9,9 +10,9 @@ public class MovieManager implements Manager{
     private String FileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/movies.dat";
     private ImportController importController;
 
-    public MovieManager() {
+    public MovieManager(ImportController importController) {
         movies = new ArrayList<Movie>();
-        importController = new ImportController();
+        this.importController = importController;
     }
 
     public void importData() {
@@ -44,23 +45,15 @@ public class MovieManager implements Manager{
     	return null;
     }
     
-    public ArrayList<Movie> searchForMovie(String name) {
-    	ArrayList<Movie> tempList = new ArrayList<Movie>();
-    	for (Movie movie: movies) {
-    		if (movie.getName().equals(name))
-    			tempList.add(movie);
-    	}
-    	return tempList;
+    public ArrayList<Movie> getMatchingMovies(String movieSearchString) {
+        ArrayList<Movie> tempList = new ArrayList<Movie>();
+        String tempString = movieSearchString.toLowerCase();
+        for (Movie movie: movies) {
+            if (movie.getName().toLowerCase().contains(tempString))
+                tempList.add(movie);
+        }
+        return tempList;
     }
-    
-    public void searchingLogic(String name) {
-    	boolean continueLoop = true;
-    	ArrayList<Movie> movieList = new ArrayList<Movie>();
-    	if (movieList.size() == 0)
-    		return;
-    	while (continueLoop) {
-    		System.out.println("These are the movies found");
-    	}
-    }
-    
+
+
 }

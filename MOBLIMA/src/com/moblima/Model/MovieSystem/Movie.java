@@ -1,4 +1,4 @@
-package com.moblima.MovieSystem;
+package com.moblima.Model.MovieSystem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Movie implements Serializable{
         this.synopsis = synopsis;
         this.casts = casts;
         this.director = director;
-        this.rating = 0.0;
+        this.rating = getRatingFromReviews(reviews);
         this.movieType = movieType;
         this.movieRating = movieRating;
         this.reviews = reviews;
@@ -53,8 +53,20 @@ public class Movie implements Serializable{
         return rating;
     }
 
+    public String getDirector() {
+        return this.director;
+    }
+
     public MovieType getMovieType() {
         return movieType;
+    }
+
+    public ArrayList<Review> getReviews() {
+        return reviews;
+    }
+
+    public int getNumberOfReviews() {
+        return reviews.size();
     }
 
     public void setName(String name) {
@@ -131,6 +143,14 @@ public class Movie implements Serializable{
     
     public String toString() {
     	return name + "," + status;
+    }
+
+    public double getRatingFromReviews(ArrayList<Review> reviews) {
+        double total = 0.0;
+        for (Review review: reviews) {
+            total += review.getRating();
+        }
+        return total / (double)reviews.size();
     }
 
 }

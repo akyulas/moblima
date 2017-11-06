@@ -1,4 +1,4 @@
-package com.moblima.MovieSystem;
+package com.moblima.Model.MovieSystem;
 
 import java.io.Serializable;
 

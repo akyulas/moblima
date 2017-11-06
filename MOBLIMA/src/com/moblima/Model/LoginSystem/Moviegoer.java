@@ -1,4 +1,4 @@
-package com.moblima.LoginSystem;
+package com.moblima.Model.LoginSystem;
 
 import java.io.Serializable;
 
