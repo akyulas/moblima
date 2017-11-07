@@ -1,6 +1,5 @@
 package com.moblima.Controller;
 
-import com.moblima.Model.Control.UserManager;
 import com.moblima.View.LoginView;
 import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.LoginSystem.Moviegoer;

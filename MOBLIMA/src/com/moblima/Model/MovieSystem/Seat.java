@@ -19,6 +19,10 @@ public class Seat implements Serializable{
     public boolean isOccupied() {
     	return occupied;
     }
+    
+    public void occupy() {
+    	occupied = true;
+    }
 
 }
 

@@ -220,7 +220,6 @@ public class MoviegoerView {
             System.out.println("1. Search by movies");
             System.out.println("2. Search by cineplex");
             System.out.println("3. Search by movies and cineplex");
-            System.out.println("4. Search by movies, cineplex and date");
             System.out.println("0. Enter 0 to go back to other commands.");
             try {
                 input = Integer.parseInt(reader.nextLine());
@@ -265,6 +264,23 @@ public class MoviegoerView {
             }
         }
         return movieName;
+    }
+    
+    public String getCineplex() {
+    	 boolean continueLoop = true;
+         String cineplexName = "";
+         while (continueLoop) {
+             System.out.println("Please give a movie name");
+             try {
+                 cineplexName = reader.nextLine();
+                 if (cineplexName.equals(""))
+                     throw new RuntimeException();
+                 continueLoop = false;
+             } catch(RuntimeException e) {
+                 System.out.println("Please do not give an empty input.");
+             }
+         }
+         return cineplexName;
     }
 
     public int inputForBookingSearchDetails(ArrayList<String> strings) {
@@ -385,7 +401,7 @@ public class MoviegoerView {
     	reader.nextLine();
     }
     
-    public int askToProceedWithBooking(ArrayList<String> chosenSeats) {
+    public int askToProceedWithBooking(ArrayList<String> chosenSeats, double cost) {
     	int input = 0;
     	boolean continueLoop = true;
     	while (continueLoop)  {
@@ -397,6 +413,7 @@ public class MoviegoerView {
     		}
     		result = result.substring(0, result.length() - 2);
     		System.out.println(result);
+    		System.out.println("The total cost is: " + cost);
     		System.out.println("Please press 1 if to confirm you want to book the tickets. Press 0 to go back and choose more seats.");
     		try {
     			input = Integer.parseInt(reader.nextLine());

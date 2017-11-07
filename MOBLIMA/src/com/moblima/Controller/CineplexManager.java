@@ -1,35 +1,18 @@
-package com.moblima.Model.Control;
+package com.moblima.Controller;
 
-import com.moblima.Controller.ImportController;
 import com.moblima.Model.MovieSystem.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CineplexManager implements IManager{
+public class CineplexManager implements Serializable {
 
     private ArrayList<Cineplex> cineplexes;
     private String FileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/cineplex.dat";
-    private ImportController importController;
 
-    public CineplexManager(ImportController importController) {
+    public CineplexManager() {
         cineplexes = new ArrayList<Cineplex>();
-        this.importController = importController;
-    }
-
-    public void importData() {
-        ArrayList list = (ArrayList)importController.readSerializedObject(FileString);
-        for (int i = 0; i < list.size(); i++) {
-            Cineplex cineplex = (Cineplex)list.get(i);
-            cineplexes.add(cineplex);
-        }
-    }
-
-    public void exportData() {
-        importController.writeSerializedObject(FileString, cineplexes);
-    }
-
-    protected void wipeOutData() {
-        importController.writeSerializedObject(FileString, new ArrayList());
     }
     
     public ArrayList<Cineplex> getCineplexes() {
@@ -48,6 +31,25 @@ public class CineplexManager implements IManager{
             }
         }
         return temp;
+    }
+    
+    public Cineplex searchForCineplex(String ciniplexName) {
+    	for (Cineplex cineplex: cineplexes) {
+    		if (cineplex.getName().equals(ciniplexName))
+    			return cineplex;
+    	}
+    	return null;
+    }
+    
+    public Cinema searchForCinema(String cinemaName) {
+    	for (Cineplex cineplex: cineplexes) {
+    		for (Cinema cinema: cineplex.getCinemas()) {
+    			if (cinema.getCode().equals(cinemaName)) {
+    				return cinema;
+    			}
+    		}
+    	}
+    	return null;
     }
     
 

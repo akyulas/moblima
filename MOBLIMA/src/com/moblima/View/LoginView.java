@@ -1,7 +1,8 @@
 package com.moblima.View;
 
 import java.util.Scanner;
-import com.moblima.Model.Control.UserManager;
+
+import com.moblima.Controller.UserManager;
 
 /**
  * Created by jodiakyulas on 3/11/17.

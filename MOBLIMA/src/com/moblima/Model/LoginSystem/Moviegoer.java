@@ -24,6 +24,10 @@ public class Moviegoer extends User implements Serializable {
         return false;
     }
     
+    public int getAge() {
+    	return age;
+    }
+    
     public String toString() {
     	return super.getUsername();
     }

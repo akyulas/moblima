@@ -1,10 +1,6 @@
 package com.moblima.Controller;
 import java.util.Scanner;
 
-import com.moblima.Model.Control.CineplexManager;
-import com.moblima.Model.Control.MovieManager;
-import com.moblima.Model.Control.Populate;
-import com.moblima.Model.Control.UserManager;
 import com.moblima.Model.LoginSystem.Moviegoer;
 import com.moblima.View.LoginView;
 
@@ -16,23 +12,23 @@ public class MainController{
     private CineplexManager cineplexManager;
     private UserManager userManager;
     private LoginController loginController;
+    private BookingManager bookingManager;
     private MoviegoerController moviegoerController;
     private AdminController adminController;
 
     public MainController() {
     	importController = new ImportController();
     	populate = new Populate(importController);
-    	movieManager = new MovieManager(importController);
-		cineplexManager = new CineplexManager(importController);
-		userManager = new UserManager(importController);
+    	importController.importData();
+    	movieManager = importController.getMovieManager();
+		cineplexManager = importController.getCineplexManager();
+		userManager = importController.getUserManager();
+		bookingManager = importController.getBookingManager();
 		loginController = new LoginController(userManager);
 	}
 
     public void start() {
         System.out.println("Starting application");     
-        movieManager.importData();
-        cineplexManager.importData();
-        userManager.importData();
         System.out.println("Welcome to moblima.");
         continueInstructions();
     }
@@ -49,7 +45,7 @@ public class MainController{
     			boolean runMoviegoerController = loginController.checkIfMoviegoer();
     			if (runMoviegoerController) {
     				Moviegoer moviegoer = loginController.getMoviegoer();
-    				moviegoerController = new MoviegoerController(movieManager, cineplexManager, moviegoer);
+    				moviegoerController = new MoviegoerController(movieManager, cineplexManager, moviegoer, bookingManager);
     				moviegoerController.getMoviegoerCommands();
 				} else {
 					adminController = new AdminController();
@@ -61,9 +57,7 @@ public class MainController{
 
     private void end() {
         System.out.println("Ending application");
-        movieManager.exportData();
-        cineplexManager.exportData();
-        userManager.exportData();
+        importController.export();
         System.out.println("Goodbye!");
     }
 

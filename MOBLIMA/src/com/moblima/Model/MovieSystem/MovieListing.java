@@ -68,5 +68,11 @@ public class MovieListing implements Serializable{
     public ArrayList<String> getSeatNames() {
     	return seatNames;
     }
+    
+    public void occupyTheSeats(ArrayList<String> chosenSeats) {
+    	for (String seatName: chosenSeats) {
+    		seats.get(seatName).occupy();
+    	}
+    }
 
 }

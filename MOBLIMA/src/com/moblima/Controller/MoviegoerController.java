@@ -1,10 +1,10 @@
 package com.moblima.Controller;
 
-import com.moblima.Model.Control.CineplexManager;
-import com.moblima.Model.Control.MovieManager;
 import com.moblima.View.MoviegoerView;
 import com.moblima.Model.MovieSystem.*;
 import com.moblima.Model.LoginSystem.Moviegoer;
+import com.moblima.Model.BookingSystem.Holidays;
+import com.moblima.Model.BookingSystem.Ticket;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.time.format.DateTimeFormatter;
+
 
 /**
  * Created by jodiakyulas on 3/11/17.
@@ -25,13 +26,17 @@ public class MoviegoerController {
     private boolean continueStartingLoop;
     private DateTimeFormatter formatter;
     private Moviegoer moviegoer;
+    private BookingManager bookingManager;
+    private boolean bookingSuccessful;
 
-    public MoviegoerController(MovieManager movieManager, CineplexManager cineplexManager, Moviegoer moviegoer) {
+    public MoviegoerController(MovieManager movieManager, CineplexManager cineplexManager, Moviegoer moviegoer, BookingManager bookingManager) {
         this.movieManager = movieManager;
         this.cineplexManager = cineplexManager;
         this.moviegoerView = new MoviegoerView();
+        this.bookingManager = bookingManager;
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.moviegoer = moviegoer;
+        bookingSuccessful = false;
     }
 
     public void getMoviegoerCommands() {
@@ -159,6 +164,7 @@ public class MoviegoerController {
     private void checkSeatsAndBuyTickets() {
         boolean continueLoop = true;
         while (continueLoop) {
+        	bookingSuccessful = false;
             input = moviegoerView.getBookingSearchInput();
             switch(input) {
                 case 0:
@@ -166,6 +172,10 @@ public class MoviegoerController {
                     break;
                 case 1:
                     searchByMovie();
+                    if (bookingSuccessful) {
+                    	continueLoop = false;
+                    	break;
+                    }
                     break;
                 case 2:
                     searchByCineplex();
@@ -183,8 +193,8 @@ public class MoviegoerController {
     private void searchByMovie() {
         String movieName = moviegoerView.getMovieName();
         ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName);
-        boolean continueStartingLoop = true;
-        while (continueStartingLoop) {
+        boolean continueLoop = true;
+        while (continueLoop) {
             ArrayList<String> tempList = new ArrayList<String>();
             int count = 1;
             for (MovieListing movieListing: movieListings) {
@@ -199,6 +209,8 @@ public class MoviegoerController {
                 continueStartingLoop = false;
             } else {
                 viewMovieListingDetail(movieListings.get(input - 1));
+                if (bookingSuccessful)
+                	continueLoop = false;
             }
         }
     }
@@ -221,10 +233,12 @@ public class MoviegoerController {
             input = moviegoerView.getInputForBookingPage();
             switch(input) {
                 case 0:
-                    continueStartingLoop = false;
+                    continueLoop = false;
                     break;
                 case 1:
                 	giveUserSeats(movieListing);
+                	if (bookingSuccessful)
+                		continueLoop = false;
                     break;
             }
         }
@@ -255,7 +269,8 @@ public class MoviegoerController {
     				moviegoerView.informUserToChooseASeat();
     			} else { // proceed with the booking
     				BookSeats(chosenSeats, movieListing);
-    				continueLoop = false;
+    				if (bookingSuccessful)
+    					continueLoop = false;
     				break;
     			}
     		} else if (chosenSeats.contains(input)) { // the seat he choose has already been chosen by him
@@ -276,13 +291,27 @@ public class MoviegoerController {
     }
     
     public void BookSeats(ArrayList<String> chosenSeats, MovieListing movieListing) {
-    	int input = moviegoerView.askToProceedWithBooking(chosenSeats);
+    	double price = 0.0;
+    	Movie movie = movieListing.getMovie();
+    	Cinema cinema = movieListing.getCinema();
+    	Cineplex cineplex = movieListing.getCineplex();
+    	LocalDateTime startTime = movieListing.getStartingTime();
+    	int age = moviegoer.getAge();
+    	Holidays holidays = bookingManager.getHolidays();
+    	for (String chosenSeat: chosenSeats) {
+    		price += Ticket.calculateTicketPrice(movie, cinema, startTime, age, holidays);
+    	}
+    	int input = moviegoerView.askToProceedWithBooking(chosenSeats, price);
     	switch(input) {
     		case 0:
     			break;
     		case 1:
-    			
     			System.out.println("Booking successful.");
+    			movie.increaseTicketSales();
+    			bookingManager.addHistory(moviegoer.getUsername(), new Ticket(movie, cineplex, cinema, startTime, moviegoer.getUsername()));
+    			bookingManager.addTransactionID(cinema.getCode());
+    			movieListing.occupyTheSeats(chosenSeats);
+    			bookingSuccessful = true; // ensure the user will end up on the main screen
     	}
     }
 
