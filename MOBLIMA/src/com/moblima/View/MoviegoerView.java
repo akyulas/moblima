@@ -458,7 +458,7 @@ public class MoviegoerView {
     		}
     		for (String movie: movieList) {
     			System.out.println("Choose a movie you want to add review to.");
-    			System.out.println("movieList");
+    			System.out.println(movie);
     			System.out.println("0. Go back to the previous screen.");
     		}
     		try {
