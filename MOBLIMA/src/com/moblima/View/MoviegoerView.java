@@ -544,5 +544,44 @@ public class MoviegoerView {
 	public void tellUserReviewIsAdded() {
 		System.out.println("Reivew has been successfully added.");
 	}
+	
+	public int askForRankingInput() {
+		int input = 0;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println("Please select what you want to rank by.");
+			System.out.println("1. Rank by ticket sales");
+			System.out.println("2. Rank by reviewer's ratings");
+			System.out.println("0. Go back to the previous page.");
+			try {
+				input = Integer.parseInt(reader.nextLine());
+				switch(input) {
+					case 0:
+						continueLoop = false;
+						break;
+					case 1:
+						continueLoop = false;
+						break;
+					case 2:
+						continueLoop = false;
+						break;
+					default:
+						System.out.println("Please enter the correct input.");
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
+	}
+
+	public void showUserRanking(ArrayList<String> rankingList) {
+		System.out.println("These are the current rankings.");
+		for (int i = 0; i < rankingList.size(); i++) {
+			System.out.println(rankingList.get(i));
+		}
+		System.out.println("Please press enter to continue.");
+		reader.nextLine();
+	}
 
 }

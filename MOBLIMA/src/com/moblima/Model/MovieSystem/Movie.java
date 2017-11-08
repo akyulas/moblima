@@ -68,6 +68,10 @@ public class Movie implements Serializable{
     public int getNumberOfReviews() {
         return reviews.size();
     }
+    
+    public int getNumberOfTicketsSold() {
+    	return ticketSales;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -85,7 +89,7 @@ public class Movie implements Serializable{
         this.casts = casts;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

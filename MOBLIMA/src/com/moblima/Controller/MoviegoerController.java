@@ -351,7 +351,43 @@ public class MoviegoerController {
     }
 
     private void listTopMovies() {
-    	
+    	boolean continueLoop = true;
+    	int input;
+    	while (continueLoop) {
+    		input = moviegoerView.askForRankingInput();
+    		switch(input) {
+    			case 0:
+    				continueLoop = false;
+    				break;
+    			case 1:
+    				getRankingByTicketSales();
+    				break;
+    			case 2:
+    				getRankingByRatings();
+    		}
+    	}
+    }
+    
+    private void getRankingByTicketSales() {
+    	ArrayList<Movie> movies = movieManager.sortByTicketSales();
+    	int count = 1;
+    	ArrayList<String> tempList = new ArrayList<String>();
+    	for (Movie movie: movies) {
+    		tempList.add(count + ". " + movie.getName() + "(" + movie.getMovieType() + ") " + "(" + movie.getNumberOfTicketsSold() + ") tickets sold");
+    		count++;
+    	}
+    	moviegoerView.showUserRanking(tempList);
+    }
+    
+    private void getRankingByRatings() {
+    	ArrayList<Movie> movies = movieManager.sortByRatings();
+    	int count = 1;
+    	ArrayList<String> tempList = new ArrayList<String>();
+    	for (Movie movie: movies) {
+    		tempList.add(count + ". " + movie.getName() + "(" + movie.getMovieType() + ") " + "(" + movie.getRating() + ") rating");
+    		count++;
+    	}
+    	moviegoerView.showUserRanking(tempList);
     }
 
 

@@ -45,6 +45,12 @@ public class Populate {
                 "Michael Cuesta", BlockBuster, NC16, casts, reviews);
 
         movies.add(movie);
+        
+        for (int i = 0; i < 500; i++) {
+        	movie.increaseTicketSales();
+        }
+        
+        movie.setRating(3.5);
 
         /* Populate with Flatliners */
 
@@ -65,6 +71,12 @@ public class Populate {
                 "Joel Schumacher", BlockBuster, PG13, casts, reviews);
 
         movies.add(movie);
+        
+        for (int i = 0; i < 1000; i++) {
+        	movie.increaseTicketSales();
+        }
+        
+        movie.setRating(5.0);
 
         /* Populate with Thor*/
 
@@ -88,6 +100,12 @@ public class Populate {
                 "Taika Waititi", _3D, PG13, casts, reviews);
 
         movies.add(movie);
+        
+        for (int i = 0; i < 2000; i++) {
+        	movie.increaseTicketSales();
+        }
+        
+        movie.setRating(1.0);
         
         importController.setMovieManager(movieManager);
         /* create new cineplex population */
