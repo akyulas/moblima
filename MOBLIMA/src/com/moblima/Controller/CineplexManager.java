@@ -32,7 +32,7 @@ public class CineplexManager implements Serializable {
         }
         return temp;
     }
-    
+        
     public Cineplex searchForCineplex(String ciniplexName) {
     	for (Cineplex cineplex: cineplexes) {
     		if (cineplex.getName().equals(ciniplexName))

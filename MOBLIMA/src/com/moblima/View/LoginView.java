@@ -9,7 +9,11 @@ import com.moblima.Controller.UserManager;
  */
 public class LoginView {
 
-    private Scanner reader = new Scanner(System.in);
+    private Scanner reader;
+    
+    public LoginView(Scanner reader) {
+    	this.reader = reader;
+    }
 
     public int getLoginInput() {
         boolean continueLoop = true;
@@ -212,6 +216,7 @@ public class LoginView {
                 if (emailAddress.equals("")) {
                     throw new RuntimeException();
                 }
+                continueLoop = false;
             } catch(RuntimeException e) {
                 System.out.println("Please do not give an empty string.");
             }

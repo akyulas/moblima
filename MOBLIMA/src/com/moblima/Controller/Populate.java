@@ -382,70 +382,73 @@ public class Populate {
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint1");
         start = LocalDateTime.of(2017, 10, 10, 17, 30);
-        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, "apple"));
+        LocalDateTime bookingTiming = LocalDateTime.of(2017, 10, 10, 14, 30);
+        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
         transactionIDs.add(new TransactionID("JurongPoint1", 2017, 10, 10, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint2");
         start = LocalDateTime.of(2017, 10, 10, 17, 30);
-        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, "banana"));
+        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana"));
         transactionIDs.add(new TransactionID("JurongPoint2", 2017, 10, 10, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint3");
         start = LocalDateTime.of(2017, 10, 10, 17, 30);
-        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, "cucumber"));
+        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber"));
         transactionIDs.add(new TransactionID("JurongPoint3", 2017, 10, 10, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint1");
         start = LocalDateTime.of(2017, 10, 20, 17, 30);
-        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, "banana"));
+        bookingTiming = LocalDateTime.of(2017, 10, 20, 14, 30);
+        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana"));
         transactionIDs.add(new TransactionID("JurongPoint1", 2017, 10, 20, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint2");
         start = LocalDateTime.of(2017, 10, 20, 17, 30);
-        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, "cucumber"));
+        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber"));
         transactionIDs.add(new TransactionID("JurongPoint2", 2017, 10, 20, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint3");
         start = LocalDateTime.of(2017, 10, 20, 17, 30);
-        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, "apple"));
+        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
         transactionIDs.add(new TransactionID("JurongPoint3", 2017, 10, 20, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint1");
         start = LocalDateTime.of(2017, 10, 30, 17, 30);
-        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, "cucumber"));
+        bookingTiming = LocalDateTime.of(2017, 10, 30, 14, 30);
+        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber"));
         transactionIDs.add(new TransactionID("JurongPoint1", 2017, 10, 30, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint2");
         start = LocalDateTime.of(2017, 10, 30, 17, 30);
-        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, "apple"));
+        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
         transactionIDs.add(new TransactionID("JurongPoint2", 2017, 10, 30, 17, 30));
         
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint3");
         start = LocalDateTime.of(2017, 10, 30, 17, 30);
-        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, "banana"));
+        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana"));
         transactionIDs.add(new TransactionID("JurongPoint3", 2017, 10, 30, 17, 30));
         
         
         Holidays holidays = bookingManager.getHolidays();
         holidays.addHoliday(LocalDate.of(2017, 11, 8), "Public Holiday 1");
         holidays.addHoliday(LocalDate.of(2017, 11, 9), "Public Holiday 2");
-        holidays.addHoliday(LocalDate.of(2017, 11, 9), "Public Holiday 3");
+        holidays.addHoliday(LocalDate.of(2017, 11, 10), "Public Holiday 3");
         
         importController.setBookingManager(bookingManager);
         importController.export();

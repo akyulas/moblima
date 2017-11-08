@@ -4,6 +4,7 @@ import com.moblima.Model.LoginSystem.Moviegoer;
 import com.moblima.Model.MovieSystem.Cinema;
 import com.moblima.Model.MovieSystem.Cineplex;
 import com.moblima.Model.MovieSystem.Movie;
+import com.moblima.Utilities.Utilities;
 
 import java.io.Serializable;
 import java.time.DayOfWeek;
@@ -17,13 +18,25 @@ public class Ticket implements Serializable{
     private LocalDateTime startTiming;
     private Cineplex cineplex;
     private String moviegoerUserName;
+    private int numberOfTickets;
+    private LocalDateTime bookedTiming;
 
-    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, String moviegoerUserName) {
-        this.movie = movie;
-        this.cinema = cinema;
-        this.startTiming = startTiming;
-        this.cineplex = cineplex;
-        this.moviegoerUserName = moviegoerUserName;
+    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName) {
+        this(movie, cineplex, cinema, startTiming, bookedTiming, moviegoerUserName, 1);
+    }
+    
+    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName, int numberOfTickets) {
+    	this.movie = movie;
+    	this.cinema = cinema;
+    	this.startTiming = startTiming;
+    	this.bookedTiming = bookedTiming;
+    	this.cineplex = cineplex;
+    	this.moviegoerUserName = moviegoerUserName;
+    	this.numberOfTickets = numberOfTickets;
+    }
+    
+    public Movie getMovie() {
+    	return this.movie;
     }
     
     public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int age, Holidays holidays) {
@@ -63,6 +76,12 @@ public class Ticket implements Serializable{
     		result += TicketPriceConfiguration.getSeniorCitizenPrice();
     	}
     	return result;
+    }
+    
+    public String toString() {
+    	return "Movie: " + movie.getName() + ", Cineplex: " + cineplex.getName() + ", Cinema: " + cinema.getCode() +
+    			", Movie Start Timing: " + Utilities.timeToString(startTiming) + ", Booking Time: " + 
+    			Utilities.timeToString(bookedTiming) + ", Number Of Tickets: " + numberOfTickets;
     }
 
 }

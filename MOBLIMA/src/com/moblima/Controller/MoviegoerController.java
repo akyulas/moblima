@@ -1,17 +1,16 @@
 package com.moblima.Controller;
 
 import com.moblima.View.MoviegoerView;
+import java.util.Scanner;
 import com.moblima.Model.MovieSystem.*;
 import com.moblima.Model.LoginSystem.Moviegoer;
 import com.moblima.Model.BookingSystem.Holidays;
 import com.moblima.Model.BookingSystem.Ticket;
+import com.moblima.Utilities.Utilities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Set;
-import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -24,17 +23,15 @@ public class MoviegoerController {
     private MoviegoerView moviegoerView;
     private int input;
     private boolean continueStartingLoop;
-    private DateTimeFormatter formatter;
     private Moviegoer moviegoer;
     private BookingManager bookingManager;
     private boolean bookingSuccessful;
 
-    public MoviegoerController(MovieManager movieManager, CineplexManager cineplexManager, Moviegoer moviegoer, BookingManager bookingManager) {
+    public MoviegoerController(MovieManager movieManager, CineplexManager cineplexManager, Moviegoer moviegoer, BookingManager bookingManager, Scanner reader) {
         this.movieManager = movieManager;
         this.cineplexManager = cineplexManager;
-        this.moviegoerView = new MoviegoerView();
+        this.moviegoerView = new MoviegoerView(reader);
         this.bookingManager = bookingManager;
-        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.moviegoer = moviegoer;
         bookingSuccessful = false;
     }
@@ -54,7 +51,7 @@ public class MoviegoerController {
                     checkSeatsAndBuyTickets();
                     break;
                 case 3:
-                    viewBookingHistory();
+                    viewBookingHistoryAndAddReview();
                     break;
                 case 4:
                     listTopMovies();
@@ -168,7 +165,7 @@ public class MoviegoerController {
             input = moviegoerView.getBookingSearchInput();
             switch(input) {
                 case 0:
-                    continueStartingLoop = false;
+                    continueLoop = false;
                     break;
                 case 1:
                     searchByMovie();
@@ -176,15 +173,6 @@ public class MoviegoerController {
                     	continueLoop = false;
                     	break;
                     }
-                    break;
-                case 2:
-                    searchByCineplex();
-                    break;
-                case 3:
-                    searchByMovieAndCineplex();
-                    break;
-                case 4:
-                    searchByMovieAndCineplexAndTime();
                     break;
             }
         }
@@ -201,30 +189,18 @@ public class MoviegoerController {
                 LocalDateTime startTime = movieListing.getStartingTime();
                 LocalDateTime endTime = movieListing.getEndingTime();
                 tempList.add(count + ". "  + " Cineplex: " + movieListing.getCineplex().getName() + " Cinema: " + movieListing.getCinema().getCode()
-                        + " Start time: " + startTime.format(formatter) + " End time: " + endTime.format(formatter));
+                        + " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
                 count++;
             }
             int input = moviegoerView.inputForMoviesFound(tempList);
             if (input == 0) {
-                continueStartingLoop = false;
+                continueLoop = false;
             } else {
                 viewMovieListingDetail(movieListings.get(input - 1));
                 if (bookingSuccessful)
                 	continueLoop = false;
             }
         }
-    }
-
-    private void searchByCineplex() {
-    	
-    }
-
-    private void searchByMovieAndCineplex() {
-
-    }
-
-    private void searchByMovieAndCineplexAndTime() {
-
     }
 
     private void viewMovieListingDetail(MovieListing movieListing) {
@@ -296,6 +272,7 @@ public class MoviegoerController {
     	Cinema cinema = movieListing.getCinema();
     	Cineplex cineplex = movieListing.getCineplex();
     	LocalDateTime startTime = movieListing.getStartingTime();
+    	LocalDateTime bookedTiming = LocalDateTime.now();
     	int age = moviegoer.getAge();
     	Holidays holidays = bookingManager.getHolidays();
     	for (String chosenSeat: chosenSeats) {
@@ -308,19 +285,73 @@ public class MoviegoerController {
     		case 1:
     			System.out.println("Booking successful.");
     			movie.increaseTicketSales();
-    			bookingManager.addHistory(moviegoer.getUsername(), new Ticket(movie, cineplex, cinema, startTime, moviegoer.getUsername()));
+    			bookingManager.addHistory(moviegoer.getUsername(), new Ticket(movie, cineplex, cinema, startTime, bookedTiming, moviegoer.getUsername()));
     			bookingManager.addTransactionID(cinema.getCode());
     			movieListing.occupyTheSeats(chosenSeats);
     			bookingSuccessful = true; // ensure the user will end up on the main screen
     	}
     }
 
-    private void viewBookingHistory() {
-
+    private void viewBookingHistoryAndAddReview() {
+    	ArrayList<Ticket> tickets = bookingManager.getHistoryOfMoviegoer(moviegoer.getUsername());
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		int input = moviegoerView.getInputFromBookingHistoryMenu();
+    		switch(input) {
+    			case 0:
+    				continueLoop = false;
+    				break;
+    			case 1:
+    				viewBookingHistory(tickets);
+    				break;
+    			case 2:
+    				addReview();
+    				break;
+    		}
+    		
+    	}
+    }
+    
+    private void viewBookingHistory(ArrayList<Ticket> tickets) {
+    	ArrayList<String> temp = new ArrayList<String>();
+    	int count = 1;
+    	for (Ticket ticket: tickets) {
+    		temp.add(count + ". " + ticket.toString());
+    		count++;
+    	}
+    	moviegoerView.showMoviegoerBookingHistory(temp);
+    }
+    
+    private void addReview() {
+    	ArrayList<Movie> movies = bookingManager.getMoviesForReview(moviegoer.getUsername());
+    	ArrayList<String> tempList = new ArrayList<String>();
+        int count = 1;
+        for (Movie movie: movies) {
+            tempList.add(count + ". "  + movie.getName() + " (" + movie.getMovieType() + ")");
+            count++;
+        }
+        boolean continueLoop = true;
+        int input = 0;
+        while (continueLoop) {
+        	input = moviegoerView.showMoviegoerReviewAndGetInput(tempList);
+        	if (input == 0) {
+        		continueLoop = false;
+        	} else {
+        		addReviewByTheUser(movies.get(input - 1));
+        	}
+        }
+    }
+    
+    public void addReviewByTheUser(Movie movie) {
+    	String name = moviegoer.getUsername();
+    	double rating = moviegoerView.askForRatings();
+    	String review = moviegoerView.askForReview();
+    	movie.addReview(new Review(name, rating, review));
+    	moviegoerView.tellUserReviewIsAdded();
     }
 
     private void listTopMovies() {
-
+    	
     }
 
 

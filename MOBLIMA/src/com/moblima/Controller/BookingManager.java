@@ -8,6 +8,7 @@ import com.moblima.Model.BookingSystem.Holidays;
 import com.moblima.Model.BookingSystem.Ticket;
 import com.moblima.Model.BookingSystem.TicketPriceConfiguration;
 import com.moblima.Model.BookingSystem.TransactionID;
+import com.moblima.Model.MovieSystem.Movie;
 
 public class BookingManager implements Serializable{
 	
@@ -56,6 +57,25 @@ public class BookingManager implements Serializable{
 		int hour = time.getHour();
 		int minute = time.getMinute();
 		transactionIDs.add(new TransactionID(code, year, month, day, hour, minute));
+	}
+	
+	public ArrayList<Ticket> getHistoryOfMoviegoer(String moviegoer) {
+		if (bookingHistories.containsKey(moviegoer)) {
+			return bookingHistories.get(moviegoer);
+		}
+		return new ArrayList<Ticket>();
+	}
+	
+	public ArrayList<Movie> getMoviesForReview(String moviegoer) {
+		ArrayList<Movie> temp = new ArrayList<Movie>();
+		ArrayList<Ticket> tickets = getHistoryOfMoviegoer(moviegoer);
+		for (Ticket ticket: tickets) {
+			Movie movie = ticket.getMovie();
+			if (!movie.hasMoviegoerAddedReview(moviegoer)) {
+				temp.add(movie);
+			}
+		}
+		return temp;
 	}
 		
 }

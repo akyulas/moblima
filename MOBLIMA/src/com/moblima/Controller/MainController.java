@@ -15,6 +15,7 @@ public class MainController{
     private BookingManager bookingManager;
     private MoviegoerController moviegoerController;
     private AdminController adminController;
+    private Scanner reader;
 
     public MainController() {
     	importController = new ImportController();
@@ -24,7 +25,8 @@ public class MainController{
 		cineplexManager = importController.getCineplexManager();
 		userManager = importController.getUserManager();
 		bookingManager = importController.getBookingManager();
-		loginController = new LoginController(userManager);
+		reader = new Scanner(System.in);
+		loginController = new LoginController(userManager, reader);
 	}
 
     public void start() {
@@ -45,7 +47,7 @@ public class MainController{
     			boolean runMoviegoerController = loginController.checkIfMoviegoer();
     			if (runMoviegoerController) {
     				Moviegoer moviegoer = loginController.getMoviegoer();
-    				moviegoerController = new MoviegoerController(movieManager, cineplexManager, moviegoer, bookingManager);
+    				moviegoerController = new MoviegoerController(movieManager, cineplexManager, moviegoer, bookingManager, reader);
     				moviegoerController.getMoviegoerCommands();
 				} else {
 					adminController = new AdminController();
@@ -58,6 +60,7 @@ public class MainController{
     private void end() {
         System.out.println("Ending application");
         importController.export();
+        reader.close();
         System.out.println("Goodbye!");
     }
 

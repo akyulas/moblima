@@ -3,13 +3,18 @@ package com.moblima.View;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import com.moblima.Utilities.Utilities;
 
 /**
  * Created by jodiakyulas on 4/11/17.
  */
 public class MoviegoerView {
 
-    private Scanner reader = new Scanner(System.in);
+    private Scanner reader;
+    
+    public MoviegoerView(Scanner reader) {
+    	this.reader = reader;
+    }
 
     public int getMovieGoerInput() {
         boolean continueLoop = true;
@@ -18,7 +23,7 @@ public class MoviegoerView {
             System.out.println("Please select an input:");
             System.out.println("1. Search/List movie");
             System.out.println("2. Check seat availability and purchase tickets");
-            System.out.println("3. View booking history");
+            System.out.println("3. View booking history and add reviews");
             System.out.println("4. List The Top 5 ranking movies by ticket sales OR by reviewer's ratings");
             System.out.println("0. Return to login page");
             try {
@@ -160,7 +165,7 @@ public class MoviegoerView {
 
     public void showMovieGoerSynopsis(String synopsis) {
         System.out.println("Synopsis");
-        System.out.println(breakLines(synopsis, 100));
+        System.out.println(Utilities.breakLines(synopsis, 100));
         System.out.println();
         System.out.println("Please press any buttons to continue.");
         reader.nextLine();
@@ -183,7 +188,7 @@ public class MoviegoerView {
                 resultString += cast + ".";
             count++;
         }
-        System.out.println(breakLines("Casts: " + resultString, 100));
+        System.out.println(Utilities.breakLines("Casts: " + resultString, 100));
         System.out.println();
         System.out.println("Please press any buttons to continue.");
         reader.nextLine();
@@ -218,8 +223,6 @@ public class MoviegoerView {
         while (continueLoop) {
             System.out.println("Please select your search criteria");
             System.out.println("1. Search by movies");
-            System.out.println("2. Search by cineplex");
-            System.out.println("3. Search by movies and cineplex");
             System.out.println("0. Enter 0 to go back to other commands.");
             try {
                 input = Integer.parseInt(reader.nextLine());
@@ -228,15 +231,6 @@ public class MoviegoerView {
                         continueLoop = false;
                         break;
                     case 1:
-                        continueLoop = false;
-                        break;
-                    case 2:
-                        continueLoop = false;
-                        break;
-                    case 3:
-                        continueLoop = false;
-                        break;
-                    case 4:
                         continueLoop = false;
                         break;
                     default:
@@ -414,7 +408,7 @@ public class MoviegoerView {
     		result = result.substring(0, result.length() - 2);
     		System.out.println(result);
     		System.out.println("The total cost is: " + cost);
-    		System.out.println("Please press 1 if to confirm you want to book the tickets. Press 0 to go back and choose more seats.");
+    		System.out.println("Please press 1 to confirm you want to book the tickets. Press 0 to go back and choose more seats.");
     		try {
     			input = Integer.parseInt(reader.nextLine());
     			switch(input) {
@@ -433,33 +427,122 @@ public class MoviegoerView {
     	}
     	return input;
     }
-
-    public  String breakLines(String input, int maxLineLength) {
-        String SPLIT_REGEXP= "\\s+";
-        String SPACE_SEPARATOR = " ";
-        String NEWLINE = "\n";
-        String[] tokens = input.split(SPLIT_REGEXP);
-        StringBuilder output = new StringBuilder(input.length());
-        int lineLen = 0;
-        for (int i = 0; i < tokens.length; i++) {
-            String word = tokens[i];
-
-            if (lineLen + (SPACE_SEPARATOR + word).length() > maxLineLength) {
-                if (i > 0) {
-                    output.append(NEWLINE);
-                }
-                lineLen = 0;
-            }
-            if (i < tokens.length - 1 && (lineLen + (word + SPACE_SEPARATOR).length() + tokens[i + 1].length() <=
-                    maxLineLength)) {
-                word += SPACE_SEPARATOR;
-            }
-            output.append(word);
-            lineLen += word.length();
-        }
-        return output.toString();
+    
+    public void showMoviegoerBookingHistory(ArrayList<String> histories) {
+    	if (histories.size() == 0) {
+    		System.out.println("Your history could not be found.");
+    	} else {
+    		System.out.println("These are your past history of bookings:");
+    		for (String history: histories) {
+    			System.out.println(history);
+    		}
+    	}
+    	System.out.println("Please press enter to continue.");
+    	reader.nextLine();
+    }
+    
+    public int showMoviegoerReviewAndGetInput(ArrayList<String> movieList) {
+    	System.out.println("Please take note that you can only add a review once to a movie you have watched.");
+    	System.out.println("Please press enter to continue.");
+    	reader.nextLine();
+    	int input = 0;
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		if (movieList.size() == 0) {
+    			System.out.println("You are not allowed to add any reviews.");
+    			System.out.println("You have either already add review to any movie that you have watched or you haven't watched any movie.");
+    			System.out.println("Please press enter to continue.");
+    			reader.hasNextLine();
+    			continueLoop =false;
+    			break;
+    		}
+    		for (String movie: movieList) {
+    			System.out.println("Choose a movie you want to add review to.");
+    			System.out.println("movieList");
+    			System.out.println("0. Go back to the previous screen.");
+    		}
+    		try {
+    			input = Integer.parseInt(reader.nextLine());
+    			if (input < 0 || input > movieList.size()) {
+    				System.out.println("Please choose a movie from the list.");
+    			} else {
+    				continueLoop =false;
+    			}
+    		} catch(Exception e) {
+    			System.out.println("Please enter an integer.");
+    		}
+    	}
+    	return input;
+    }
+    
+    public int getInputFromBookingHistoryMenu() {
+    	int input = 0;
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		System.out.println("Please select an option that you want.");
+    		System.out.println("1. View your booking history.");
+    		System.out.println("2. Add review to a movie that you have watched.");
+    		System.out.println("0. Return back to main menu.");
+    		try {
+    			input = Integer.parseInt(reader.nextLine());
+    			switch(input) {
+    				case 0:
+    					continueLoop = false;
+    					break;
+    				case 1:
+    					continueLoop = false;
+    					break;
+    				case 2:
+    					continueLoop = false;
+    					break;
+    				default:
+    					System.out.println("Please enter a valid option.");
+    			}
+    		} catch(Exception e) {
+    			System.out.println("Please input an integer.");
+    		}
+    	}
+    	return input;
     }
 
+	public double askForRatings() {
+		double input = 0;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println("Please give a rating(0 - 5) to the movie.");
+			try {
+				input = Double.parseDouble(reader.nextLine());
+				if (input < 0 || input > 5) {
+					System.out.println("Please ensure that it is between 0 and 5.");
+				} else {
+					continueLoop = false;
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter a double.");
+			}
+		}
+		return input;
+	}
 
+	public String askForReview() {
+		String input = "";
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println("Please enter a review to the movie.");
+			try {
+				input = reader.nextLine();
+				if (input.equals(""))
+					throw new RuntimeException();
+				continueLoop = false;
+			} catch(RuntimeException e) {
+				System.out.println("Please do not enter an empty review.");
+			}
+		}
+		return input;
+	}
+
+	public void tellUserReviewIsAdded() {
+		System.out.println("Reivew has been successfully added.");
+	}
 
 }

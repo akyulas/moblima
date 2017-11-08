@@ -126,6 +126,15 @@ public class Movie implements Serializable{
             rating = (tempTotalRatings - tempRating) / size;
         }
     }
+    
+    public boolean hasMoviegoerAddedReview(String moviegoer) {
+    	for (Review review: reviews) {
+    		if (review.getUser().equals(moviegoer)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     public void removeCinema(Cinema cinema) {
         if (cinemas.contains(cinema)) {

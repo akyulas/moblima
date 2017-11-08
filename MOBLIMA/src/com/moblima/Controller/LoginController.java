@@ -1,6 +1,9 @@
 package com.moblima.Controller;
 
 import com.moblima.View.LoginView;
+
+import java.util.Scanner;
+
 import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.LoginSystem.Moviegoer;
 
@@ -19,9 +22,9 @@ public class LoginController {
     private Admin admin;
     private Moviegoer moviegoer;
 
-    public LoginController(UserManager userManager) {
+    public LoginController(UserManager userManager, Scanner reader) {
         this.userManager = userManager;
-        loginView = new LoginView();
+        loginView = new LoginView(reader);
         quit = false;
         isMoviegoer =false;
         continueStartingLoop = true;
@@ -55,17 +58,23 @@ public class LoginController {
     }
 
     public void getMoviegoerLoginInformation() {
-        input = loginView.getMoviegoerLoginInput();
-        switch(input) {
-            case 0:
-                break;
-            case 1:
-                loginAsMovieGoer();
-                break;
-            case 2:
-                registerNewMovieGoer();
-                break;
-        }
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		input = loginView.getMoviegoerLoginInput();
+    		switch(input) {
+            	case 0:
+            		continueLoop = false;
+            		break;
+            	case 1:
+            		loginAsMovieGoer();
+            		if (loginSuccessful)
+            			continueLoop = false;
+            		break;
+            	case 2:
+            		registerNewMovieGoer();
+            		break;
+    		}
+    	}
     }
 
     public void loginAsMovieGoer() {
