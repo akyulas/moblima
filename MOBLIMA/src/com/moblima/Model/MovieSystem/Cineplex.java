@@ -37,7 +37,7 @@ public class Cineplex implements Serializable{
             cinemas.remove(cinema);
     }
 
-    public boolean addMovie(Movie movie, Cinema cinema, LocalDateTime startTiming, LocalDateTime endTiming) {
+    public boolean addMovieListing(Movie movie, Cinema cinema, LocalDateTime startTiming, LocalDateTime endTiming) {
         if (!cinema.checkIfOccupied(startTiming, endTiming)) {
             movieListings.add(new MovieListing(this, movie, cinema, startTiming, endTiming));
             return true;

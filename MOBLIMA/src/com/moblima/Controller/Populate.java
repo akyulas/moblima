@@ -27,6 +27,8 @@ public class Populate {
 
         ArrayList<Movie> movies = movieManager.getMovies();
 
+        ArrayList<Movie> allMovies = movieManager.getAllMovies();
+
         /* Populate with American Assassin */
 
         ArrayList<String> casts = new ArrayList<String>();
@@ -42,9 +44,10 @@ public class Populate {
         reviews.add(new Review("cucumber", 0.0, "This movie is bad"));
 
         Movie movie = new Movie("American Assassin", NOW_SHOWING, "When Cold War veteran Stan Hurley takes CIA black ops recruit Mitch Rapp under his wing, they receive an assignment to investigate a wave of random attacks on both military and civilian targets. After discovering a pattern of violence, Hurley and Rapp join forces with a lethal Turkish agent to stop a mysterious operative who wants to start a global war.",
-                "Michael Cuesta", BlockBuster, NC16, casts, reviews);
+                "Michael Cuesta", BlockBuster, NC16, casts, reviews, LocalDate.of(2017, 12, 1));
 
         movies.add(movie);
+        allMovies.add(movie);
         
         for (int i = 0; i < 500; i++) {
         	movie.increaseTicketSales();
@@ -68,9 +71,10 @@ public class Populate {
         reviews.add(new Review("cucumber", 0.0, "This movie is bad"));
 
         movie = new Movie("Flatliners", COMING_SOON, "Five medical students embark on a daring and dangerous experiment to gain insight into the mystery of what lies beyond the confines of life. The bold adventure begins when they trigger near-death experiences by stopping their hearts for short periods of time. As their trials become more perilous, each must confront the sins from their past while facing the paranormal consequences of journeying to the other side.",
-                "Joel Schumacher", BlockBuster, PG13, casts, reviews);
+                "Joel Schumacher", BlockBuster, PG13, casts, reviews, LocalDate.of(2017, 12, 1));
 
         movies.add(movie);
+        allMovies.add(movie);
         
         for (int i = 0; i < 1000; i++) {
         	movie.increaseTicketSales();
@@ -97,9 +101,10 @@ public class Populate {
         reviews.add(new Review("cucumber", 0.0, "This movie is bad"));
 
         movie = new Movie("Marvel's Thor: Ragnarok", PREVIEW, "Thor is imprisoned on the other side of the universe without his mighty hammer and finds himself in a race against time to get back to Asgard to stop Ragnarok- the destruction of his homeworld and the end of Asgardian civilization- the hands of an all-powerful new threat, the ruthless Hela. But first he must survive a deadly gladiatorial contest that pits him against his former ally and fellow Avenger- the Incredible Hulk!",
-                "Taika Waititi", _3D, PG13, casts, reviews);
+                "Taika Waititi", _3D, PG13, casts, reviews, LocalDate.of(2017, 12, 1));
 
         movies.add(movie);
+        allMovies.add(movie);
         
         for (int i = 0; i < 2000; i++) {
         	movie.increaseTicketSales();
@@ -392,6 +397,7 @@ public class Populate {
         ticketPriceConfiguration.setWeekdayPrice(0.00);
         ticketPriceConfiguration.setWeekendPrice(2.00);
         ticketPriceConfiguration.setHolidayPrice(3.00);
+        ticketPriceConfiguration.setGSTRate(0.07);
         
         HashMap<String, ArrayList<Ticket>> bookingHistory = new HashMap<String, ArrayList<Ticket>>();
         ArrayList<TransactionID> transactionIDs = bookingManager.getTransactionID();

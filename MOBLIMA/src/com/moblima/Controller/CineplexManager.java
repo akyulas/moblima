@@ -3,6 +3,7 @@ package com.moblima.Controller;
 import com.moblima.Model.MovieSystem.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,6 +51,13 @@ public class CineplexManager implements Serializable {
     		}
     	}
     	return null;
+    }
+
+    public boolean addMovieListing(Cineplex cineplex, Cinema cinema, Movie movie, LocalDateTime startingTime, LocalDateTime endingTime) {
+        if (startingTime.toLocalDate().isAfter(movie.getEndOfShowingDate()))
+            return false;
+        cineplex.addMovieListing(movie, cinema, startingTime, endingTime);
+        return true;
     }
     
 

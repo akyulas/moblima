@@ -10,12 +10,14 @@ import java.util.Comparator;
 public class MovieManager implements Serializable{
 
     private ArrayList<Movie> movies;
+    private ArrayList<Movie> allMovies;
     private String FileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/movies.dat";
     private Comparator<Movie> ticketOrder;
     private Comparator<Movie> ratingOrder;
 
     public MovieManager() {
         movies = new ArrayList<Movie>();
+        allMovies = new ArrayList<Movie>();
     }
     
     public void setMovie(ArrayList<Movie> movies) {
@@ -25,6 +27,10 @@ public class MovieManager implements Serializable{
     public ArrayList<Movie> getMovies() {
         return movies;
     }
+
+    public ArrayList<Movie> getAllMovies() {
+    	return allMovies;
+	}
     
     public Movie searchForSpecificMovie(String name, MovieType type) {
     	for (Movie movie: movies) {
@@ -88,6 +94,25 @@ public class MovieManager implements Serializable{
     	}
     	return tempList;
     }
+
+    public void addMovies(Movie movie) {
+    	allMovies.add(movie);
+    	movies.add(movie);
+	}
+
+    public void removeMovies(String movieName) {
+    	for (Movie movie: movies) {
+    		if (movie.getName().equals(movieName)) {
+    			movies.remove(movie);
+    			movie.removeByChangingStatus();
+			}
+		}
+	}
+
+	public void removeMovies(Movie movie) {
+		movies.remove(movie);
+		movie.removeByChangingStatus();
+	}
 
 
 }

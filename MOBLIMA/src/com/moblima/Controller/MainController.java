@@ -1,6 +1,7 @@
 package com.moblima.Controller;
 import java.util.Scanner;
 
+import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.LoginSystem.Moviegoer;
 import com.moblima.View.LoginView;
 
@@ -50,7 +51,9 @@ public class MainController{
     				moviegoerController = new MoviegoerController(movieManager, cineplexManager, moviegoer, bookingManager, reader);
     				moviegoerController.getMoviegoerCommands();
 				} else {
-					adminController = new AdminController();
+    				Admin admin = loginController.getAdmin();
+					adminController = new AdminController(movieManager, cineplexManager, admin, bookingManager, userManager, reader);
+					adminController.getAdminCommands();
 				}
 			}
 		}

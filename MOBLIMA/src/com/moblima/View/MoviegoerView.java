@@ -74,6 +74,8 @@ public class MoviegoerView {
     public int inputForMoviesFound(ArrayList<String> movieList) {
         if (movieList.size() == 0) {
             System.out.println("No movies are found.");
+            System.out.println("Please press enter to continue.");
+            reader.nextLine();
             return 0;
         }
 
@@ -407,7 +409,8 @@ public class MoviegoerView {
     		}
     		result = result.substring(0, result.length() - 2);
     		System.out.println(result);
-    		System.out.println("The total cost is: " + cost);
+    		String price = String.format("%.2f", cost);
+    		System.out.println("The total cost is: " + price);
     		System.out.println("Please press 1 to confirm you want to book the tickets. Press 0 to go back and choose more seats.");
     		try {
     			input = Integer.parseInt(reader.nextLine());

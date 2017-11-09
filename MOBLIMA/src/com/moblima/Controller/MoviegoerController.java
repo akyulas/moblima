@@ -63,8 +63,8 @@ public class MoviegoerController {
     private void searchForMovie() {
         String movieName = moviegoerView.askUserForMovieName();
         ArrayList<Movie> movieResults = movieManager.getMatchingMovies(movieName);
-        boolean continueStartingLoop = true;
-        while (continueStartingLoop) {
+        boolean continueLoop = true;
+        while (continueLoop) {
             ArrayList<String> tempList = new ArrayList<String>();
             int count = 1;
             for (Movie movie: movieResults) {
@@ -73,7 +73,7 @@ public class MoviegoerController {
             }
             int input = moviegoerView.inputForMoviesFound(tempList);
             if (input == 0) {
-                continueStartingLoop = false;
+                continueLoop = false;
             } else {
                 viewMovieDetails(movieResults.get(input - 1));
             }
@@ -81,12 +81,12 @@ public class MoviegoerController {
     }
 
     private void viewMovieDetails(Movie movie) {
-        boolean continueStartingLoop = true;
-        while (continueStartingLoop) {
+        boolean continueLoop = true;
+        while (continueLoop) {
             input = moviegoerView.inputForMovieDetails();
             switch (input) {
                 case 0:
-                    continueStartingLoop = false;
+                    continueLoop = false;
                     break;
                 case 1:
                     giveMoviegoerMovieName(movie);
@@ -142,7 +142,7 @@ public class MoviegoerController {
             moviegoerView.showMovieGoerRatings("NA");
         } else {
             double ratings = movie.getRating();
-            String result = String.format("%.2f", ratings);
+            String result = String.format("%.1f", ratings);
             moviegoerView.showMovieGoerRatings(result);
         }
     }
@@ -151,7 +151,7 @@ public class MoviegoerController {
         ArrayList<String> strings = new ArrayList<String>();
         for (Review review: movie.getReviews()) {
             double ratings = movie.getRating();
-            String result = String.format("%.2f", ratings);
+            String result = String.format("%.1f", ratings);
             strings.add("User: " + review.getUser() + ", " + "Rating: " + review.getRating() + ", " + review.getComment());
         }
         moviegoerView.showMovieGoerPastReviews(strings);

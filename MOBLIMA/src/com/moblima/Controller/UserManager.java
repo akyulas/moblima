@@ -30,6 +30,11 @@ public class UserManager implements Serializable {
     	Moviegoer moviegoer = new Moviegoer(username, password, age, name, mobileNumber, email);
     	moviegoers.add(moviegoer);
     }
+
+    public void addNewAdmin(String username, String password, int id) {
+        Admin admin = new Admin(username, password, id);
+        admins.add(admin);
+    }
     
     public Moviegoer validateMovieGoerData(String username, String password) {
     	for (Moviegoer moviegoer: moviegoers) {
@@ -51,6 +56,15 @@ public class UserManager implements Serializable {
     public boolean checkIfMovieGoerUserNameExist(String username) {
         for (Moviegoer moviegoer: moviegoers) {
             if (moviegoer.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkIfAdminUserNameExist(String username) {
+        for (Admin admin: admins) {
+            if (admin.getUsername().equals(username)) {
                 return true;
             }
         }

@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 public class Utilities {
 	
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+	private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	public static String breakLines(String input, int maxLineLength) {
         String SPLIT_REGEXP= "\\s+";
@@ -37,6 +39,8 @@ public class Utilities {
 		return localDateTime.format(formatter);
 	}
 	
-	
+	public static DateTimeFormatter getDateTimeFormatter() {
+	    return dateFormatter;
+    }
 	
 }

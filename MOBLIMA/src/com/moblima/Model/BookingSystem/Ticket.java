@@ -75,6 +75,8 @@ public class Ticket implements Serializable{
     	} else {
     		result += TicketPriceConfiguration.getSeniorCitizenPrice();
     	}
+    	double GST = TicketPriceConfiguration.getGST() * result;
+    	result += GST;
     	return result;
     }
     

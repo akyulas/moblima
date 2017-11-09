@@ -19,6 +19,7 @@ public class TicketPriceConfiguration implements Serializable {
 	private static double weekdayPrice;
 	private static double weekendPrice;
 	private static double holidayPrice;
+	private static double GSTRate;
 	
 	public void set3DPrice(Double price) {
 		_3DPrice = price;
@@ -63,6 +64,8 @@ public class TicketPriceConfiguration implements Serializable {
 	public void setHolidayPrice(Double price) {
 		holidayPrice = price;
 	}
+
+	public void setGSTRate(Double taxRate) {GSTRate = taxRate;}
 	
 	public static double get3DPrice() {
 		return _3DPrice;
@@ -107,4 +110,6 @@ public class TicketPriceConfiguration implements Serializable {
 	public static double getHolidayPrice() {
 		return holidayPrice;
 	}
+
+	public static double getGST() {return GSTRate;}
 }
