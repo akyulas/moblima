@@ -44,5 +44,16 @@ public class Cinema implements Serializable{
     public void addTimetable(Timetable timetable) {
         timetables.add(timetable);
     }
+    
+    public void removeTimetable(LocalDateTime startTime, LocalDateTime endTime) {
+    	Timetable tempTimetable = null;
+    	for (Timetable timetable: timetables) {
+            if (timetable.getStartTiming().isEqual(startTime) && timetable.getEndTiming().isEqual(endTime)) {
+            	tempTimetable = timetable;
+            	break;
+            }
+        }
+    	timetables.remove(tempTimetable);
+    }
 
 }

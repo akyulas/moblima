@@ -1,7 +1,10 @@
 package com.moblima.Model.BookingSystem;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.moblima.Utilities.Utilities;
 
 public class Holidays implements Serializable{
 	
@@ -28,5 +31,13 @@ public class Holidays implements Serializable{
 			return true;
 		return false;
 	}
+	
+	public ArrayList<LocalDate> getHolidayDates() {
+		ArrayList<LocalDate> tempList = new ArrayList<LocalDate>();
+		for (LocalDate holiday: holidays.keySet()) {
+			tempList.add(holiday);
+		}
+		return tempList;
+	}	
 	
 }

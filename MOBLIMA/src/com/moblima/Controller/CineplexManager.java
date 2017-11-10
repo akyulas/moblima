@@ -20,6 +20,22 @@ public class CineplexManager implements Serializable {
     	return cineplexes;
     }
 
+    public ArrayList<MovieListing> getMovieList(String movieName,int age) {
+        ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
+        String tempString = movieName.toLowerCase();
+        for (Cineplex cineplex: cineplexes) {
+            for (MovieListing movieListing: cineplex.getMovieListing()) {
+            	Movie movie = movieListing.getMovie();
+            	int minimumAge = movie.getMovieRating().getMinimumAge();
+                String tempMovieName = movieListing.getMovie().getName().toLowerCase();
+                if (tempMovieName.contains(tempString) && age > minimumAge) {
+                    temp.add(movieListing);
+                }
+            }
+        }
+        return temp;
+    }
+    
     public ArrayList<MovieListing> getMovieList(String movieName) {
         ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
         String tempString = movieName.toLowerCase();

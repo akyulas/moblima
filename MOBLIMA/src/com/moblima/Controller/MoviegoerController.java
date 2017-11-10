@@ -180,7 +180,7 @@ public class MoviegoerController {
 
     private void searchByMovie() {
         String movieName = moviegoerView.getMovieName();
-        ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName);
+        ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName, moviegoer.getAge());
         boolean continueLoop = true;
         while (continueLoop) {
             ArrayList<String> tempList = new ArrayList<String>();

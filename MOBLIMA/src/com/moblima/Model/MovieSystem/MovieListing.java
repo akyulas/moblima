@@ -61,6 +61,25 @@ public class MovieListing implements Serializable{
         return this.endingTime;
     }
     
+    public void setMovie(Movie movie) {
+    	this.movie = movie;
+    }
+    
+    public void setCineplexAndCinema(Cineplex newCineplex, Cinema newCinema, Cineplex oldCineplex, Cinema oldCinema) {
+    	cineplex = newCineplex;
+    	cinema = newCinema;
+    	cinema.addTimetable(new Timetable(startingTime, endingTime));
+    	oldCinema.removeTimetable(startingTime, endingTime);
+    }
+   
+
+    public void setTime(LocalDateTime startingTime, LocalDateTime endingTime) {
+        this.startingTime = startingTime;
+        this.endingTime = endingTime;
+        cinema.addTimetable(new Timetable(startingTime, endingTime));
+        cinema.removeTimetable(startingTime, endingTime);
+    }
+  
     public HashMap<String, Seat> getSeats(){
     	return seats;
     }

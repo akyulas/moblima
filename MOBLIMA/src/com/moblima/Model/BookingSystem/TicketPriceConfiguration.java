@@ -21,51 +21,51 @@ public class TicketPriceConfiguration implements Serializable {
 	private static double holidayPrice;
 	private static double GSTRate;
 	
-	public void set3DPrice(Double price) {
+	public static void set3DPrice(Double price) {
 		_3DPrice = price;
 	}
 	
-	public void setBlockBusterPrice(Double price) {
+	public static void setBlockBusterPrice(Double price) {
 		blockBusterPrice = price;
 	}
 	
-	public void setNormalCinemaPrice(Double price) {
+	public static void setNormalCinemaPrice(Double price) {
 		normalCinemaPrice = price;
 	}
 	
-	public void setPlantinumPrice(Double price) {
+	public static void setPlantinumPrice(Double price) {
 		plantinumPrice = price;
 	}
 	
-	public void setElitePrice(Double price) {
+	public static void setElitePrice(Double price) {
 		elitePrice = price;
 	}
 	
-	public void setChildrenPrice(Double price) {
+	public static void setChildrenPrice(Double price) {
 		childrenPrice = price;
 	}
 	
-	public void setAdultPrice(Double price) {
+	public static void setAdultPrice(Double price) {
 		adultPrice = price;
 	}
 	
-	public void setSeniorCitizenPrice(Double price) {
+	public static void setSeniorCitizenPrice(Double price) {
 		seniorCitizenPrice = price;
 	}
 	
-	public void setWeekdayPrice(Double price) {
+	public static void setWeekdayPrice(Double price) {
 		weekdayPrice = price;
 	}
 	
-	public void setWeekendPrice(Double price) {
+	public static void setWeekendPrice(Double price) {
 		weekendPrice = price;
 	}
 	
-	public void setHolidayPrice(Double price) {
+	public static void setHolidayPrice(Double price) {
 		holidayPrice = price;
 	}
 
-	public void setGSTRate(Double taxRate) {GSTRate = taxRate;}
+	public static void setGSTRate(Double taxRate) {GSTRate = taxRate;}
 	
 	public static double get3DPrice() {
 		return _3DPrice;

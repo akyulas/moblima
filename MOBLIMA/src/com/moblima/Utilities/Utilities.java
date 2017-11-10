@@ -1,5 +1,6 @@
 package com.moblima.Utilities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -37,6 +38,10 @@ public class Utilities {
 	
 	public static String timeToString(LocalDateTime localDateTime) {
 		return localDateTime.format(formatter);
+	}
+	
+	public static String dateToString(LocalDate localDate) {
+		return localDate.format(dateFormatter);
 	}
 	
 	public static DateTimeFormatter getDateFormatter() {

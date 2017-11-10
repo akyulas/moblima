@@ -87,6 +87,10 @@ public class Movie implements Serializable{
     public int getNumberOfTicketsSold() {
     	return ticketSales;
     }
+    
+    public MovieRating getMovieRating() {
+    	return movieRating;
+    }
 
     public LocalDate getEndOfShowingDate() {
         return endOfShowingDate;

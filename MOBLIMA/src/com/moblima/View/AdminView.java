@@ -1,5 +1,6 @@
 package com.moblima.View;
 
+import com.moblima.Model.BookingSystem.Holidays;
 import com.moblima.Utilities.Utilities;
 
 import java.time.LocalDate;
@@ -738,11 +739,31 @@ public class AdminView {
         return localDateTime;
     }
 
-    public void tellUserTheTimeSlotIsOccupied() {
-        System.out.println("The time slot is occupied.");
+    public int tellUserTheTimeSlotIsOccupiedAndGetInput() {
+    	int input = 0;
+    	boolean continueLoop = true;
+    	System.out.println("The time slot is occupied.");
         System.out.println("Please choose another time slot.");
-        System.out.println("Press enter to continue.");
-        reader.nextLine();
+        while (continueLoop) {
+            System.out.println("1. Continue");
+            System.out.println("0. Choose more options in the previous screen.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                switch(input) {
+                    case 0:
+                        continueLoop = false;
+                        break;
+                    case 1:
+                        continueLoop = false;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid option.");
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;   
     }
 
     public void tellUserMovieListingIsSuccessfullyAdded() {
@@ -750,4 +771,316 @@ public class AdminView {
         System.out.println("Press enter to continue.");
         reader.nextLine();
     }
+    
+	public int showAdminMovieListingsAndGetInput(ArrayList<String> foundMovieListings) {
+		System.out.println("These are the movie listings found.");
+	    for (String foundMovieListing: foundMovieListings) {
+	    	System.out.println(foundMovieListing);
+	    }
+	    int input = 0;
+	    boolean continueLoop = true;
+	    while (continueLoop) {
+	    	System.out.println("Please select the movie listings. Enter 0 to go back to other commands.");
+	        try {
+	        	input = Integer.parseInt(reader.nextLine());
+	        	if (input > foundMovieListings.size() || input < 0) {
+	        		System.out.println("Press enter to continue.");
+	            } else {
+	                continueLoop = false;
+	            }
+	        } catch (Exception e) {
+	        	System.out.println("Please enter an integer.");
+	        }
+	   }
+	   return input;
+    }
+	
+    public int tellUserMovieListingsCannotBeFoundAndGetInput() {
+        System.out.println("Movie listings cannot be found.");
+        System.out.println("Do you want to continue?");
+        int input = 0;
+        boolean continueLoop = true;
+        while (continueLoop) {
+            System.out.println("1. Continue");
+            System.out.println("0. Choose more options in the previous screen.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                switch(input) {
+                    case 0:
+                        continueLoop = false;
+                        break;
+                    case 1:
+                        continueLoop = false;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid option.");
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;
+    }
+	
+	public int giveAdminUpdateListAndGetInput() {
+		int input = 0;
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		System.out.println("Please select what you want to update.");
+    		System.out.println("1. The movie being shown.");
+    		System.out.println("2. The cineplex and cinema it is being shown in.");
+    		System.out.println("3. The starting and ending times.");
+    		System.out.println("0. Go back to the previous page.");
+    		try {
+    			input = Integer.parseInt(reader.nextLine());
+    			switch(input) {
+    				case 0:
+    					continueLoop = false;
+    					break;
+    				case 1:
+    					continueLoop = false;
+    					break;
+    				case 2:
+    					continueLoop = false;
+    					break;
+    				case 3:
+    					continueLoop = false;
+    					break;
+    				default:
+    					System.out.println("Please give a proper input.");
+    			}
+    		} catch(Exception e) {
+    			System.out.println("Please enter an integer.");
+    		}
+    	}
+    	return input;
+    }
+
+	public int tellUserTheCinemaTimeSlotIsOccupiedAndGetInput() {
+		int input = 0;
+    	boolean continueLoop = true;
+    	System.out.println("The time slot in the cinema is occupied.");
+        System.out.println("Please choose another cinema.");
+        while (continueLoop) {
+            System.out.println("1. Continue");
+            System.out.println("0. Choose more options in the previous screen.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                switch(input) {
+                    case 0:
+                        continueLoop = false;
+                        break;
+                    case 1:
+                        continueLoop = false;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid option.");
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;   
+	}
+
+	public void tellUserMovieListingIsSuccessfullyUpdated() {
+		System.out.println("The update of the movie listing is successfully.");
+		System.out.println("Please press enter to continue.");
+		reader.nextLine();
+	}
+
+	public void telluserMovieListingIsSuccessfullyRemoved() {
+		System.out.println("The movie has been successfully removed.");
+		System.out.println("Please press enter to continue.");
+		reader.nextLine();
+	}
+	
+	public int showUserSystemConfigurationAndGetInput() {
+		boolean continueLoop = true;
+		int input = 0;
+		while (continueLoop) {
+			System.out.println("Please select an option.");
+			System.out.println("1. Change ticket price.");
+			System.out.println("2. Add/Remove holidays.");
+			System.out.println("0. Go back to the previous screen.");
+			try {
+				input = Integer.parseInt(reader.nextLine());
+				switch(input) {
+					case 0:
+						continueLoop = false;
+						break;
+					case 1:
+						continueLoop = false;
+						break;
+					case 2:
+						continueLoop = false;
+						break;
+					default:
+						System.out.println("Please choose a valid option.");
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
+	}
+
+	public int showTicketOptions() {
+		int input = 0;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println("Please select what you want to change.");
+			System.out.println("1. Price added by a 3D movie ticket.");
+			System.out.println("2. Price added by a BlockBuster movie ticket.");
+			System.out.println("3. Price added by a normal cinema.");
+			System.out.println("4. Price added by a plantinum class cinema.");
+			System.out.println("5. Price added by an elite class cinema.");
+			System.out.println("6. Price added by a children ticket.");
+			System.out.println("7. Price added by an adult ticket.");
+			System.out.println("8. Price added by a senior citizen ticket.");
+			System.out.println("9. Price added by a weeday ticket.");
+			System.out.println("10. Price added by a weekend ticket.");
+			System.out.println("11. Price added by a holiday ticket.");
+			System.out.println("12. GST");
+			System.out.println("0. Go back to the previous menu.");
+			try {
+				input = Integer.parseInt(reader.nextLine());
+				if (input >= 0 && input <= 12) {
+					continueLoop = false;
+				} else {
+					System.out.println("Please enter a valid option.");
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
+	}
+	
+	public double getNewCost() {
+		double input = 0;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println("Please enter the new value.");
+			try {
+				input = Double.parseDouble(reader.nextLine());
+				if (input > 0) {
+					continueLoop = false;
+				} else {
+					System.out.println("Please enter a postive value.");
+				}
+			} catch(Exception e) {
+				System.out.println("Pleae enter a double.");
+			}		
+		}
+		return input;
+	}
+	
+	public int getInputToAddOrRemoveHoliday() {
+		int input = 0;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println("Please select an option.");
+			System.out.println("1. Add a Holiday.");
+			System.out.println("2. Remove a Holiday.");
+			System.out.println("0. Go back to the previous menu.");
+			try {
+				input = Integer.parseInt(reader.nextLine());
+				switch(input) {
+					case 0:
+						continueLoop = false;
+						break;
+					case 1:
+						continueLoop = false;
+						break;
+					case 2:
+						continueLoop = false;
+						break;
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
+	}
+
+	public LocalDate getHoliday() {
+		LocalDate holidayDate = LocalDate.now();
+		DateTimeFormatter formatter = Utilities.getDateFormatter();
+		boolean continueLoop =true;
+		while (continueLoop) {
+			try {
+				System.out.println("Please enter the holiday date in a yyyy-MM-dd format.");
+				String input = reader.nextLine();
+				holidayDate = LocalDate.parse(input, formatter);
+				if (holidayDate.isBefore(LocalDate.now())) 
+					System.out.println("Please do not enter a date before today's date.");
+				else 
+					continueLoop = false;
+			} catch(Exception e) {
+				System.out.println("Please enter a valid date in a yyyy-MM-dd format.");
+			}
+		}
+		return holidayDate;
+	}
+
+	public String getHolidayDescription() {
+		String input = "";
+		boolean continueLoop = true;
+		while (continueLoop) {
+			try {
+				System.out.println("Please enter the holdiay description.");
+				input = reader.nextLine();
+				if (input.equals(""))
+					throw new RuntimeException();
+				continueLoop = false;
+			} catch(RuntimeException e) {
+				System.out.println("Please do not enter an empty string.");
+			}
+		}
+		return input;
+	}
+
+	public void tellUserNoHolidayDatesIsFound() {
+		System.out.println("No holiday dates can be found.");
+		System.out.println("Press enter to continue.");
+		reader.nextLine();
+	}
+
+	public int displayHolidaysToAdmin(ArrayList<String> holidays) {
+		int input = 0;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			for (String holiday: holidays) {
+				System.out.println(holiday);
+			}
+			System.out.println("0. Go back to the previous menu.");
+			try {
+				input = Integer.parseInt(reader.nextLine());
+				if (input < 0 || input > holidays.size()) {
+					System.out.println("Please choose the correct input.");
+				} else {
+					continueLoop = false;
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
+	}
+	
+	public void tellUserAddingIsSuccessful() {
+		System.out.println("The addition of the holiday date is successful.");
+		System.out.println("Please press enter to continue.");
+		reader.nextLine();
+	}
+
+	public void tellUserRemovalIsSuccessful() {
+		System.out.println("The removal of the holiday date is successful.");
+		System.out.println("Please press enter to continue.");
+		reader.nextLine();
+	}
+
+
+	
 }

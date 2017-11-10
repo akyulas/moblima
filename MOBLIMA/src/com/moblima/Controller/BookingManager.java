@@ -1,5 +1,6 @@
 package com.moblima.Controller;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +39,14 @@ public class BookingManager implements Serializable{
 	
 	public Holidays getHolidays() {
 		return holidays;
+	}
+	
+	public void addHolidays(LocalDate holiday, String description) {
+		holidays.addHoliday(holiday, description);
+	}
+	
+	public void removeHolidays(LocalDate holiday) {
+		holidays.removeHoliday(holiday);
 	}
 	
 	public void addHistory(String user, Ticket ticket) {

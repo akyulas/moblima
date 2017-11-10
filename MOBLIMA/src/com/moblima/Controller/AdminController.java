@@ -1,8 +1,11 @@
 package com.moblima.Controller;
 
+import com.moblima.Model.BookingSystem.TicketPriceConfiguration;
 import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.MovieSystem.*;
+import com.moblima.Utilities.Utilities;
 import com.moblima.View.AdminView;
+import com.moblima.Model.BookingSystem.Holidays;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +19,6 @@ public class AdminController {
     private MovieManager movieManager;
     private CineplexManager cineplexManager;
     private AdminView adminView;
-    private int input;
     private boolean continueStartingLoop;
     private Admin admin;
     private BookingManager bookingManager;
@@ -35,7 +37,7 @@ public class AdminController {
     public void getAdminCommands() {
         continueStartingLoop = true;
         while (continueStartingLoop) {
-            input = adminView.getAdminInput();
+            int input = adminView.getAdminInput();
             switch(input) {
                 case 0:
                     continueStartingLoop = false;
@@ -336,7 +338,13 @@ public class AdminController {
                 LocalDateTime startingTime = adminView.getStartingTime();
                 LocalDateTime endingTime = adminView.getEndingTime();
                 if (cinema.checkIfOccupied(startingTime, endingTime)) {
-                    adminView.tellUserTheTimeSlotIsOccupied();
+                	input = adminView.tellUserTheTimeSlotIsOccupiedAndGetInput();
+                	switch(input) {
+            		case 0:
+            			return;
+            		case 1:
+            			continue;
+            	}
                 } else {
                     cineplexManager.addMovieListing(cineplex, cinema, movie, startingTime, endingTime);
                     adminView.tellUserMovieListingIsSuccessfullyAdded();
@@ -347,14 +355,310 @@ public class AdminController {
     }
 
     private void updateCineplexMovieListing() {
+    	boolean continueLoop = true;
+    	int input;
+    	while (continueLoop) {
+    		MovieListing movieListing;
+    		boolean tempLoop = true;
+        	ArrayList<MovieListing> movieListings = null;
+        	while (tempLoop) {
+        		String movieName = adminView.getMovieName();
+        		movieListings = cineplexManager.getMovieList(movieName);
+        		if (movieListings.size() == 0) {
+        			input = adminView.tellUserMovieListingsCannotBeFoundAndGetInput();
+        			switch(input) {
+        				case 0:
+        					return;
+        				case 1:
+        					continue;
+        			}
+        		}
+        	}
+        	ArrayList<String> tempList = new ArrayList<String>();
+        	int count = 1;
+        	continueLoop = true;
+            for (MovieListing foundMovieListing: movieListings) {
+            	LocalDateTime startTime = foundMovieListing.getStartingTime();
+        	    LocalDateTime endTime = foundMovieListing.getEndingTime();
+        	    tempList.add(count + ". "  + " Cineplex: " + foundMovieListing.getCineplex().getName() + " Cinema: " + foundMovieListing.getCinema().getCode()
+        	    		+ " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
+        	    count++;
+        	 }
+        	 input = adminView.showAdminMovieListingsAndGetInput(tempList);
+        	 if (input == 0)
+        	    return;
+        	 movieListing = movieListings.get(input - 1);
+        	 input = adminView.giveAdminUpdateListAndGetInput();
+        	 switch(input) {
+        	 	case 0:
+        	 		continueLoop = false;
+        	 		break;
+        	 	case 1:
+        	 		updateMovieListingName(movieListing);
+        	 		break;
+        	 	case 2:
+        	 		updateCineplex(movieListing);
+        	 		break;
+        	 	case 3:
+        	 		updateDateTime(movieListing);
+        	 		break;
+        	 }
+        }
     }
+    
+	private void updateMovieListingName(MovieListing movieListing) {
+    	boolean continueLoop = true;
+    	Movie movie;
+ 		while (continueLoop) {
+ 			String movieName = adminView.getMovieName(); 
+	 		ArrayList<Movie> movies = movieManager.getMatchingMovies(movieName);
+	 		if (movies.size() == 0) {
+                int input = adminView.tellUserMovieCannotBeFoundAndGetInput();
+                switch (input) {
+                    case 0:
+                        return;
+                    case 1:
+                        continue;
+                }
+            } else {
+            	ArrayList<String> tempList = new ArrayList<String>();
+                int count = 1;
+                for (Movie foundMovie: movies) {
+                    tempList.add(count + ". "  + foundMovie.getName() + " (" + foundMovie.getMovieType() + ")");
+                    count++;
+                }
+                int input = adminView.inputToUpdateMoviesFound(tempList);
+                if (input == 0) {
+                    continueLoop = false;
+                } else {
+                    movie = movies.get(input - 1);
+                    movieListing.setMovie(movie);
+                    adminView.tellUserMovieListingIsSuccessfullyUpdated();
+                }
+            }
+ 		}
+    }
+	
+	private void updateCineplex(MovieListing movieListing) {
+		ArrayList<String> tempList = new ArrayList<String>();
+		Cineplex oldCineplex = movieListing.getCineplex();
+		Cinema oldCinema = movieListing.getCinema();
+		LocalDateTime startingTime = movieListing.getStartingTime();
+		LocalDateTime endingTime = movieListing.getEndingTime();
+		Cineplex cineplex;
+		Cinema cinema;
+		ArrayList<Cineplex> cineplexes = cineplexManager.getCineplexes();
+        int count = 1;
+        for (Cineplex foundCineplex: cineplexes) {
+            tempList.add(count + ". "  + foundCineplex.getName());
+            count++;
+        }
+        int input = adminView.showAdminCineplexesAndGetInput(tempList);
+        if (input == 0) {
+            return;
+        } else {
+            cineplex = cineplexes.get(input - 1);
+        }
+        tempList = new ArrayList<String>();
+        ArrayList<Cinema> cinemas = cineplexManager.getCinemas(cineplex);
+        count = 1;
+        for (Cinema foundCinemas: cinemas) {
+            tempList.add(count + ". "  + foundCinemas.getCode());
+            count++;
+        }
+        boolean continueLoop = true;
+        while(continueLoop) {
+        	input = adminView.showAdminCinemasAndGetInput(tempList);
+            if (input == 0) {
+                return;
+            } else {
+                cinema = cinemas.get(input - 1);
+                if (cinema.checkIfOccupied(startingTime, endingTime)) {
+                	input = adminView.tellUserTheCinemaTimeSlotIsOccupiedAndGetInput();
+                	switch (input) {
+                		case 0:
+                			return;
+                		case 1:
+                			continue;
+                	}
+                }
+                else {
+                	movieListing.setCineplexAndCinema(cineplex, cinema, oldCineplex, oldCinema);
+                	adminView.tellUserMovieListingIsSuccessfullyAdded();
+                }
+            }	
+        }   
+	}
+	
+	private void updateDateTime(MovieListing movieListing) {
+		boolean continueLoop = true;
+		Cinema cinema = movieListing.getCinema();
+		while (continueLoop) {
+			LocalDateTime startingTime = adminView.getStartingTime();
+            LocalDateTime endingTime = adminView.getEndingTime();
+            if (cinema.checkIfOccupied(startingTime, endingTime)) {
+            	int input = adminView.tellUserTheTimeSlotIsOccupiedAndGetInput();
+            	switch(input) {
+            		case 0:
+            			return;
+            		case 1:
+            			continue;
+            	}
+            } else {
+                movieListing.setTime(startingTime, endingTime);
+                continueLoop = false;
+            }
+       }
+	}
+    	
 
     private void removeCineplexMovieListing() {
-
+    	boolean continueLoop = true;
+    	int input;
+    	while (continueLoop) {
+    		MovieListing movieListing;
+    		boolean tempLoop = true;
+        	ArrayList<MovieListing> movieListings = null;
+        	while (tempLoop) {
+        		String movieName = adminView.getMovieName();
+        		movieListings = cineplexManager.getMovieList(movieName);
+        		if (movieListings.size() == 0) {
+        			input = adminView.tellUserMovieListingsCannotBeFoundAndGetInput();
+        			switch(input) {
+        				case 0:
+        					return;
+        				case 1:
+        					continue;
+        			}
+        		}
+        	}
+        	ArrayList<String> tempList = new ArrayList<String>();
+        	int count = 1;
+        	continueLoop = true;
+            for (MovieListing foundMovieListing: movieListings) {
+            	LocalDateTime startTime = foundMovieListing.getStartingTime();
+        	    LocalDateTime endTime = foundMovieListing.getEndingTime();
+        	    tempList.add(count + ". "  + " Cineplex: " + foundMovieListing.getCineplex().getName() + " Cinema: " + foundMovieListing.getCinema().getCode()
+        	    		+ " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
+        	    count++;
+        	 }
+        	 input = adminView.showAdminMovieListingsAndGetInput(tempList);
+        	 if (input == 0)
+        	    return;
+        	 movieListing = movieListings.get(input - 1);
+        	 movieListings.remove(movieListing);
+        	 adminView.telluserMovieListingIsSuccessfullyRemoved();
+    	}
     }
 
     private void configureSystemSettings() {
+    	boolean continueLoop = true;
+    	int input;
+    	while (continueLoop) {
+    		input = adminView.showUserSystemConfigurationAndGetInput();
+    		switch(input) {
+    			case 0:
+    				continueLoop = false;
+    				break;
+    			case 1:
+    				changeTicketPrice();
+    				break;
+    			case 2:
+    				changeHolidays();
+    				break;
+    		}
+    	}
     }
 
+	private void changeTicketPrice() {
+		int input;
+		double newCost;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			input = adminView.showTicketOptions();
+			if (input == 0)
+				break;
+			newCost = adminView.getNewCost();
+			switch(input) {
+				case 1:
+					TicketPriceConfiguration.set3DPrice(newCost);
+					break;
+				case 2:
+					TicketPriceConfiguration.setBlockBusterPrice(newCost);
+					break;
+				case 3:
+					TicketPriceConfiguration.setNormalCinemaPrice(newCost);
+					break;
+				case 4:
+					TicketPriceConfiguration.setPlantinumPrice(newCost);
+					break;
+				case 5:
+					TicketPriceConfiguration.setElitePrice(newCost);
+					break;
+				case 6:
+					TicketPriceConfiguration.setChildrenPrice(newCost);
+					break;
+				case 7:
+					TicketPriceConfiguration.setAdultPrice(newCost);
+					break;
+				case 8:
+					TicketPriceConfiguration.setSeniorCitizenPrice(newCost);
+					break;
+				case 9:
+					TicketPriceConfiguration.setWeekdayPrice(newCost);
+					break;
+				case 10:
+					TicketPriceConfiguration.setWeekendPrice(newCost);
+					break;
+				case 11:
+					TicketPriceConfiguration.setHolidayPrice(newCost);
+					break;
+				case 12:
+					TicketPriceConfiguration.setGSTRate(newCost);
+					break;
+			}
+		}
+	}
+	
+	private void changeHolidays() {
+		int input;
+		boolean continueLoop = true;
+		while (continueLoop) {
+			input = adminView.getInputToAddOrRemoveHoliday();
+			switch(input) {
+				case 0:
+					continueLoop = false;
+					break;
+				case 1:
+					LocalDate holidayDate = adminView.getHoliday();
+					String description = adminView.getHolidayDescription();
+					bookingManager.addHolidays(holidayDate, description);
+					adminView.tellUserAddingIsSuccessful();
+					break;
+				case 2:
+					Holidays holidays = bookingManager.getHolidays();
+					ArrayList<LocalDate> holidayDates = holidays.getHolidayDates();
+					if (holidayDates.size() == 0) {
+						adminView.tellUserNoHolidayDatesIsFound();
+						break;
+					} else {
+						ArrayList<String> holidayDatesString = new ArrayList<String>();
+						int count = 1;
+						for (LocalDate holiday: holidayDates) {
+							holidayDatesString.add(count + ". " + Utilities.dateToString(holiday));
+						}
+						input = adminView.displayHolidaysToAdmin(holidayDatesString);
+						if (input == 0) {
+							continueLoop = false;
+						} else {
+							LocalDate chosenDate = holidayDates.get(input - 1);
+							holidays.removeHoliday(chosenDate);
+							adminView.tellUserRemovalIsSuccessful();
+						}
+						break;
+					}
+			}
+		}
+	}
 
 }
