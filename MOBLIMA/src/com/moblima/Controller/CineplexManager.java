@@ -59,6 +59,10 @@ public class CineplexManager implements Serializable {
         cineplex.addMovieListing(movie, cinema, startingTime, endingTime);
         return true;
     }
-    
 
+
+    public ArrayList<Cinema> getCinemas(Cineplex cineplex) {
+        ArrayList<Cinema> cinemas = cineplex.getCinemas();
+        return cinemas;
+    }
 }

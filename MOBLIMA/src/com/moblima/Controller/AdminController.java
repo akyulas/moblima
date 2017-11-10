@@ -5,6 +5,7 @@ import com.moblima.Model.MovieSystem.*;
 import com.moblima.View.AdminView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -272,11 +273,80 @@ public class AdminController {
 
 
     private void addCineplexMovieListing() {
-        
+        boolean continueLoop = true;
+        while (continueLoop) {
+            Cineplex cineplex;
+            Cinema cinema;
+            Movie movie;
+            ArrayList<Movie> movies = null;
+            ArrayList<String> tempList = new ArrayList<String>();
+            ArrayList<Cineplex> cineplexes = cineplexManager.getCineplexes();
+            int count = 1;
+            for (Cineplex foundCineplex: cineplexes) {
+                tempList.add(count + ". "  + foundCineplex.getName());
+                count++;
+            }
+            int input = adminView.showAdminCineplexesAndGetInput(tempList);
+            if (input == 0) {
+                return;
+            } else {
+                cineplex = cineplexes.get(input - 1);
+            }
+            tempList = new ArrayList<String>();
+            ArrayList<Cinema> cinemas = cineplexManager.getCinemas(cineplex);
+            count = 1;
+            for (Cinema foundCinemas: cinemas) {
+                tempList.add(count + ". "  + foundCinemas.getCode());
+                count++;
+            }
+            input = adminView.showAdminCinemasAndGetInput(tempList);
+            if (input == 0) {
+                return;
+            } else {
+                cinema = cinemas.get(input - 1);
+            }
+            boolean tempLoop = true;
+            while (tempLoop) {
+                String movieName = adminView.getMovieName();
+                movies = movieManager.getMatchingMovies(movieName);
+                if (movies.size() == 0) {
+                    input = adminView.tellUserMovieCannotBeFoundAndGetInput();
+                    switch (input) {
+                        case 0:
+                            return;
+                        case 1:
+                            continue;
+                    }
+                } else {
+                    tempLoop = false;
+                }
+            }
+            tempList = new ArrayList<String>();
+            count = 1;
+            for (Movie foundMovie: movies) {
+                tempList.add(count + ". "  + foundMovie.getName() + " (" + foundMovie.getMovieType() + ")");
+                count++;
+            }
+            input = adminView.showAdminMoviesAndGetInput(tempList);
+            if (input == 0)
+                return;
+            movie = movies.get(input - 1);
+            tempLoop = true;
+            while (tempLoop) {
+                LocalDateTime startingTime = adminView.getStartingTime();
+                LocalDateTime endingTime = adminView.getEndingTime();
+                if (cinema.checkIfOccupied(startingTime, endingTime)) {
+                    adminView.tellUserTheTimeSlotIsOccupied();
+                } else {
+                    cineplexManager.addMovieListing(cineplex, cinema, movie, startingTime, endingTime);
+                    adminView.tellUserMovieListingIsSuccessfullyAdded();
+                    tempLoop = false;
+                }
+            }
+        }
     }
 
     private void updateCineplexMovieListing() {
-
     }
 
     private void removeCineplexMovieListing() {

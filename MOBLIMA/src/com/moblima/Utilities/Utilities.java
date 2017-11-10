@@ -39,8 +39,12 @@ public class Utilities {
 		return localDateTime.format(formatter);
 	}
 	
-	public static DateTimeFormatter getDateTimeFormatter() {
+	public static DateTimeFormatter getDateFormatter() {
 	    return dateFormatter;
+    }
+
+    public static DateTimeFormatter getDateTimeFormatter() {
+	    return formatter;
     }
 	
 }

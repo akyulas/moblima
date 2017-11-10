@@ -424,11 +424,11 @@ public class AdminView {
     public LocalDate getEndOfShowingDate() {
         boolean continueLoop = true;
         LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = Utilities.getDateFormatter();
         while (continueLoop) {
             System.out.println("Please enter a date in the format yyyy-MM-dd");
             String input = reader.nextLine();
             try {
-                DateTimeFormatter formatter = Utilities.getDateTimeFormatter();
                 localDate = LocalDate.parse(input, formatter);
                 if (localDate.isBefore(LocalDate.now())) {
                     System.out.println("Please enter a date that is after today.");
@@ -577,5 +577,177 @@ public class AdminView {
             }
         }
         return input;
+    }
+
+    public void tellUserMovieCannotBeFound() {
+        System.out.println("Movie cannot be found.");
+    }
+
+
+    public int tellUserMovieCannotBeFoundAndGetInput() {
+        System.out.println("Movie cannot be found.");
+        System.out.println("Do you want to continue?");
+        int input = 0;
+        boolean continueLoop = true;
+        while (continueLoop) {
+            System.out.println("1. Continue");
+            System.out.println("0. Choose more options in the previous screen.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                switch(input) {
+                    case 0:
+                        continueLoop = false;
+                        break;
+                    case 1:
+                        continueLoop = false;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid option.");
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;
+    }
+
+    public int showAdminCineplexesAndGetInput(ArrayList<String> foundCineplexes) {
+        if (foundCineplexes.size() == 0) {
+            System.out.println("No movies are found.");
+            System.out.println("Press enter to continue.");
+            reader.nextLine();
+            return 0;
+        }
+
+        System.out.println("These are the cineplexes found.");
+        for (String foundCineplex: foundCineplexes) {
+            System.out.println(foundCineplex);
+        }
+        int input = 0;
+        boolean continueLoop = true;
+        while (continueLoop) {
+            System.out.println("Please select the cineplex you want to add movie to. Enter 0 to go back to other commands.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                if (input > foundCineplexes.size() || input < 0) {
+                    System.out.println("Please choose the correct number.");
+                } else {
+                    continueLoop = false;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;
+    }
+
+    public int showAdminCinemasAndGetInput(ArrayList<String> foundCinemas) {
+        if (foundCinemas.size() == 0) {
+            System.out.println("No movies are found.");
+            System.out.println("Press enter to continue.");
+            reader.nextLine();
+            return 0;
+        }
+
+        System.out.println("These are the cinemas found.");
+        for (String foundCinema: foundCinemas) {
+            System.out.println(foundCinema);
+        }
+        int input = 0;
+        boolean continueLoop = true;
+        while (continueLoop) {
+            System.out.println("Please select the cinema you want to add movie to. Enter 0 to go back to other commands.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                if (input > foundCinemas.size() || input < 0) {
+                    System.out.println("Please choose the correct number.");
+                } else {
+                    continueLoop = false;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;
+    }
+
+    public int showAdminMoviesAndGetInput(ArrayList<String> foundMovies) {
+        System.out.println("These are the movies found.");
+        for (String foundMovie: foundMovies) {
+            System.out.println(foundMovie);
+        }
+        int input = 0;
+        boolean continueLoop = true;
+        while (continueLoop) {
+            System.out.println("Please select the movie. Enter 0 to go back to other commands.");
+            try {
+                input = Integer.parseInt(reader.nextLine());
+                if (input > foundMovies.size() || input < 0) {
+                    System.out.println("Please choose the correct number.");
+                } else {
+                    continueLoop = false;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;
+    }
+
+    public LocalDateTime getStartingTime() {
+        boolean continueLoop = true;
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = Utilities.getDateTimeFormatter();
+        System.out.println("This is for the starting time.");
+        while (continueLoop) {
+            System.out.println("Please enter a date and time in the format yyyy-MM-dd HH:mm:ss");
+            String input = reader.nextLine();
+            try {
+                localDateTime = LocalDateTime.parse(input, formatter);
+                if (localDateTime.isBefore(LocalDateTime.now())) {
+                    System.out.println("Please enter a date and time that is after the current date and time.");
+                } else {
+                    continueLoop = false;
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter a proper date and time in the format yyyy-MM-dd HH:mm:ss");
+            }
+        }
+        return localDateTime;
+    }
+
+    public LocalDateTime getEndingTime() {
+        boolean continueLoop = true;
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = Utilities.getDateTimeFormatter();
+        System.out.println("This is for the ending time.");
+        while (continueLoop) {
+            System.out.println("Please enter a date and time in the format yyyy-MM-dd HH:mm:ss");
+            String input = reader.nextLine();
+            try {
+                localDateTime = LocalDateTime.parse(input, formatter);
+                if (localDateTime.isBefore(LocalDateTime.now())) {
+                    System.out.println("Please enter a date and time that is after the current date and time.");
+                } else {
+                    continueLoop = false;
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter a proper date and time in the format yyyy-MM-dd HH:mm:ss");
+            }
+        }
+        return localDateTime;
+    }
+
+    public void tellUserTheTimeSlotIsOccupied() {
+        System.out.println("The time slot is occupied.");
+        System.out.println("Please choose another time slot.");
+        System.out.println("Press enter to continue.");
+        reader.nextLine();
+    }
+
+    public void tellUserMovieListingIsSuccessfullyAdded() {
+        System.out.println("The movie has been successfully listed.");
+        System.out.println("Press enter to continue.");
+        reader.nextLine();
     }
 }
