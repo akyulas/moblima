@@ -1,7 +1,6 @@
 package com.moblima.Controller;
 
 import com.moblima.Model.BookingSystem.TicketPriceConfiguration;
-import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.MovieSystem.*;
 import com.moblima.Utilities.Utilities;
 import com.moblima.View.AdminView;
@@ -13,34 +12,69 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created by jodiakyulas on 3/11/17.
+ * This is the admin controller that controls the flow of the admin part of the program
  */
 public class AdminController {
+    /**
+     * This is the movie manager that stores the movies and it is used to control
+     * the movies processes.
+     */
     private MovieManager movieManager;
+
+    /**
+     * This is the cineplex manager that stores the cineplexes and it is used to control
+     * the cineplex processes.
+     */
     private CineplexManager cineplexManager;
+
+    /**
+     * This is the admin view that will be used to interact with the admin
+     * and it will be used to get input.
+     */
     private AdminView adminView;
-    private boolean continueStartingLoop;
-    private Admin admin;
+
+    /**
+     * This is the booking manager that stores the relevant stuff to the booking system and it is used to control
+     * the booking processes.
+     */
     private BookingManager bookingManager;
-    private boolean bookingSuccessful;
+
+    /**
+     * This is the user manager that stores the users and it is used to control
+     * the user processes.
+     */
     private UserManager userManager;
 
-    public AdminController(MovieManager movieManager, CineplexManager cineplexManager, Admin admin,BookingManager bookingManager, UserManager userManager, Scanner reader) {
+    /**
+     *
+     * @param movieManager This is the movie manager that stores the movies and it is used to control
+     * the movies processes.
+     * @param cineplexManager This is the cineplex manager that stores the cineplexes and it is used to control
+     * the cineplex processes.
+     * @param bookingManager This is the booking manager that stores the relevant stuff to the booking system and it is used to control
+     * the booking processes.
+     * @param userManager This is the user manager that stores the users and it is used to control
+     * the user processes.
+     * @param reader This is the reader that will be passed to the view to get input from the user.
+     */
+    public AdminController(MovieManager movieManager, CineplexManager cineplexManager, BookingManager bookingManager, UserManager userManager, Scanner reader) {
         this.movieManager = movieManager;
         this.cineplexManager = cineplexManager;
-        this.admin = admin;
         this.bookingManager = bookingManager;
         this.userManager = userManager;
         this.adminView = new AdminView(reader);
     }
 
+    /**
+     * This is used to access the admin commands at the "main" menu of the admin part of the program
+     */
     public void getAdminCommands() {
-        continueStartingLoop = true;
-        while (continueStartingLoop) {
+        boolean startingLoop = true;
+        while (startingLoop) {
             int input = adminView.getAdminInput();
             switch(input) {
                 case 0:
-                    continueStartingLoop = false;
+                    startingLoop = false;
                     break;
                 case 1:
                     registerNewAdmin();
@@ -53,15 +87,22 @@ public class AdminController {
                     break;
                 case 4:
                     configureSystemSettings();
+                    break;
+                case 5:
+                    listTopMovies();
+                    break;
             }
         }
     }
 
+    /**
+     * This is used to register new admin into the system.
+     */
     private void registerNewAdmin() {
-        String username = adminView.getUserName();
+        String username = adminView.getNewUserName();
         boolean continueLoop = userManager.checkIfAdminUserNameExist(username);
         while (continueLoop) {
-            System.out.println("Please enter another username. This one's already taken.");
+            adminView.tellAdminUserNameIsChosen();
             username = adminView.getNewUserName();
             continueLoop = userManager.checkIfAdminUserNameExist(username);
         }
@@ -70,11 +111,15 @@ public class AdminController {
         userManager.addNewAdmin(username, password, id);
     }
 
+    /**
+     * This is used to show the options of changing the movies inside the movie pool to the
+     * admin.
+     */
     private void changeMovieList() {
         boolean continueLoop = true;
         int input = 0;
         while (continueLoop) {
-            input = adminView.showMovieGoerOptionsToChangeMovieListing();
+            input = adminView.showAdminOptionsToChangeMovieListing();
             switch(input) {
                 case 0:
                     continueLoop = false;
@@ -86,12 +131,17 @@ public class AdminController {
                     updateMovie();
                     break;
                 case 3:
+                    delistMovie();
+                case 4:
                     removeMovie();
                     break;
             }
         }
     }
 
+    /**
+     * This is used to add the movie into the movie pool.
+     */
     private void addMovie() {
         boolean continueLoop = true;
         while (continueLoop) {
@@ -158,6 +208,9 @@ public class AdminController {
         }
     }
 
+    /**
+     * This is used to update the movie that is inside the movie pool.
+     */
     private void updateMovie() {
         String movieName = adminView.getMovieName();
         boolean continueLoop = true;
@@ -178,6 +231,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * This is used to show available options to update the movie
+     * inside the movie pool.
+     * @param movie This is the movie that the admin has chosen to update.
+     */
     private void showChoices(Movie movie) {
         boolean continueLoop = true;
         int input = 0;
@@ -230,11 +288,39 @@ public class AdminController {
         }
     }
 
-    private void removeMovie() {
+    /**
+     * This is used to remove the movie from the movie pool. The movie will still be
+     * inside the movie history pool.
+     */
+    private void delistMovie() {
         String movieName = adminView.getMovieName();
         boolean continueLoop = true;
         while (continueLoop) {
             ArrayList<Movie> movieResults = movieManager.getMatchingMovies(movieName);
+            ArrayList<String> tempList = new ArrayList<String>();
+            int count = 1;
+            for (Movie movie: movieResults) {
+                tempList.add(count + ". "  + movie.getName() + " (" + movie.getMovieType() + ")");
+                count++;
+            }
+            int input = adminView.inputToRemoveMoviesFound(tempList);
+            if (input == 0) {
+                continueLoop = false;
+            } else {
+                movieManager.delistMovies(movieResults.get(input - 1));
+                adminView.tellUserMovieIsSuccesfullyRemoved();
+            }
+        }
+    }
+
+    /**
+     * This is used to remove the movie from the movie history pool and the movie pool.
+     */
+    private void removeMovie() {
+        String movieName = adminView.getMovieName();
+        boolean continueLoop = true;
+        while (continueLoop) {
+            ArrayList<Movie> movieResults = movieManager.getMatchingMoviesFromHistory(movieName);
             ArrayList<String> tempList = new ArrayList<String>();
             int count = 1;
             for (Movie movie: movieResults) {
@@ -251,11 +337,15 @@ public class AdminController {
         }
     }
 
+    /**
+     * This is used to show options that are available to change the movies
+     * that are listed in the cinemas
+     */
     private void changeCineplexMovieList() {
         boolean continueLoop = true;
         int input = 0;
         while (continueLoop) {
-            input = adminView.showMovieGoerOptionsToChangeCineplexMovieListing();
+            input = adminView.showAdminOptionsToChangeCineplexMovieListing();
             switch(input) {
                 case 0:
                     continueLoop = false;
@@ -273,7 +363,9 @@ public class AdminController {
         }
     }
 
-
+    /**
+     * This is used to list the movie to a cinema.
+     */
     private void addCineplexMovieListing() {
         boolean continueLoop = true;
         while (continueLoop) {
@@ -336,7 +428,7 @@ public class AdminController {
             tempLoop = true;
             while (tempLoop) {
                 LocalDateTime startingTime = adminView.getStartingTime();
-                LocalDateTime endingTime = adminView.getEndingTime();
+                LocalDateTime endingTime = adminView.getEndingTime(startingTime);
                 if (cinema.checkIfOccupied(startingTime, endingTime)) {
                 	input = adminView.tellUserTheTimeSlotIsOccupiedAndGetInput();
                 	switch(input) {
@@ -354,40 +446,28 @@ public class AdminController {
         }
     }
 
+    /**
+     * This is used to show the movies that are listed in each cinema and it will show
+     * options to update the movie listing.
+     */
     private void updateCineplexMovieListing() {
     	boolean continueLoop = true;
     	int input;
     	while (continueLoop) {
-    		MovieListing movieListing;
-    		boolean tempLoop = true;
-        	ArrayList<MovieListing> movieListings = null;
-        	while (tempLoop) {
-        		String movieName = adminView.getMovieName();
-        		movieListings = cineplexManager.getMovieList(movieName);
-        		if (movieListings.size() == 0) {
-        			input = adminView.tellUserMovieListingsCannotBeFoundAndGetInput();
-        			switch(input) {
-        				case 0:
-        					return;
-        				case 1:
-        					continue;
-        			}
-        		}
-        	}
+        	ArrayList<MovieListing> movieListings = cineplexManager.getAllMovieListings();
         	ArrayList<String> tempList = new ArrayList<String>();
         	int count = 1;
-        	continueLoop = true;
             for (MovieListing foundMovieListing: movieListings) {
             	LocalDateTime startTime = foundMovieListing.getStartingTime();
         	    LocalDateTime endTime = foundMovieListing.getEndingTime();
-        	    tempList.add(count + ". "  + " Cineplex: " + foundMovieListing.getCineplex().getName() + " Cinema: " + foundMovieListing.getCinema().getCode()
+        	    tempList.add(count + ". "  + "Movie: " + foundMovieListing.getMovie().getName() + " Cineplex: " + foundMovieListing.getCineplex().getName() + " Cinema: " + foundMovieListing.getCinema().getCode()
         	    		+ " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
         	    count++;
         	 }
         	 input = adminView.showAdminMovieListingsAndGetInput(tempList);
         	 if (input == 0)
         	    return;
-        	 movieListing = movieListings.get(input - 1);
+        	 MovieListing movieListing = movieListings.get(input - 1);
         	 input = adminView.giveAdminUpdateListAndGetInput();
         	 switch(input) {
         	 	case 0:
@@ -405,7 +485,12 @@ public class AdminController {
         	 }
         }
     }
-    
+
+    /**
+     * This is used to change the movie being shown by the cinema at
+     * that particular timing.
+     * @param movieListing The movie listing the user has chosen.
+     */
 	private void updateMovieListingName(MovieListing movieListing) {
     	boolean continueLoop = true;
     	Movie movie;
@@ -434,11 +519,17 @@ public class AdminController {
                     movie = movies.get(input - 1);
                     movieListing.setMovie(movie);
                     adminView.tellUserMovieListingIsSuccessfullyUpdated();
+                    continueLoop = false;
                 }
             }
  		}
     }
-	
+
+    /**
+     * This is used to change cineplex and the cinema the movie will be shown at
+     * that particular timing.
+     * @param movieListing The movie listing the user has chosen.
+     */
 	private void updateCineplex(MovieListing movieListing) {
 		ArrayList<String> tempList = new ArrayList<String>();
 		Cineplex oldCineplex = movieListing.getCineplex();
@@ -485,17 +576,22 @@ public class AdminController {
                 else {
                 	movieListing.setCineplexAndCinema(cineplex, cinema, oldCineplex, oldCinema);
                 	adminView.tellUserMovieListingIsSuccessfullyAdded();
+                	continueLoop = false;
                 }
             }	
         }   
 	}
-	
+
+    /**
+     * This is used to change timing the movie is being shown at the cinema.
+     * @param movieListing The movie listing the user has chosen.
+     */
 	private void updateDateTime(MovieListing movieListing) {
 		boolean continueLoop = true;
 		Cinema cinema = movieListing.getCinema();
 		while (continueLoop) {
 			LocalDateTime startingTime = adminView.getStartingTime();
-            LocalDateTime endingTime = adminView.getEndingTime();
+            LocalDateTime endingTime = adminView.getEndingTime(startingTime);
             if (cinema.checkIfOccupied(startingTime, endingTime)) {
             	int input = adminView.tellUserTheTimeSlotIsOccupiedAndGetInput();
             	switch(input) {
@@ -510,47 +606,37 @@ public class AdminController {
             }
        }
 	}
-    	
 
+
+    /**
+     * This is used to remove the movie that is being listed at a cinema.
+     */
     private void removeCineplexMovieListing() {
-    	boolean continueLoop = true;
-    	int input;
-    	while (continueLoop) {
-    		MovieListing movieListing;
-    		boolean tempLoop = true;
-        	ArrayList<MovieListing> movieListings = null;
-        	while (tempLoop) {
-        		String movieName = adminView.getMovieName();
-        		movieListings = cineplexManager.getMovieList(movieName);
-        		if (movieListings.size() == 0) {
-        			input = adminView.tellUserMovieListingsCannotBeFoundAndGetInput();
-        			switch(input) {
-        				case 0:
-        					return;
-        				case 1:
-        					continue;
-        			}
-        		}
-        	}
-        	ArrayList<String> tempList = new ArrayList<String>();
-        	int count = 1;
-        	continueLoop = true;
+        boolean continueLoop = true;
+        int input;
+        while (continueLoop) {
+            ArrayList<MovieListing> movieListings = cineplexManager.getAllMovieListings();
+            ArrayList<String> tempList = new ArrayList<String>();
+            int count = 1;
             for (MovieListing foundMovieListing: movieListings) {
-            	LocalDateTime startTime = foundMovieListing.getStartingTime();
-        	    LocalDateTime endTime = foundMovieListing.getEndingTime();
-        	    tempList.add(count + ". "  + " Cineplex: " + foundMovieListing.getCineplex().getName() + " Cinema: " + foundMovieListing.getCinema().getCode()
-        	    		+ " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
-        	    count++;
-        	 }
-        	 input = adminView.showAdminMovieListingsAndGetInput(tempList);
-        	 if (input == 0)
-        	    return;
-        	 movieListing = movieListings.get(input - 1);
-        	 movieListings.remove(movieListing);
-        	 adminView.telluserMovieListingIsSuccessfullyRemoved();
-    	}
+                LocalDateTime startTime = foundMovieListing.getStartingTime();
+                LocalDateTime endTime = foundMovieListing.getEndingTime();
+                tempList.add(count + ". " + "Movie: " + foundMovieListing.getMovie().getName()  + " Cineplex: " + foundMovieListing.getCineplex().getName() + " Cinema: " + foundMovieListing.getCinema().getCode()
+                        + " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
+                count++;
+            }
+            input = adminView.showAdminMovieListingsAndGetInput(tempList);
+            if (input == 0)
+                return;
+            MovieListing movieListing = movieListings.get(input - 1);
+            cineplexManager.removeMovieListing(movieListing.getCineplex(), movieListing);
+            adminView.tellUserMovieListingIsSuccessfullyRemoved();
+        }
     }
 
+    /**
+     * This is used to show the user options to change the system settings.
+     */
     private void configureSystemSettings() {
     	boolean continueLoop = true;
     	int input;
@@ -570,6 +656,9 @@ public class AdminController {
     	}
     }
 
+    /**
+     * This is used to change the ticket price used by the movie system.
+     */
 	private void changeTicketPrice() {
 		int input;
 		double newCost;
@@ -619,7 +708,10 @@ public class AdminController {
 			}
 		}
 	}
-	
+
+    /**
+     * This is used to add more holidays into the system or to remove holidays from the system.
+     */
 	private void changeHolidays() {
 		int input;
 		boolean continueLoop = true;
@@ -633,7 +725,7 @@ public class AdminController {
 					LocalDate holidayDate = adminView.getHoliday();
 					String description = adminView.getHolidayDescription();
 					bookingManager.addHolidays(holidayDate, description);
-					adminView.tellUserAddingIsSuccessful();
+					adminView.tellUserAdditionOfHolidayIsSuccessful();
 					break;
 				case 2:
 					Holidays holidays = bookingManager.getHolidays();
@@ -645,7 +737,8 @@ public class AdminController {
 						ArrayList<String> holidayDatesString = new ArrayList<String>();
 						int count = 1;
 						for (LocalDate holiday: holidayDates) {
-							holidayDatesString.add(count + ". " + Utilities.dateToString(holiday));
+							holidayDatesString.add(count + ". " + Utilities.dateToString(holiday) + " " + holidays.getDescription(holiday));
+							count++;
 						}
 						input = adminView.displayHolidaysToAdmin(holidayDatesString);
 						if (input == 0) {
@@ -653,12 +746,72 @@ public class AdminController {
 						} else {
 							LocalDate chosenDate = holidayDates.get(input - 1);
 							holidays.removeHoliday(chosenDate);
-							adminView.tellUserRemovalIsSuccessful();
+							adminView.tellUserRemovalOfHolidayIsSuccessful();
 						}
 						break;
 					}
 			}
 		}
 	}
+
+    /**
+     * This is used to let the user choose
+     * between different ranking systems
+     */
+    private void listTopMovies() {
+        boolean continueLoop = true;
+        int input;
+        while (continueLoop) {
+            input = adminView.askForRankingInput();
+            switch(input) {
+                case 0:
+                    continueLoop = false;
+                    break;
+                case 1:
+                    getRankingByTicketSales();
+                    break;
+                case 2:
+                    getRankingByRatings();
+            }
+        }
+    }
+
+    /**
+     * This is used to let the moviegoer view the top 5
+     * movies sorted by ticket sales.
+     */
+    private void getRankingByTicketSales() {
+        ArrayList<Movie> movies = movieManager.sortByTicketSales();
+        int count = 1;
+        ArrayList<String> tempList = new ArrayList<String>();
+        for (Movie movie: movies) {
+            tempList.add(count + ". " + movie.getName() + "(" + movie.getMovieType() + ") " + "(" + movie.getNumberOfTicketsSold() + ") tickets sold");
+            count++;
+        }
+        adminView.showUserRanking(tempList);
+    }
+
+    /**
+     * This is used to let the moviegoer view the top 5 movies
+     * sorted by movie ratings.
+     */
+    private void getRankingByRatings() {
+        ArrayList<Movie> movies = movieManager.sortByRatings();
+        int count = 1;
+        ArrayList<String> tempList = new ArrayList<String>();
+        for (Movie movie: movies) {
+            double ratings = movie.getRating();
+            String result;
+            if (ratings == -1) {
+                result = "NA";
+            } else {
+                result = String.format("%.1f", ratings);
+            }
+
+            tempList.add(count + ". " + movie.getName() + "(" + movie.getMovieType() + ") " + "(" + result + ") rating");
+            count++;
+        }
+        adminView.showUserRanking(tempList);
+    }
 
 }

@@ -6,16 +6,28 @@ import java.util.Scanner;
 import com.moblima.Utilities.Utilities;
 
 /**
- * Created by jodiakyulas on 4/11/17.
+ * This is the moviegoer view that will be used to interact with the moviegoer for
+ * the moviegoer part of the program.
  */
 public class MoviegoerView {
 
+    /**
+     * This is the scanner that will be used to get input from the user.
+     */
     private Scanner reader;
-    
+
+    /**
+     * The construction of the class
+     * @param reader This is the scanner that will be used to get input from the user.
+     */
     public MoviegoerView(Scanner reader) {
     	this.reader = reader;
     }
 
+    /**
+     * This will be used to get the starting input from the moviegoer.
+     * @return The integer that indicates whether the choice the moviegoer has made.
+     */
     public int getMovieGoerInput() {
         boolean continueLoop = true;
         int input = 0;
@@ -54,6 +66,10 @@ public class MoviegoerView {
         return input;
     }
 
+    /**
+     * Get the movie name from the moviegoer.
+     * @return The movie name given by the moviegoer.
+     */
     public String askUserForMovieName() {
         boolean continueLoop = true;
         String movieName = "";
@@ -71,6 +87,11 @@ public class MoviegoerView {
         return movieName;
     }
 
+    /**
+     * This is used to show the moviegoer the movies that were found.
+     * @param movieList The movies that were found.
+     * @return The integer that indicates the movie that the moviegoer has chosen.
+     */
     public int inputForMoviesFound(ArrayList<String> movieList) {
         if (movieList.size() == 0) {
             System.out.println("No movies are found.");
@@ -101,6 +122,11 @@ public class MoviegoerView {
         return input;
     }
 
+    /**
+     * This is used to show the movie details options that are available for the moviegoer and to get them to
+     * choose an option.
+     * @return The integer that indicates the movie details the moviegoer wants to see.
+     */
     public int inputForMovieDetails() {
         int input = 0;
         boolean continueLoop = true;
@@ -151,35 +177,55 @@ public class MoviegoerView {
         return input;
     }
 
-    public void showMovieGoerName(String name) {
+    /**
+     * This is used to show the moviegoer the name of the movie.
+     * @param name The name of the movie.
+     */
+    public void showMovieGoerMovieName(String name) {
         System.out.println("Name: " + name);
         System.out.println();
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
+    /**
+     * This is used to show the moviegoer the status of the movie.
+     * @param status The status of the movie.
+     */
     public void showMovieGoerStatus(String status) {
         System.out.println("Status: " + status);
         System.out.println();
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
+    /**
+     * This is used to show the moviegoer the synopsis of the movie.
+     * @param synopsis The synopsis of the movie.
+     */
     public void showMovieGoerSynopsis(String synopsis) {
         System.out.println("Synopsis");
         System.out.println(Utilities.breakLines(synopsis, 100));
         System.out.println();
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
+    /**
+     * This is used to show the moviegoer the director of the movie.
+     * @param director The director of the movie.
+     */
     public void showMovieGoerDirector(String director) {
         System.out.println("Director: " + director);
         System.out.println();
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
+    /**
+     * This is used to show the moviegoer the casts of the movie.
+     * @param casts The casts of the movie.
+     */
     public void showMovieGoerCast(ArrayList<String> casts) {
         String resultString = "";
         int count = 0;
@@ -192,19 +238,27 @@ public class MoviegoerView {
         }
         System.out.println(Utilities.breakLines("Casts: " + resultString, 100));
         System.out.println();
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
+    /**
+     * This is used to show the moviegoer the ratings of the movie.
+     * @param ratings The ratings of the movie.
+     */
     public void showMovieGoerRatings(String ratings) {
         System.out.println("Ratings: " + ratings);
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
-    public void showMovieGoerPastReviews(ArrayList<String> strings) {
+    /**
+     * This is used to show the moviegoer the reviews of the movie.
+     * @param reviews The reviews of the movie.
+     */
+    public void showMovieGoerPastReviews(ArrayList<String> reviews) {
         System.out.println("Reviews By Other Users:");
-        for (int i = 0; i < strings.size(); i++) {
+        for (int i = 0; i < reviews.size(); i++) {
             if (i != 0 && i % 3 == 0) {
                 System.out.println("Do you want more ratings?");
                 System.out.println("Type N for no, any other buttons for yes.");
@@ -212,19 +266,22 @@ public class MoviegoerView {
                 if (input.equals("N"))
                     return;
             }
-            System.out.println(strings.get(i));
+            System.out.println(reviews.get(i));
             System.out.println();
         }
-        System.out.println("Please press any buttons to continue.");
+        System.out.println("Please press enter to continue.");
         reader.nextLine();
     }
 
+    /**
+     * This is used to show the moviegoer the options in the booking search menu.
+     * @return The integer that indicates the option chosen by the moviegoer.
+     */
     public int getBookingSearchInput() {
         boolean continueLoop = true;
         int input = 0;
         while (continueLoop) {
-            System.out.println("Please select your search criteria");
-            System.out.println("1. Search by movies");
+            System.out.println("1. Search for movies");
             System.out.println("0. Enter 0 to go back to other commands.");
             try {
                 input = Integer.parseInt(reader.nextLine());
@@ -245,6 +302,10 @@ public class MoviegoerView {
         return input;
     }
 
+    /**
+     * This is used to get the movie name from the moviegoer.
+     * @return The movie name given by the movie goer.
+     */
     public String getMovieName() {
         boolean continueLoop = true;
         String movieName = "";
@@ -261,46 +322,11 @@ public class MoviegoerView {
         }
         return movieName;
     }
-    
-    public String getCineplex() {
-    	 boolean continueLoop = true;
-         String cineplexName = "";
-         while (continueLoop) {
-             System.out.println("Please give a movie name");
-             try {
-                 cineplexName = reader.nextLine();
-                 if (cineplexName.equals(""))
-                     throw new RuntimeException();
-                 continueLoop = false;
-             } catch(RuntimeException e) {
-                 System.out.println("Please do not give an empty input.");
-             }
-         }
-         return cineplexName;
-    }
 
-    public int inputForBookingSearchDetails(ArrayList<String> strings) {
-        boolean continueLoop = true;
-        int input = 0;
-        while (continueLoop) {
-            for (String string : strings) {
-                System.out.println(string);
-            }
-            System.out.println("Please choose a movie in the list. Please key in 0 if you want to go back.");
-            try {
-                input = Integer.parseInt(reader.nextLine());
-                if (input < 0 || input > strings.size())
-                    System.out.println("Please choose a valid movie.");
-                else {
-                    continueLoop = false;
-                }
-            } catch(Exception e) {
-                System.out.println("Please enter an integer.");
-            }
-        }
-        return input;
-    }
-
+    /**
+     * This is used to show the moviegoer options to get input for the booking page.
+     * @return The option that indicates the option the moviegoer has chosen.
+     */
     public int getInputForBookingPage() {
         boolean continueLoop = true;
         int input = 0;
@@ -326,7 +352,11 @@ public class MoviegoerView {
         }
         return input;
     }
-    
+
+    /**
+     * This is used to show the moviegoer the seating plan.
+     * @param seatingPlan The seating plan of the cinema.
+     */
     public void showUserSeats(ArrayList<String> seatingPlan) {
     	System.out.println("========screen========");
     	for (int i = 0; i < seatingPlan.size(); i++) {
@@ -340,7 +370,15 @@ public class MoviegoerView {
     	}
     	System.out.println();
     }
-    
+
+    /**
+     * This is used to show the moviegoer seats that they have chosen
+     * so far and to ask whether they want to continue adding more seats.
+     * @param chosenSeats The seats that were chosen by the moviegoer
+     * @return The new seat the moviegoer has chosen or other options that
+     * indicates whether the user wants to quit or to continue with the booking
+     * process.
+     */
     public String askMovieGoerForSeats(ArrayList<String> chosenSeats) {
     	System.out.print("The seats you have chosen so far: ");
     	Iterator<String> iterator = chosenSeats.iterator();
@@ -371,32 +409,52 @@ public class MoviegoerView {
     	}
     	return input;
     }
-    
+
+    /**
+     * This is used to inform the moviegoer to choose a seat if they want to proceed
+     * with no seats chosen.
+     */
     public void informUserToChooseASeat() {
     	System.out.println("Please choose a seat first before you proceed.");
-    	System.out.println("Press any key to continue with the choosing process.");
+    	System.out.println("Press enter to continue with the choosing process.");
     	reader.nextLine();
     }
-    
+
+    /**
+     * This is used to inform the moviegoer that the seat is taken.
+     */
     public void informUserSeatIsTaken() {
     	System.out.println("That seat is already taken.");
-    	System.out.println("Press any key to continue with the choosing process.");
+    	System.out.println("Press enter to continue with the choosing process.");
     	reader.nextLine();
     }
-    
+
+    /**
+     * This is used to inform the moviegoer that no such seats exist.
+     */
     public void informUserNoSuchSeatExist() {
     	System.out.println("No such seat exist.");
     	System.out.println("Please enter a proper seat name.");
-    	System.out.println("Press any key to continue with the choosing process.");
+    	System.out.println("Press enter to continue with the choosing process.");
     	reader.nextLine();
     }
-    
+
+    /**
+     * This is used to inform the moviegoer that he has already chosen the seat.
+     */
     public void informUserHeAlreadyChoseTheSeat() {
     	System.out.println("Hello. The seat has already been chosen by you. Please choose another seat.");
-    	System.out.println("Press any key to continue with the choosing process.");
+    	System.out.println("Press enter to continue with the choosing process.");
     	reader.nextLine();
     }
-    
+
+    /**
+     * This is used to ask the moviegoer if he wants to proceed with the booking.
+     * @param chosenSeats The seats that he have chosen.
+     * @param cost The total cost of the tickets he bought.
+     * @return The integer that indicates whether he want to proceed with the purchase
+     * or he wants to return to the previous menu.
+     */
     public int askToProceedWithBooking(ArrayList<String> chosenSeats, double cost) {
     	int input = 0;
     	boolean continueLoop = true;
@@ -430,7 +488,11 @@ public class MoviegoerView {
     	}
     	return input;
     }
-    
+
+    /**
+     * This is used to show the moviegoer their booking history.
+     * @param histories The booking histories of the moviegoer.
+     */
     public void showMoviegoerBookingHistory(ArrayList<String> histories) {
     	if (histories.size() == 0) {
     		System.out.println("Your history could not be found.");
@@ -443,7 +505,13 @@ public class MoviegoerView {
     	System.out.println("Please press enter to continue.");
     	reader.nextLine();
     }
-    
+
+    /**
+     * This is used to show the moviegoer the movies that they can add reviews to.
+     * @param movieList The movies the moviegoer can added reviews to.
+     * @return The integer that indicates whether the moviegoer wants to add review or to
+     * go back to the previous menu.
+     */
     public int showMoviegoerReviewAndGetInput(ArrayList<String> movieList) {
     	System.out.println("Please take note that you can only add a review once to a movie you have watched.");
     	System.out.println("Please press enter to continue.");
@@ -477,7 +545,12 @@ public class MoviegoerView {
     	}
     	return input;
     }
-    
+
+    /**
+     * This is used to show the user options available from the booking history menu and
+     * to get input from moviegoer.
+     * @return The integer that indicates the option that the user has chosen.
+     */
     public int getInputFromBookingHistoryMenu() {
     	int input = 0;
     	boolean continueLoop = true;
@@ -508,6 +581,10 @@ public class MoviegoerView {
     	return input;
     }
 
+    /**
+     * This is used to ask ratings from the moviegoer.
+     * @return The ratings given by the moviegoer.
+     */
 	public double askForRatings() {
 		double input = 0;
 		boolean continueLoop = true;
@@ -527,6 +604,10 @@ public class MoviegoerView {
 		return input;
 	}
 
+    /**
+     * This is used to ask the moviegoer reviews for the movie.
+     * @return The reviews given by the moviegoer.
+     */
 	public String askForReview() {
 		String input = "";
 		boolean continueLoop = true;
@@ -544,10 +625,20 @@ public class MoviegoerView {
 		return input;
 	}
 
+    /**
+     * This is used to tell the moviegoer the review is successfully added.
+     */
 	public void tellUserReviewIsAdded() {
 		System.out.println("Reivew has been successfully added.");
+		System.out.println("Press enter to continue.");
+		reader.nextLine();
 	}
-	
+
+    /**
+     * This is used to show the admin options that the admin can choose to rank the
+     * top movies by.
+     * @return The integer that indicates that option the admin has chosen.
+     */
 	public int askForRankingInput() {
 		int input = 0;
 		boolean continueLoop = true;
@@ -578,6 +669,10 @@ public class MoviegoerView {
 		return input;
 	}
 
+    /**
+     * This is used to show the moviegoer the ranked list.
+     * @param rankingList The ranked list produced by the system.
+     */
 	public void showUserRanking(ArrayList<String> rankingList) {
 		System.out.println("These are the current rankings.");
 		for (int i = 0; i < rankingList.size(); i++) {

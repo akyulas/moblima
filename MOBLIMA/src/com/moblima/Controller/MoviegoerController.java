@@ -14,19 +14,55 @@ import java.util.HashMap;
 
 
 /**
- * Created by jodiakyulas on 3/11/17.
+ * This is the moviegoer controller that controls the flow of the moviegoer part of the program
  */
 public class MoviegoerController {
 
+    /**
+     * This is the movie manager that stores the movies and it is used to control
+     * the movies processes.
+     */
     private MovieManager movieManager;
+
+    /**
+     * This is the cineplex manager that stores the cineplexes and it is used to control
+     * the cineplex processes.
+     */
     private CineplexManager cineplexManager;
+
+    /**
+     * This is the moviegoer view that will be used to interact with the moviegoer
+     * and it will be used to get input.
+     */
     private MoviegoerView moviegoerView;
-    private int input;
-    private boolean continueStartingLoop;
+
+    /**
+     * This is the moviegoer that is currently using the program.
+     */
     private Moviegoer moviegoer;
+
+    /**
+     * This is the booking manager that stores the relevant stuff to the booking system and it is used to control
+     * the booking processes.
+     */
     private BookingManager bookingManager;
+
+    /**
+     * This is the boolean that will be used to control some of the loops if the booking is successful.
+     */
     private boolean bookingSuccessful;
 
+    /**
+     * The construction of the moviegoer controller
+     * @param movieManager This is the movie manager that stores the movies and it is used to control
+     * the movies processes.
+     * @param cineplexManager This is the cineplex manager that stores the cineplexes and it is used to control
+     * the cineplex processes.
+     * @param moviegoer This is the moviegoer that is currently accessing the program
+     * @param bookingManager This is the booking manager that stores the relevant stuff to the booking system and it is used to control
+     * the booking processes.
+     * @param reader This is the reader that will be passed to the view to get input from the user.
+     */
     public MoviegoerController(MovieManager movieManager, CineplexManager cineplexManager, Moviegoer moviegoer, BookingManager bookingManager, Scanner reader) {
         this.movieManager = movieManager;
         this.cineplexManager = cineplexManager;
@@ -36,13 +72,16 @@ public class MoviegoerController {
         bookingSuccessful = false;
     }
 
+    /**
+     * This is used to access the moviegoer commands at the "main" menu of the moviegoer part of the program
+     */
     public void getMoviegoerCommands() {
-        continueStartingLoop = true;
-        while (continueStartingLoop) {
-            input = moviegoerView.getMovieGoerInput();
+        boolean continueLoop = true;
+        while (continueLoop) {
+            int input = moviegoerView.getMovieGoerInput();
             switch(input) {
                 case 0:
-                    continueStartingLoop = false;
+                    continueLoop = false;
                     break;
                 case 1:
                     searchForMovie();
@@ -60,6 +99,9 @@ public class MoviegoerController {
         }
     }
 
+    /**
+     * This is the part of the program that searches for movies.
+     */
     private void searchForMovie() {
         String movieName = moviegoerView.askUserForMovieName();
         ArrayList<Movie> movieResults = movieManager.getMatchingMovies(movieName);
@@ -80,10 +122,14 @@ public class MoviegoerController {
         }
     }
 
+    /**
+     * This is used to view the movie details.
+     * @param movie The movie the user has selected.
+     */
     private void viewMovieDetails(Movie movie) {
         boolean continueLoop = true;
         while (continueLoop) {
-            input = moviegoerView.inputForMovieDetails();
+            int input = moviegoerView.inputForMovieDetails();
             switch (input) {
                 case 0:
                     continueLoop = false;
@@ -112,31 +158,55 @@ public class MoviegoerController {
         }
     }
 
+    /**
+     * This is used to view the movie name details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerMovieName(Movie movie) {
         String movieName = movie.getName();
-        moviegoerView.showMovieGoerName(movieName);
+        moviegoerView.showMovieGoerMovieName(movieName);
     }
 
+    /**
+     * This is used to view the movie status details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerStatus(Movie movie) {
         String status = String.valueOf(movie.getStatus());
         moviegoerView.showMovieGoerStatus(status);
     }
 
+    /**
+     * This is used to view the movie synopsis details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerSynopsis(Movie movie) {
         String synopsis = movie.getSynopsis();
         moviegoerView.showMovieGoerSynopsis(synopsis);
     }
 
+    /**
+     * This is used to view the movie director details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerDirector(Movie movie) {
         String director = movie.getDirector();
         moviegoerView.showMovieGoerDirector(director);
     }
 
+    /**
+     * This is used to view the movie casts details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerCast(Movie movie) {
         ArrayList<String> casts = movie.getCasts();
         moviegoerView.showMovieGoerCast(casts);
     }
 
+    /**
+     * This is used to view the movie rating details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerRatings(Movie movie) {
         if (movie.getNumberOfReviews() == 0) {
             moviegoerView.showMovieGoerRatings("NA");
@@ -147,6 +217,10 @@ public class MoviegoerController {
         }
     }
 
+    /**
+     * This is used to view the movie review details.
+     * @param movie The movie the user has selected.
+     */
     private void giveMoviegoerReviews(Movie movie) {
         ArrayList<String> strings = new ArrayList<String>();
         for (Review review: movie.getReviews()) {
@@ -158,11 +232,14 @@ public class MoviegoerController {
 
     }
 
+    /**
+     * This is used to check for available seats and to buy tickets.
+     */
     private void checkSeatsAndBuyTickets() {
         boolean continueLoop = true;
         while (continueLoop) {
         	bookingSuccessful = false;
-            input = moviegoerView.getBookingSearchInput();
+            int input = moviegoerView.getBookingSearchInput();
             switch(input) {
                 case 0:
                     continueLoop = false;
@@ -178,6 +255,11 @@ public class MoviegoerController {
         }
     }
 
+    /**
+     * This is used to search for movie listings that the moviegoer
+     * wants to check the seating availabilities and to book the ticket
+     * for.
+     */
     private void searchByMovie() {
         String movieName = moviegoerView.getMovieName();
         ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName, moviegoer.getAge());
@@ -188,7 +270,7 @@ public class MoviegoerController {
             for (MovieListing movieListing: movieListings) {
                 LocalDateTime startTime = movieListing.getStartingTime();
                 LocalDateTime endTime = movieListing.getEndingTime();
-                tempList.add(count + ". "  + " Cineplex: " + movieListing.getCineplex().getName() + " Cinema: " + movieListing.getCinema().getCode()
+                tempList.add(count + ". "  + "Movie: " + movieListing.getMovie().getName() + " Cineplex: " + movieListing.getCineplex().getName() + " Cinema: " + movieListing.getCinema().getCode()
                         + " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
                 count++;
             }
@@ -203,10 +285,15 @@ public class MoviegoerController {
         }
     }
 
+    /**
+     * This is used to view the details of the movie listing that the
+     * moviegoer has selected.
+     * @param movieListing The movie listing that the user has selected.
+     */
     private void viewMovieListingDetail(MovieListing movieListing) {
         boolean continueLoop = true;
         while (continueLoop) {
-            input = moviegoerView.getInputForBookingPage();
+            int input = moviegoerView.getInputForBookingPage();
             switch(input) {
                 case 0:
                     continueLoop = false;
@@ -219,7 +306,13 @@ public class MoviegoerController {
             }
         }
     }
-    
+
+    /**
+     * This will show the seat arrangements of the cinema
+     * to the movie goer and let the moviegoer choose
+     * seats.
+     * @param movieListing The movie listing the user has selected.
+     */
     private void giveUserSeats(MovieListing movieListing) {
     	HashMap<String, Seat> seats = movieListing.getSeats();
     	ArrayList<String> seatPlan = new ArrayList<String>();
@@ -265,7 +358,12 @@ public class MoviegoerController {
     		}
     	}	
     }
-    
+
+    /**
+     * This is used to book the seats that the moviegoer has selected.
+     * @param chosenSeats The chosen seats the user has selected.
+     * @param movieListing The movie listing the user has selected.
+     */
     public void BookSeats(ArrayList<String> chosenSeats, MovieListing movieListing) {
     	double price = 0.0;
     	Movie movie = movieListing.getMovie();
@@ -284,14 +382,20 @@ public class MoviegoerController {
     			break;
     		case 1:
     			System.out.println("Booking successful.");
-    			movie.increaseTicketSales();
-    			bookingManager.addHistory(moviegoer.getUsername(), new Ticket(movie, cineplex, cinema, startTime, bookedTiming, moviegoer.getUsername()));
+    			for (String chosenSeat: chosenSeats)
+    			    movie.increaseTicketSales();
+    			bookingManager.addHistory(moviegoer.getUsername(), new Ticket(movie, cineplex, cinema, startTime, bookedTiming, moviegoer.getUsername(), chosenSeats.size()));
     			bookingManager.addTransactionID(cinema.getCode());
     			movieListing.occupyTheSeats(chosenSeats);
     			bookingSuccessful = true; // ensure the user will end up on the main screen
     	}
     }
 
+    /**
+     * This is used to show the moviegoer the options to
+     * view their booking history or to add reviews to the movies
+     * they have watched.
+     */
     private void viewBookingHistoryAndAddReview() {
     	ArrayList<Ticket> tickets = bookingManager.getHistoryOfMoviegoer(moviegoer.getUsername());
     	boolean continueLoop = true;
@@ -311,7 +415,11 @@ public class MoviegoerController {
     		
     	}
     }
-    
+
+    /**
+     * This is used to allow the moviegoer to see their booking history.
+     * @param tickets The ticket history that belongs to the user.
+     */
     private void viewBookingHistory(ArrayList<Ticket> tickets) {
     	ArrayList<String> temp = new ArrayList<String>();
     	int count = 1;
@@ -321,7 +429,11 @@ public class MoviegoerController {
     	}
     	moviegoerView.showMoviegoerBookingHistory(temp);
     }
-    
+
+    /**
+     * This is used to show the moviegoer the movies the moviegoer has watched
+     * and ask if they want to add review for it
+     */
     private void addReview() {
     	ArrayList<Movie> movies = bookingManager.getMoviesForReview(moviegoer.getUsername());
     	ArrayList<String> tempList = new ArrayList<String>();
@@ -341,7 +453,12 @@ public class MoviegoerController {
         	}
         }
     }
-    
+
+    /**
+     * This is used to let the moviegoer add reviews for the movie they have
+     * watched.
+     * @param movie The movie the moviegoer has selected.
+     */
     public void addReviewByTheUser(Movie movie) {
     	String name = moviegoer.getUsername();
     	double rating = moviegoerView.askForRatings();
@@ -350,6 +467,10 @@ public class MoviegoerController {
     	moviegoerView.tellUserReviewIsAdded();
     }
 
+    /**
+     * This is used to let the user choose
+     * between different ranking systems
+     */
     private void listTopMovies() {
     	boolean continueLoop = true;
     	int input;
@@ -367,7 +488,11 @@ public class MoviegoerController {
     		}
     	}
     }
-    
+
+    /**
+     * This is used to let the moviegoer view the top 5
+     * movies sorted by ticket sales.
+     */
     private void getRankingByTicketSales() {
     	ArrayList<Movie> movies = movieManager.sortByTicketSales();
     	int count = 1;
@@ -378,13 +503,25 @@ public class MoviegoerController {
     	}
     	moviegoerView.showUserRanking(tempList);
     }
-    
+
+    /**
+     * This is used to let the moviegoer view the top 5 movies
+     * sorted by movie ratings.
+     */
     private void getRankingByRatings() {
     	ArrayList<Movie> movies = movieManager.sortByRatings();
     	int count = 1;
     	ArrayList<String> tempList = new ArrayList<String>();
     	for (Movie movie: movies) {
-    		tempList.add(count + ". " + movie.getName() + "(" + movie.getMovieType() + ") " + "(" + movie.getRating() + ") rating");
+    	    double ratings = movie.getRating();
+    	    String result;
+    	    if (ratings == -1) {
+    	        result = "NA";
+            } else {
+                result = String.format("%.1f", ratings);
+            }
+
+    		tempList.add(count + ". " + movie.getName() + "(" + movie.getMovieType() + ") " + "(" + result + ") rating");
     		count++;
     	}
     	moviegoerView.showUserRanking(tempList);

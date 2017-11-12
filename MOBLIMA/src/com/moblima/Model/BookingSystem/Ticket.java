@@ -11,20 +11,69 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * The ticket is generated everytime a booking is made.
+ */
 public class Ticket implements Serializable{
 
+	/**
+	 * The movie that the moviegoer booked to see.
+	 */
     private Movie movie;
-    private Cinema cinema;
+
+	/**
+	 * The cinema that the moviegoer booked to see the movie in.
+	 */
+	private Cinema cinema;
+
+	/**
+	 * The starting time of the movie.
+	 */
     private LocalDateTime startTiming;
+
+    /**
+	 * The cineplex the moviegoer booked to see the movie in.
+     */
     private Cineplex cineplex;
-    private String moviegoerUserName;
+
+	/**
+	 * The username of the moviegoer that booked the movie.
+	 */
+	private String moviegoerUserName;
+
+	/**
+	 * The number of tickets the moviegoer booked during the booking.
+	 */
     private int numberOfTickets;
+
+    /**
+	 * The time the moviegoer booked the movie.
+     */
     private LocalDateTime bookedTiming;
 
+	/**
+	 * Construction of the Ticket class
+	 * @param movie The movie that the moviegoer booked to see.
+	 * @param cineplex The cineplex the moviegoer booked to see the movie in.
+	 * @param cinema The cinema that the moviegoer booked to see the movie in.
+	 * @param startTiming The starting time of the movie.
+	 * @param bookedTiming The time the moviegoer booked the movie.
+	 * @param moviegoerUserName The username of the moviegoer that booked the movie.
+	 */
     public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName) {
         this(movie, cineplex, cinema, startTiming, bookedTiming, moviegoerUserName, 1);
     }
-    
+
+	/**
+	 *
+	 * @param movie The movie that the moviegoer booked to see.
+	 * @param cineplex The cineplex the moviegoer booked to see the movie in.
+	 * @param cinema The cinema that the moviegoer booked to see the movie in.
+	 * @param startTiming The starting time of the movie.
+	 * @param bookedTiming The time the moviegoer booked the movie.
+	 * @param moviegoerUserName The username of the moviegoer that booked the movie.
+	 * @param numberOfTickets The number of tickets the moviegoer booked during the booking.
+	 */
     public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName, int numberOfTickets) {
     	this.movie = movie;
     	this.cinema = cinema;
@@ -34,11 +83,24 @@ public class Ticket implements Serializable{
     	this.moviegoerUserName = moviegoerUserName;
     	this.numberOfTickets = numberOfTickets;
     }
-    
-    public Movie getMovie() {
+
+	/**
+	 * Get the movie that the moviegoer booked to see.
+	 * @return The movie that the moviegoer booked to see.
+	 */
+	public Movie getMovie() {
     	return this.movie;
     }
-    
+
+	/**
+	 * The calculation of the ticket price
+	 * @param movie The movie that the moviegoer booked to see.
+	 * @param cinema The cinema that the moviegoer booked to see the movie in.
+	 * @param startTiming The starting time of the movie.
+	 * @param age Age of the moviegoer.
+	 * @param holidays The holidays inside the system.
+	 * @return The price of the ticket.
+	 */
     public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int age, Holidays holidays) {
     	double result = 0.0;
     	switch(movie.getMovieType()) {
@@ -79,8 +141,12 @@ public class Ticket implements Serializable{
     	result += GST;
     	return result;
     }
-    
-    public String toString() {
+
+	/**
+	 * The toString that will be generated.
+	 * @return toString
+	 */
+	public String toString() {
     	return "Movie: " + movie.getName() + ", Cineplex: " + cineplex.getName() + ", Cinema: " + cinema.getCode() +
     			", Movie Start Timing: " + Utilities.timeToString(startTiming) + ", Booking Time: " + 
     			Utilities.timeToString(bookedTiming) + ", Number Of Tickets: " + numberOfTickets;

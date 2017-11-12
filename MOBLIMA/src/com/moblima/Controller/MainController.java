@@ -1,41 +1,69 @@
 package com.moblima.Controller;
 import java.util.Scanner;
 
-import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.LoginSystem.Moviegoer;
-import com.moblima.View.LoginView;
 
+/**
+ * This is the main controller that will create other controllers.
+ * It controls the flow of the program.
+ */
 public class MainController{
 
+	/**
+	 * The Import Controller that imports data from the text files
+	 */
 	private ImportController importController = new ImportController();
-	private Populate populate;
-    private MovieManager movieManager;
-    private CineplexManager cineplexManager;
-    private UserManager userManager;
-    private LoginController loginController;
-    private BookingManager bookingManager;
-    private MoviegoerController moviegoerController;
-    private AdminController adminController;
-    private Scanner reader;
 
+	/**
+	 * The Login Controller that controls the login process
+	 */
+    private LoginController loginController;
+
+	/**
+	 * The Moviegoer Controller that controls the flow of the moviegoer part of the program
+	 */
+	private MoviegoerController moviegoerController;
+
+	/**
+	 * The Admin Controller that controls the flow of the admin part of the program
+	 */
+    private AdminController adminController;
+
+	/**
+	 * The Scanner that will be used to get input from the user
+	 */
+	private Scanner reader;
+
+	/**
+	 * Construction of the main controller
+	 */
     public MainController() {
     	importController = new ImportController();
-    	populate = new Populate(importController);
+    	Populate populate = new Populate(importController);
     	importController.importData();
-    	movieManager = importController.getMovieManager();
-		cineplexManager = importController.getCineplexManager();
-		userManager = importController.getUserManager();
-		bookingManager = importController.getBookingManager();
+    	importController.removeOldData();
 		reader = new Scanner(System.in);
-		loginController = new LoginController(userManager, reader);
 	}
 
+	/**
+	 * The start of the main controller
+	 */
     public void start() {
         System.out.println("Starting application");     
         System.out.println("Welcome to moblima.");
         continueInstructions();
     }
+
+	/**
+	 * The continuation of instructions inside the main controller.
+	 * The part that controls the flow of the program.
+	 */
 	private void continueInstructions() {
+    	MovieManager movieManager = importController.getMovieManager();
+    	CineplexManager cineplexManager = importController.getCineplexManager();
+    	UserManager userManager = importController.getUserManager();
+    	BookingManager bookingManager = importController.getBookingManager();
+		loginController = new LoginController(userManager, reader);
     	boolean continueLoop= true;
     	while (continueLoop) {
     		loginController.getLoginInformation();
@@ -51,8 +79,7 @@ public class MainController{
     				moviegoerController = new MoviegoerController(movieManager, cineplexManager, moviegoer, bookingManager, reader);
     				moviegoerController.getMoviegoerCommands();
 				} else {
-    				Admin admin = loginController.getAdmin();
-					adminController = new AdminController(movieManager, cineplexManager, admin, bookingManager, userManager, reader);
+					adminController = new AdminController(movieManager, cineplexManager, bookingManager, userManager, reader);
 					adminController.getAdminCommands();
 				}
 			}
@@ -60,6 +87,9 @@ public class MainController{
 		end();
 	}
 
+	/**
+	 * The ending of the main controller
+	 */
     private void end() {
         System.out.println("Ending application");
         importController.export();
