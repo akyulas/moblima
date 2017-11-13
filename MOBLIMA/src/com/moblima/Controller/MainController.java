@@ -40,8 +40,6 @@ public class MainController{
     public MainController() {
     	importController = new ImportController();
     	Populate populate = new Populate(importController);
-    	importController.importData();
-    	importController.removeOldData();
 		reader = new Scanner(System.in);
 	}
 
@@ -51,6 +49,7 @@ public class MainController{
     public void start() {
         System.out.println("Starting application");     
         System.out.println("Welcome to moblima.");
+        importController.importData();
         continueInstructions();
     }
 
@@ -59,10 +58,12 @@ public class MainController{
 	 * The part that controls the flow of the program.
 	 */
 	private void continueInstructions() {
-    	MovieManager movieManager = importController.getMovieManager();
-    	CineplexManager cineplexManager = importController.getCineplexManager();
-    	UserManager userManager = importController.getUserManager();
-    	BookingManager bookingManager = importController.getBookingManager();
+		AllTheManagers allTheManagers = importController.getAllTheManagers();
+		allTheManagers.clearOldDate();
+    	MovieManager movieManager = allTheManagers.getMovieManager();
+    	CineplexManager cineplexManager = allTheManagers.getCineplexManager();
+    	UserManager userManager = allTheManagers.getUserManager();
+    	BookingManager bookingManager = allTheManagers.getBookingManager();
 		loginController = new LoginController(userManager, reader);
     	boolean continueLoop= true;
     	while (continueLoop) {

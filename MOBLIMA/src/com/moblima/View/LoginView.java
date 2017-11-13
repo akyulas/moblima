@@ -330,25 +330,6 @@ public class LoginView {
     }
 
     /**
-     * Get the admin ID from the admin.
-     * @return The admin ID.
-     */
-    public int getAdminID() {
-        boolean continueLoop = true;
-        int adminID = 0;
-        while (continueLoop) {
-            System.out.println("Please enter your admin ID:");
-            try {
-                adminID = Integer.parseInt(reader.nextLine());
-                continueLoop = false;
-            } catch(Exception e) {
-                System.out.println("Please enter an integer");
-            }
-        }
-        return adminID;
-    }
-
-    /**
      * Used to tell the user that the username has been chosen.
      */
     public void tellUserUserNameIsChosen() {

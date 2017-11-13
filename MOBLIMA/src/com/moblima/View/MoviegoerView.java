@@ -282,6 +282,7 @@ public class MoviegoerView {
         int input = 0;
         while (continueLoop) {
             System.out.println("1. Search for movies");
+            System.out.println("2. List out all the movies being listed in cinema.");
             System.out.println("0. Enter 0 to go back to other commands.");
             try {
                 input = Integer.parseInt(reader.nextLine());
@@ -292,6 +293,9 @@ public class MoviegoerView {
                     case 1:
                         continueLoop = false;
                         break;
+                    case 2:
+                    	continueLoop = false;
+                    	break;
                     default:
                         System.out.println("Please give a valid input.");
                 }
@@ -523,7 +527,7 @@ public class MoviegoerView {
     			System.out.println("You are not allowed to add any reviews.");
     			System.out.println("You have either already add review to any movie that you have watched or you haven't watched any movie.");
     			System.out.println("Please press enter to continue.");
-    			reader.hasNextLine();
+    			reader.nextLine();
     			continueLoop =false;
     			break;
     		}
@@ -680,6 +684,67 @@ public class MoviegoerView {
 		}
 		System.out.println("Please press enter to continue.");
 		reader.nextLine();
+	}
+
+	/**
+	 * This is used to ask the moviegoer if he wants to search or to list.
+	 * @return The integer that indicates the option the user has chosen.
+	 */
+	public int askForSearchingOrListing() {
+		boolean continueLoop = true;
+		int input = 0;
+		while (continueLoop) {
+			try {
+				System.out.println("Please select an option.");
+				System.out.println("1. Search for a movie.");
+				System.out.println("2. List movies.");
+				System.out.println("0. Go back to the previous menu.");
+				input = Integer.parseInt(reader.nextLine());
+				switch(input) {
+					case 0:
+						continueLoop = false;
+						break;
+					case 1:
+						continueLoop = false;
+						break;
+					case 2:
+						continueLoop = false;
+						break;
+					default:
+						System.out.println("Please enter a valid option.");
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
+	}
+
+	/**
+	 * This is used to show the movies that were found through list to the moviegoer 
+	 * and to get the input from the moviegoer.
+	 * @return The integer that indicates the option the moviegoer has chosen.
+	 */
+	public int showUserTheMoviesAndGetInput(ArrayList<String> movies) {
+		boolean continueLoop = true;
+		int input = 0;
+		while (continueLoop) {
+			for (String movie: movies) {
+				System.out.println(movie);
+			}
+			System.out.println("Please select a movie you want to know more about. Enter 0 to go back to the previous page.");
+			try {
+				input = Integer.parseInt(reader.nextLine());
+				if (input > movies.size() || input < 0) {
+					System.out.println("Please enter a valid option.");
+				} else {
+					continueLoop = false;
+				}
+			} catch(Exception e) {
+				System.out.println("Please enter an integer.");
+			}
+		}
+		return input;
 	}
 
 }

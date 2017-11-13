@@ -100,43 +100,43 @@ public class Ticket implements Serializable{
 	 * @param holidays The holidays inside the system.
 	 * @return The price of the ticket.
 	 */
-    public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int age, Holidays holidays) {
+    public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int age, Holidays holidays, TicketPriceConfiguration ticketPriceConfiguration) {
     	double result = 0.0;
     	switch(movie.getMovieType()) {
     		case _3D:
-    			result += TicketPriceConfiguration.get3DPrice();
+    			result += ticketPriceConfiguration.get3DPrice();
     			break;
     		case BlockBuster:
-    			result += TicketPriceConfiguration.getBlockBusterPrice();
+    			result += ticketPriceConfiguration.getBlockBusterPrice();
     			break;
     	}
     	switch(cinema.getClassType()) {
     		case NORMAL:
-    			result += TicketPriceConfiguration.getNormalCinemaPrice();
+    			result += ticketPriceConfiguration.getNormalCinemaPrice();
     			break;
     		case PLANTINUM:
-    			result += TicketPriceConfiguration.getPlantinumPrice();
+    			result += ticketPriceConfiguration.getPlantinumPrice();
     			break;
     		case ELITE:
-    			result += TicketPriceConfiguration.getElitePrice();
+    			result += ticketPriceConfiguration.getElitePrice();
     			break;
     	}
     	LocalDate startDate = startTiming.toLocalDate();
     	if (holidays.isHoliday(startDate)) {
-    		result += TicketPriceConfiguration.getHolidayPrice();
+    		result += ticketPriceConfiguration.getHolidayPrice();
     	} else if (startDate.getDayOfWeek() == DayOfWeek.SUNDAY || startDate.getDayOfWeek() == DayOfWeek.SATURDAY) {
-    		result += TicketPriceConfiguration.getWeekendPrice();
+    		result += ticketPriceConfiguration.getWeekendPrice();
     	} else {
-    		result += TicketPriceConfiguration.getWeekdayPrice();
+    		result += ticketPriceConfiguration.getWeekdayPrice();
     	}
     	if (age < 18) {
-    		result += TicketPriceConfiguration.getChildrenPrice();
+    		result += ticketPriceConfiguration.getChildrenPrice();
     	} else if (age < 55) {
-    		result += TicketPriceConfiguration.getAdultPrice();
+    		result += ticketPriceConfiguration.getAdultPrice();
     	} else {
-    		result += TicketPriceConfiguration.getSeniorCitizenPrice();
+    		result += ticketPriceConfiguration.getSeniorCitizenPrice();
     	}
-    	double GST = TicketPriceConfiguration.getGST() * result;
+    	double GST = ticketPriceConfiguration.getGST() * result;
     	result += GST;
     	return result;
     }
@@ -146,7 +146,7 @@ public class Ticket implements Serializable{
 	 * @return toString
 	 */
 	public String toString() {
-    	return "Movie: " + movie.getName() + ", Cineplex: " + cineplex + ", Cinema: " + cinema +
+    	return "Movie: " + movie.getName() + "(" + movie.getMovieType() + ")" + ", Cineplex: " + cineplex.getName() + ", Cinema: " + cinema.getCode() +
     			", Movie Start Timing: " + Utilities.timeToString(startTiming) + ", Booking Time: " +
     			Utilities.timeToString(bookedTiming) + ", Number Of Tickets: " + numberOfTickets;
     }

@@ -3,7 +3,7 @@ package com.moblima.Model.BookingSystem;
 import java.io.Serializable;
 
 /**
- * This is the transactinID that is generated every booking.
+ * This is the transactionID that is generated every booking.
  */
 public class TransactionID implements Serializable{
 

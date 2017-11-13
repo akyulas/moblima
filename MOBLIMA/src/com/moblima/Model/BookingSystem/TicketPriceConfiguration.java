@@ -14,68 +14,68 @@ public class TicketPriceConfiguration implements Serializable {
 	/**
 	 * Price added for a 3D movie.
 	 */
-	private static double _3DPrice;
+	private double _3DPrice;
 
 	/**
 	 * Price added for a blockbuster movie.
 	 */
-	private static double blockBusterPrice;
+	private double blockBusterPrice;
 
 	/**
 	 * Price added for a normal class cinema price.
 	 */
-	private static double normalCinemaPrice;
+	private double normalCinemaPrice;
 
 	/**
 	 * Price added for a plantinum class cinema price.
 	 */
-	private static double plantinumPrice;
+	private double plantinumPrice;
 
 	/**
 	 * Price added for an elite class cinema price.
 	 */
-	private static double elitePrice;
+	private double elitePrice;
 
 	/**
 	 * Price added by a children.
 	 */
-	private static double childrenPrice;
+	private double childrenPrice;
 
 	/**
 	 * Price added by an adult.
 	 */
-	private static double adultPrice;
+	private double adultPrice;
 
 	/**
 	 * Price added by a senior citizen.
 	 */
-	private static double seniorCitizenPrice;
+	private double seniorCitizenPrice;
 
 	/**
 	 * Price added on a weekday.
 	 */
-	private static double weekdayPrice;
+	private double weekdayPrice;
 
 	/**
 	 * Price added on a weekend.
 	 */
-	private static double weekendPrice;
+	private double weekendPrice;
 
 	/**
 	 * Price added on a holiday.
 	 */
-	private static double holidayPrice;
+	private double holidayPrice;
 
 	/**
 	 * The GST Rate.
 	 */
-	private static double GSTRate;
+	private double GSTRate;
 
 	/**
 	 * Set the price added by a 3D movie ticket.
 	 * @param price The price added by a 3D movie ticket.
 	 */
-	public static void set3DPrice(Double price) {
+	public void set3DPrice(Double price) {
 		_3DPrice = price;
 	}
 
@@ -83,7 +83,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a BlockBuster movie ticket.
 	 * @param price The price added by a BlockBuster movie ticket.
 	 */
-	public static void setBlockBusterPrice(Double price) {
+	public void setBlockBusterPrice(Double price) {
 		blockBusterPrice = price;
 	}
 
@@ -91,7 +91,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a normal class cinema movie ticket.
 	 * @param price The price added by a normal class movie ticket.
 	 */
-	public static void setNormalCinemaPrice(Double price) {
+	public void setNormalCinemaPrice(Double price) {
 		normalCinemaPrice = price;
 	}
 
@@ -99,7 +99,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a plantinum class movie ticket.
 	 * @param price The price added by a plantinum class movie ticket.
 	 */
-	public static void setPlantinumPrice(Double price) {
+	public void setPlantinumPrice(Double price) {
 		plantinumPrice = price;
 	}
 
@@ -107,7 +107,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by an elite class movie ticket.
 	 * @param price The price added by an elite class movie ticket.
 	 */
-	public static void setElitePrice(Double price) {
+	public void setElitePrice(Double price) {
 		elitePrice = price;
 	}
 
@@ -115,7 +115,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a children movie ticket.
 	 * @param price The price added by a children movie ticket.
 	 */
-	public static void setChildrenPrice(Double price) {
+	public void setChildrenPrice(Double price) {
 		childrenPrice = price;
 	}
 
@@ -123,7 +123,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by an adult movie ticket.
 	 * @param price The price added by an adult movie ticket.
 	 */
-	public static void setAdultPrice(Double price) {
+	public void setAdultPrice(Double price) {
 		adultPrice = price;
 	}
 
@@ -131,7 +131,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a senior citizen ticket.
 	 * @param price The price added by a senior citizen movie ticket.
 	 */
-	public static void setSeniorCitizenPrice(Double price) {
+	public void setSeniorCitizenPrice(Double price) {
 		seniorCitizenPrice = price;
 	}
 
@@ -139,7 +139,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a weekday movie ticket.
 	 * @param price The price added by a weekday movie ticket.
 	 */
-	public static void setWeekdayPrice(Double price) {
+	public void setWeekdayPrice(Double price) {
 		weekdayPrice = price;
 	}
 
@@ -147,7 +147,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a weekend movie ticket.
 	 * @param price The price added by an weekend movie ticket.
 	 */
-	public static void setWeekendPrice(Double price) {
+	public void setWeekendPrice(Double price) {
 		weekendPrice = price;
 	}
 
@@ -155,7 +155,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the price added by a holiday movie ticket.
 	 * @param price The price added by a holiday movie ticket.
 	 */
-	public static void setHolidayPrice(Double price) {
+	public void setHolidayPrice(Double price) {
 		holidayPrice = price;
 	}
 
@@ -163,13 +163,13 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Set the GST Rate
 	 * @param taxRate GST Rate
 	 */
-	public static void setGSTRate(Double taxRate) {GSTRate = taxRate;}
+	public void setGSTRate(Double taxRate) {GSTRate = taxRate;}
 
 	/**
 	 * Get the price added by a 3D movie ticket.
 	 * @return the price added by a 3D movie ticket.
 	 */
-	public static double get3DPrice() {
+	public double get3DPrice() {
 		return _3DPrice;
 	}
 
@@ -177,7 +177,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a BlockBuster movie ticket.
 	 * @return the price added by a BlockBuster movie ticket.
 	 */
-	public static double getBlockBusterPrice() {
+	public double getBlockBusterPrice() {
 		return blockBusterPrice;
 	}
 
@@ -185,7 +185,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a normal class movie ticket.
 	 * @return the price added by a normal class movie ticket.
 	 */
-	public static double getNormalCinemaPrice() {
+	public double getNormalCinemaPrice() {
 		return normalCinemaPrice;
 	}
 
@@ -193,7 +193,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a plantinum movie ticket.
 	 * @return the price added by a plantinum movie ticket.
 	 */
-	public static double getPlantinumPrice() {
+	public double getPlantinumPrice() {
 		return plantinumPrice;
 	}
 
@@ -201,7 +201,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by an elite movie ticket.
 	 * @return the price added by an elite movie ticket.
 	 */
-	public static double getElitePrice() {
+	public double getElitePrice() {
 		return elitePrice;
 	}
 
@@ -209,7 +209,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a children movie ticket.
 	 * @return the price added by a children movie ticket.
 	 */
-	public static double getChildrenPrice() {
+	public double getChildrenPrice() {
 		return childrenPrice;
 	}
 
@@ -217,7 +217,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by an adult movie ticket.
 	 * @return the price added by an adult movie ticket.
 	 */
-	public static double getAdultPrice() {
+	public double getAdultPrice() {
 		return adultPrice;
 	}
 
@@ -225,7 +225,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a senior citizen movie ticket.
 	 * @return the price added by a senior citizen movie ticket.
 	 */
-	public static double getSeniorCitizenPrice() {
+	public double getSeniorCitizenPrice() {
 		return seniorCitizenPrice;
 	}
 
@@ -233,7 +233,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a weekday movie ticket.
 	 * @return the price added by a weekday movie ticket.
 	 */
-	public static double getWeekdayPrice() {
+	public double getWeekdayPrice() {
 		return weekdayPrice;
 	}
 
@@ -241,7 +241,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a weekend movie ticket.
 	 * @return the price added by a weekend movie ticket.
 	 */
-	public static double getWeekendPrice() {
+	public double getWeekendPrice() {
 		return weekendPrice;
 	}
 
@@ -249,7 +249,7 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the price added by a holiday movie ticket.
 	 * @return the price added by a holiday movie ticket.
 	 */
-	public static double getHolidayPrice() {
+	public double getHolidayPrice() {
 		return holidayPrice;
 	}
 
@@ -257,5 +257,5 @@ public class TicketPriceConfiguration implements Serializable {
 	 * Get the GST Rate.
 	 * @return the GST Rate.
 	 */
-	public static double getGST() {return GSTRate;}
+	public double getGST() {return GSTRate;}
 }

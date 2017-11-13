@@ -1,35 +1,47 @@
 package com.moblima.Controller;
 
+import static com.moblima.Model.MovieSystem.ClassType.ELITE;
+import static com.moblima.Model.MovieSystem.ClassType.NORMAL;
+import static com.moblima.Model.MovieSystem.ClassType.PLANTINUM;
+import static com.moblima.Model.MovieSystem.MovieRating.NC16;
+import static com.moblima.Model.MovieSystem.MovieRating.PG13;
+import static com.moblima.Model.MovieSystem.MovieType.BlockBuster;
+import static com.moblima.Model.MovieSystem.MovieType._3D;
+import static com.moblima.Model.MovieSystem.StatusType.NOW_SHOWING;
+import static com.moblima.Model.MovieSystem.StatusType.PREVIEW;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.moblima.Model.BookingSystem.Holidays;
 import com.moblima.Model.BookingSystem.Ticket;
 import com.moblima.Model.BookingSystem.TicketPriceConfiguration;
 import com.moblima.Model.BookingSystem.TransactionID;
 import com.moblima.Model.LoginSystem.Admin;
 import com.moblima.Model.LoginSystem.Moviegoer;
-import com.moblima.Model.MovieSystem.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static com.moblima.Model.MovieSystem.MovieRating.*;
-import static com.moblima.Model.MovieSystem.MovieType.*;
-import static com.moblima.Model.MovieSystem.StatusType.*;
-import static com.moblima.Model.MovieSystem.ClassType.*;
-import java.time.*;
+import com.moblima.Model.MovieSystem.Cinema;
+import com.moblima.Model.MovieSystem.Cineplex;
+import com.moblima.Model.MovieSystem.Movie;
+import com.moblima.Model.MovieSystem.MovieListing;
+import com.moblima.Model.MovieSystem.Review;
+import com.moblima.Model.MovieSystem.Timetable;
 
 /**
- * This is used to create the starting population of the program.
+ * This is the class used to populate the initial data.
+ *
  */
 public class Populate {
-
-    /**
-     * Construction of the Populate class
-     * @param importController The import controller that will be used to export the created population.
-     */
-    public Populate(ImportController importController) {
+	
+	/**
+	 * Construction of the populate class.
+	 * @param importController This is the import controller that imports data from the text files.
+	 */
+	public Populate(ImportController importController) {
 
         /* create new movie population */
-    	
+    	    	
     	MovieManager movieManager = new MovieManager();
 
         ArrayList<Movie> movies = movieManager.getMovies();
@@ -105,7 +117,7 @@ public class Populate {
 
         movie = new Movie("Marvel's Thor: Ragnarok", PREVIEW, "Thor is imprisoned on the other side of the universe without his mighty hammer and finds himself in a race against time to get back to Asgard to stop Ragnarok- the destruction of his homeworld and the end of Asgardian civilization- the hands of an all-powerful new threat, the ruthless Hela. But first he must survive a deadly gladiatorial contest that pits him against his former ally and fellow Avenger- the Incredible Hulk!",
                 "Taika Waititi", _3D, PG13, casts, reviews, LocalDate.of(2017, 12, 1));
-
+        
         movies.add(movie);
         allMovies.add(movie);
         
@@ -113,7 +125,6 @@ public class Populate {
         	movie.increaseTicketSales();
         }
 
-        importController.setMovieManager(movieManager);
         /* create new cineplex population */
           
         CineplexManager cineplexManager = new CineplexManager();
@@ -349,19 +360,17 @@ public class Populate {
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
         cineplexes.add(cineplex);
-
-        importController.setCineplexManager(cineplexManager);
         
         /* create new User Population */
         
         UserManager userManager = new UserManager();
         
         ArrayList<Admin> admins = userManager.getAdmins();
-        Admin admin = new Admin("Admin1", "123", 1);
+        Admin admin = new Admin("Admin1", "123");
         admins.add(admin);
-        admin = new Admin("Admin2", "456", 2);
+        admin = new Admin("Admin2", "456");
         admins.add(admin);
-        admin = new Admin("Admin3", "789", 3);
+        admin = new Admin("Admin3", "789");
         admins.add(admin);
         
         ArrayList<Moviegoer> moviegoers = userManager.getMoviegoers();
@@ -372,8 +381,6 @@ public class Populate {
         moviegoer = new Moviegoer("cucumber", "789", 67, "Einstein", 123456, "cucumber@ntu.edu.sg");
         moviegoers.add(moviegoer);
         
-        importController.setUserManager(userManager);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
         
         BookingManager bookingManager = new BookingManager();
         
@@ -396,9 +403,7 @@ public class Populate {
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
-        System.out.println(cineplex);
         cinema = cineplexManager.searchForCinema("JurongPoint1");
-        System.out.println(cinema);
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
         LocalDateTime bookingTiming = LocalDateTime.of(2017, 11, 12, 14, 30);
         bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
@@ -468,7 +473,8 @@ public class Populate {
         holidays.addHoliday(LocalDate.of(2017, 11, 9), "Public Holiday 2");
         holidays.addHoliday(LocalDate.of(2017, 11, 10), "Public Holiday 3");
         
-        importController.setBookingManager(bookingManager);
+        importController.setAllTheManagers(new AllTheManagers(bookingManager, cineplexManager, userManager, movieManager));
+        
         importController.export();
-    }
+	}
 }

@@ -42,5 +42,8 @@ public abstract class User implements Serializable{
     public String getPassword() {
         return password;
     }
+    
+
+	public abstract boolean verify(String username, String password);
 
 }

@@ -66,8 +66,8 @@ public class UserManager implements Serializable {
      * @param password The password of the admin.
      * @param id The admin ID of the admin.
      */
-    public void addNewAdmin(String username, String password, int id) {
-        Admin admin = new Admin(username, password, id);
+    public void addNewAdmin(String username, String password) {
+        Admin admin = new Admin(username, password);
         admins.add(admin);
     }
 
@@ -96,9 +96,9 @@ public class UserManager implements Serializable {
      * @return The admin that is inside the system. Null if no admin of the given
      * information is found.
      */
-    public Admin validateAdmin(String username, String password, int id) {
+    public Admin validateAdmin(String username, String password) {
     	for (Admin admin: admins) {
-    		if (admin.verify(username, password, id))
+    		if (admin.verify(username, password))
     			return admin;
     	}
     	return null;

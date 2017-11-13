@@ -126,25 +126,6 @@ public class AdminView {
     }
 
     /**
-     * Get the admin ID of the new admin.
-     * @return The admin ID of the new admin.
-     */
-    public int getAdminID() {
-        boolean continueLoop = true;
-        int input = 0;
-        while (continueLoop) {
-            System.out.println("Please enter the admin ID that will be used during the login process.");
-            try {
-                input = Integer.parseInt(reader.nextLine());
-                continueLoop = false;
-            } catch(Exception e) {
-                System.out.println("Please enter an integer.");
-            }
-        }
-        return input;
-    }
-
-    /**
      * Get the movie name from the admin.
      * @return The movie name given by the admin.
      */
@@ -1031,12 +1012,14 @@ public class AdminView {
 
     /**
      * Get the new cost.
+     * @param The old cost.
      * @return The new cost.
      */
-	public double getNewCost() {
+	public double getNewCost(String oldCost) {
 		double input = 0;
 		boolean continueLoop = true;
 		while (continueLoop) {
+			System.out.println("The old value is " + oldCost);
 			System.out.println("Please enter the new value.");
 			try {
 				input = Double.parseDouble(reader.nextLine());

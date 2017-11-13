@@ -183,8 +183,7 @@ public class LoginController {
         while (continueLoop) {
             String username = loginView.getUserName();
             String password = loginView.getPassword();
-            int adminID = loginView.getAdminID();
-            Admin admin = userManager.validateAdmin(username, password, adminID);
+            Admin admin = userManager.validateAdmin(username, password);
             if (admin != null) {
                 continueLoop = false;
                 loginView.tellUserLoginIsSuccessful();

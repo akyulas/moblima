@@ -107,8 +107,7 @@ public class AdminController {
             continueLoop = userManager.checkIfAdminUserNameExist(username);
         }
         String password = adminView.getNewPassword();
-        int id = adminView.getAdminID();
-        userManager.addNewAdmin(username, password, id);
+        userManager.addNewAdmin(username, password);
     }
 
     /**
@@ -664,46 +663,71 @@ public class AdminController {
 		double newCost;
 		boolean continueLoop = true;
 		while (continueLoop) {
+			TicketPriceConfiguration ticketPriceConfiguration = bookingManager.getTicketPriceConfiguration();
 			input = adminView.showTicketOptions();
 			if (input == 0)
 				break;
-			newCost = adminView.getNewCost();
+			String oldCost;
 			switch(input) {
 				case 1:
-					TicketPriceConfiguration.set3DPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.get3DPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.set3DPrice(newCost);
 					break;
 				case 2:
-					TicketPriceConfiguration.setBlockBusterPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getBlockBusterPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setBlockBusterPrice(newCost);
 					break;
 				case 3:
-					TicketPriceConfiguration.setNormalCinemaPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getNormalCinemaPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setNormalCinemaPrice(newCost);
 					break;
 				case 4:
-					TicketPriceConfiguration.setPlantinumPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getPlantinumPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setPlantinumPrice(newCost);
 					break;
 				case 5:
-					TicketPriceConfiguration.setElitePrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getElitePrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setElitePrice(newCost);
 					break;
 				case 6:
-					TicketPriceConfiguration.setChildrenPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getChildrenPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setChildrenPrice(newCost);
 					break;
 				case 7:
-					TicketPriceConfiguration.setAdultPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getAdultPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setAdultPrice(newCost);
 					break;
 				case 8:
-					TicketPriceConfiguration.setSeniorCitizenPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getSeniorCitizenPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setSeniorCitizenPrice(newCost);
 					break;
 				case 9:
-					TicketPriceConfiguration.setWeekdayPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getWeekdayPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setWeekdayPrice(newCost);
 					break;
 				case 10:
-					TicketPriceConfiguration.setWeekendPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getWeekendPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setWeekendPrice(newCost);
 					break;
 				case 11:
-					TicketPriceConfiguration.setHolidayPrice(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getHolidayPrice());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setHolidayPrice(newCost);
 					break;
 				case 12:
-					TicketPriceConfiguration.setGSTRate(newCost);
+					oldCost = Double.toString(ticketPriceConfiguration.getGST());
+					newCost = adminView.getNewCost(oldCost);
+					ticketPriceConfiguration.setGSTRate(newCost);
 					break;
 			}
 		}

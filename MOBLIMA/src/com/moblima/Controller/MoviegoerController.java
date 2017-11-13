@@ -6,6 +6,7 @@ import com.moblima.Model.MovieSystem.*;
 import com.moblima.Model.LoginSystem.Moviegoer;
 import com.moblima.Model.BookingSystem.Holidays;
 import com.moblima.Model.BookingSystem.Ticket;
+import com.moblima.Model.BookingSystem.TicketPriceConfiguration;
 import com.moblima.Utilities.Utilities;
 
 import java.time.LocalDateTime;
@@ -84,7 +85,7 @@ public class MoviegoerController {
                     continueLoop = false;
                     break;
                 case 1:
-                    searchForMovie();
+                    searchAndListForMovie();
                     break;
                 case 2:
                     checkSeatsAndBuyTickets();
@@ -97,6 +98,27 @@ public class MoviegoerController {
                     break;
             }
         }
+    }
+    
+    /**
+     * This is used to ask the moviegoer if the moviegoer wants to list out all the movies or to search a movie by name.
+     */
+    public void searchAndListForMovie() {
+    	boolean continueLoop = true;
+    	while (continueLoop){
+    		int input = moviegoerView.askForSearchingOrListing();
+    		switch(input) {
+    			case 0:
+    				continueLoop = false;
+    				break;
+    			case 1:
+    				searchForMovie();
+    				break;
+    			case 2:
+    				listMovies();
+    				break;
+    		}
+    	}	
     }
 
     /**
@@ -121,12 +143,35 @@ public class MoviegoerController {
             }
         }
     }
+    
+    /**
+     * This is used to list the movies being shown.
+     */
+    public void listMovies() {
+    	boolean continueLoop = true;
+    	while (continueLoop) {
+    		ArrayList<String> movieString = new ArrayList<String>();
+    		ArrayList<Movie> movies = movieManager.getMovies();
+        	int count = 1;
+        	for (Movie movie: movies) {
+        		movieString.add(count + ". " + movie.getName() + " (" + movie.getMovieType() + ")");
+        		count++;
+        	}
+        	int input = moviegoerView.showUserTheMoviesAndGetInput(movieString);
+        	if (input == 0)
+        		continueLoop = false;
+        	else 
+        		viewMovieDetails(movies.get(input - 1));
+    	}
+    	
+    }
 
     /**
      * This is used to view the movie details.
      * @param movie The movie the user has selected.
      */
     private void viewMovieDetails(Movie movie) {
+    	System.out.println(movie);
         boolean continueLoop = true;
         while (continueLoop) {
             int input = moviegoerView.inputForMovieDetails();
@@ -246,11 +291,13 @@ public class MoviegoerController {
                     break;
                 case 1:
                     searchByMovie();
-                    if (bookingSuccessful) {
+                    if (bookingSuccessful) 
                     	continueLoop = false;
-                    	break;
-                    }
                     break;
+                case 2:
+                	listMovieListings();
+                	if (bookingSuccessful) 
+                		continueLoop = false;
             }
         }
     }
@@ -270,7 +317,7 @@ public class MoviegoerController {
             for (MovieListing movieListing: movieListings) {
                 LocalDateTime startTime = movieListing.getStartingTime();
                 LocalDateTime endTime = movieListing.getEndingTime();
-                tempList.add(count + ". "  + "Movie: " + movieListing.getMovie().getName() + " Cineplex: " + movieListing.getCineplex().getName() + " Cinema: " + movieListing.getCinema().getCode()
+                tempList.add(count + ". "  + "Movie: " + movieListing.getMovie().getName() + "(" + movieListing.getMovie().getMovieType() + ")" + " Cineplex: " + movieListing.getCineplex().getName() + " Cinema: " + movieListing.getCinema().getCode()
                         + " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
                 count++;
             }
@@ -283,6 +330,33 @@ public class MoviegoerController {
                 	continueLoop = false;
             }
         }
+    }
+    
+    /**
+     * This is used to show the moviegoer all the movie listings inside all the cinemas.
+     */
+    public void listMovieListings() {
+    	boolean continueLoop = true;
+    	ArrayList<MovieListing> movieListings = cineplexManager.getAllMovieListings();
+    	while (continueLoop) {
+    		 ArrayList<String> tempList = new ArrayList<String>();
+             int count = 1;
+             for (MovieListing movieListing: movieListings) {
+                 LocalDateTime startTime = movieListing.getStartingTime();
+                 LocalDateTime endTime = movieListing.getEndingTime();
+                 tempList.add(count + ". "  + "Movie: " + movieListing.getMovie().getName() + "(" + movieListing.getMovie().getMovieType() + ")" + " Cineplex: " + movieListing.getCineplex().getName() + " Cinema: " + movieListing.getCinema().getCode()
+                         + " Start time: " + Utilities.timeToString(startTime) + " End time: " + Utilities.timeToString(endTime));
+                 count++;
+             }
+    		int input = moviegoerView.inputForMoviesFound(tempList);
+    		 if (input == 0) {
+                 continueLoop = false;
+             } else {
+                 viewMovieListingDetail(movieListings.get(input - 1));
+                 if (bookingSuccessful)
+                 	continueLoop = false;
+             }
+    	}
     }
 
     /**
@@ -367,6 +441,7 @@ public class MoviegoerController {
     public void BookSeats(ArrayList<String> chosenSeats, MovieListing movieListing) {
     	double price = 0.0;
     	Movie movie = movieListing.getMovie();
+    	System.out.println(movie);
     	Cinema cinema = movieListing.getCinema();
     	Cineplex cineplex = movieListing.getCineplex();
     	LocalDateTime startTime = movieListing.getStartingTime();
@@ -374,7 +449,8 @@ public class MoviegoerController {
     	int age = moviegoer.getAge();
     	Holidays holidays = bookingManager.getHolidays();
     	for (String chosenSeat: chosenSeats) {
-    		price += Ticket.calculateTicketPrice(movie, cinema, startTime, age, holidays);
+    		TicketPriceConfiguration ticketPriceConfiguration = bookingManager.getTicketPriceConfiguration();
+    		price += Ticket.calculateTicketPrice(movie, cinema, startTime, age, holidays, ticketPriceConfiguration);
     	}
     	int input = moviegoerView.askToProceedWithBooking(chosenSeats, price);
     	switch(input) {
@@ -435,16 +511,16 @@ public class MoviegoerController {
      * and ask if they want to add review for it
      */
     private void addReview() {
-    	ArrayList<Movie> movies = bookingManager.getMoviesForReview(moviegoer.getUsername());
-    	ArrayList<String> tempList = new ArrayList<String>();
-        int count = 1;
-        for (Movie movie: movies) {
-            tempList.add(count + ". "  + movie.getName() + " (" + movie.getMovieType() + ")");
-            count++;
-        }
         boolean continueLoop = true;
         int input = 0;
         while (continueLoop) {
+        	ArrayList<Movie> movies = bookingManager.getMoviesForReview(moviegoer.getUsername());
+        	ArrayList<String> tempList = new ArrayList<String>();
+            int count = 1;
+            for (Movie movie: movies) {
+                tempList.add(count + ". "  + movie.getName() + " (" + movie.getMovieType() + ")");
+                count++;
+            }
         	input = moviegoerView.showMoviegoerReviewAndGetInput(tempList);
         	if (input == 0) {
         		continueLoop = false;
@@ -460,6 +536,7 @@ public class MoviegoerController {
      * @param movie The movie the moviegoer has selected.
      */
     public void addReviewByTheUser(Movie movie) {
+    	System.out.println(movie);
     	String name = moviegoer.getUsername();
     	double rating = moviegoerView.askForRatings();
     	String review = moviegoerView.askForReview();
