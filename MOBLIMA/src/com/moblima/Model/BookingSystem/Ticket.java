@@ -1,6 +1,5 @@
 package com.moblima.Model.BookingSystem;
 
-import com.moblima.Model.LoginSystem.Moviegoer;
 import com.moblima.Model.MovieSystem.Cinema;
 import com.moblima.Model.MovieSystem.Cineplex;
 import com.moblima.Model.MovieSystem.Movie;
@@ -147,8 +146,8 @@ public class Ticket implements Serializable{
 	 * @return toString
 	 */
 	public String toString() {
-    	return "Movie: " + movie.getName() + ", Cineplex: " + cineplex.getName() + ", Cinema: " + cinema.getCode() +
-    			", Movie Start Timing: " + Utilities.timeToString(startTiming) + ", Booking Time: " + 
+    	return "Movie: " + movie.getName() + ", Cineplex: " + cineplex + ", Cinema: " + cinema +
+    			", Movie Start Timing: " + Utilities.timeToString(startTiming) + ", Booking Time: " +
     			Utilities.timeToString(bookedTiming) + ", Number Of Tickets: " + numberOfTickets;
     }
 

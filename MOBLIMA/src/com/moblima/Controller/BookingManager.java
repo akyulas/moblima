@@ -127,7 +127,7 @@ public class BookingManager implements Serializable{
 		if (bookingHistories.containsKey(moviegoer)) {
 			return bookingHistories.get(moviegoer);
 		}
-		return null;
+		return new ArrayList<Ticket>();
 	}
 
 	/**

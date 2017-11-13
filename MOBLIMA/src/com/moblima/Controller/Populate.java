@@ -195,6 +195,8 @@ public class Populate {
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
+        cineplexes.add(cineplex);
+
         //////////////////////////////////////////////////////////////////////
 
         cineplex = new Cineplex("VivoCity", "VivoCity1", NORMAL, "VivoCity2", PLANTINUM, "VivoCity3", ELITE);
@@ -268,6 +270,9 @@ public class Populate {
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
+
+
+        cineplexes.add(cineplex);
 
         ///////////////////////////////////////////////////////////////////////////////
 
@@ -343,6 +348,8 @@ public class Populate {
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
+        cineplexes.add(cineplex);
+
         importController.setCineplexManager(cineplexManager);
         
         /* create new User Population */
@@ -366,7 +373,6 @@ public class Populate {
         moviegoers.add(moviegoer);
         
         importController.setUserManager(userManager);
-        
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         
         BookingManager bookingManager = new BookingManager();
@@ -390,7 +396,9 @@ public class Populate {
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
+        System.out.println(cineplex);
         cinema = cineplexManager.searchForCinema("JurongPoint1");
+        System.out.println(cinema);
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
         LocalDateTime bookingTiming = LocalDateTime.of(2017, 11, 12, 14, 30);
         bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
