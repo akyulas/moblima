@@ -158,7 +158,7 @@ public class LoginController {
         String name = loginView.getMoviegoerName();
         int mobileNumber = loginView.getMoviegoerMobileNumber();
         String emailAddress = loginView.getEmailAddress();
-        userManager.addNewMoviegoer(username, password, age, name, mobileNumber, emailAddress);
+        userManager.addNewMoviegoer(username, password, name, mobileNumber, emailAddress);
     }
 
     /**
