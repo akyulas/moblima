@@ -1,5 +1,6 @@
 package com.moblima.Controller;
 
+import com.moblima.Model.BookingSystem.Ticket;
 import com.moblima.Model.BookingSystem.TicketPriceConfiguration;
 import com.moblima.Model.MovieSystem.*;
 import com.moblima.Utilities.Utilities;
@@ -91,6 +92,31 @@ public class AdminController {
                 case 5:
                     listTopMovies();
                     break;
+                case 6:
+                    checkTransactionID();
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Used to check the transaction ID if the ticket exist for that particular transaction ID.
+     */
+    private void checkTransactionID() {
+        boolean continueLoop = true;
+        while (continueLoop) {
+            String transactionID = adminView.getTransactionID();
+            Ticket ticket = bookingManager.checkValidTickets(transactionID);
+            if (ticket == null) {
+                int input = adminView.tellUserTransactionIDIsValid();
+                if (input == 0)
+                    continueLoop = false;
+                else
+                    continue;
+            } else {
+                String output = ticket.toString() + " Name: " + ticket.getName() + " Email: " +  ticket.getEmailAddress() + " Mobile Number: " + ticket.getMobileNumber() +  " Age Group: " + ticket.getAgeGroup();
+                adminView.showAdminTicket(output);
+                continueLoop = false;
             }
         }
     }
@@ -648,11 +674,38 @@ public class AdminController {
     			case 1:
     				changeTicketPrice();
     				break;
-    			case 2:
+                case 2:
+                    listTicketPrice();
+                    break;
+    			case 3:
     				changeHolidays();
     				break;
+                case 4:
+                    listHolidays();
+                    break;
     		}
     	}
+    }
+
+    /**
+     * Used to get and list all the ticket prices inside the system.
+     */
+    private void listTicketPrice() {
+        String result = "";
+        TicketPriceConfiguration ticketPriceConfiguration = bookingManager.getTicketPriceConfiguration();
+        result += "1. 3D Movie Cost: " + ticketPriceConfiguration.get3DPrice() + "\n";
+        result += "2. BlockBuster Movie Cost: " + ticketPriceConfiguration.getBlockBusterPrice() + "\n";
+        result += "3. Normal Cinema Cost: " + ticketPriceConfiguration.getNormalCinemaPrice() + "\n";
+        result += "4. Plantinum Cinema Cost: " + ticketPriceConfiguration.getPlantinumPrice() + "\n";
+        result += "5. Elite Cinema Cost: " + ticketPriceConfiguration.getElitePrice() + "\n";
+        result += "6. Children Ticket Cost: " + ticketPriceConfiguration.getChildrenPrice() + "\n";
+        result += "7. Adult Ticket Cost: " + ticketPriceConfiguration.getAdultPrice() + "\n";
+        result += "8. Senior Citizen Ticket Cost: " + ticketPriceConfiguration.getSeniorCitizenPrice() + "\n";
+        result += "9. Weekday Ticket Cost: " + ticketPriceConfiguration.getWeekdayPrice() + "\n";
+        result += "10. Weekend Ticket Cost: " + ticketPriceConfiguration.getWeekendPrice() + "\n";
+        result += "11. Holiday Ticket Cost: " + ticketPriceConfiguration.getHolidayPrice() + "\n";
+        result += "12. GST: " + ticketPriceConfiguration.getGST() + "\n";
+        adminView.showUserTicketPrices(result);
     }
 
     /**
@@ -777,6 +830,25 @@ public class AdminController {
 			}
 		}
 	}
+
+    /**
+     * Used to get and list all the holidays inside the system.
+     */
+    public void listHolidays() {
+        Holidays holidays = bookingManager.getHolidays();
+        ArrayList<LocalDate> holidayDates = holidays.getHolidayDates();
+        if (holidayDates.size() == 0) {
+            adminView.tellUserNoHolidayDatesIsFound();
+        } else {
+            ArrayList<String> holidayDatesString = new ArrayList<String>();
+            int count = 1;
+            for (LocalDate holiday: holidayDates) {
+                holidayDatesString.add(count + ". " + Utilities.dateToString(holiday) + " " + holidays.getDescription(holiday));
+                count++;
+            }
+            adminView.showHolidaysToAdmin(holidayDatesString);
+        }
+    }
 
     /**
      * This is used to let the user choose

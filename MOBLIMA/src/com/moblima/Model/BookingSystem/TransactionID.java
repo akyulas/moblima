@@ -61,4 +61,12 @@ public class TransactionID implements Serializable{
         transactionIDString = code + Integer.toString(year) + Integer.toString(month) + Integer.toString(day) + Integer.toString(hour) + Integer.toString(minutes);
     }
 
+    /**
+     * The toString of the transaction ID class
+     * @return to String of the transaction ID class
+     */
+    public String toString() {
+        return transactionIDString;
+    }
+
 }

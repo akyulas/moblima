@@ -30,9 +30,9 @@ public class BookingManager implements Serializable{
 	private HashMap<String, ArrayList<Ticket>> bookingHistories;
 
 	/**
-	 * This is the transactionIDs that are stored inside the system.
+	 * This is the transactionIDs and their tickets that are stored inside the system.
 	 */
-	private ArrayList<TransactionID> transactionIDs;
+	private HashMap<TransactionID, Ticket> transactionIDStorage;
 
 	/**
 	 * This is the holidays that are stored inside the system.
@@ -45,7 +45,7 @@ public class BookingManager implements Serializable{
 	public BookingManager() {
 		ticketPriceConfiguration = new TicketPriceConfiguration();
 		bookingHistories = new HashMap<String, ArrayList<Ticket>>();
-		transactionIDs = new ArrayList<TransactionID>();
+		transactionIDStorage = new HashMap<TransactionID, Ticket>();
 		holidays = new Holidays();
 	}
 
@@ -66,11 +66,11 @@ public class BookingManager implements Serializable{
 	}
 
 	/**
-	 * Return the transactionIDs that are stored inside the system.
-	 * @return The transactionIDs that are stored inside the system.
+	 * Return the transactionIDs and their respective Tickets that are stored inside the system.
+	 * @return The transactionIDs and the respective Tickets that are stored inside the system.
 	 */
-	public ArrayList<TransactionID> getTransactionID() {
-		return transactionIDs;
+	public HashMap<TransactionID, Ticket> getTransactionIDStorage() {
+		return transactionIDStorage;
 	}
 
 	/**
@@ -107,15 +107,18 @@ public class BookingManager implements Serializable{
 	/**
 	 * Add the transactionID from a booking to the system.
 	 * @param code The transactionID
+	 * @param ticket The ticket that belongs with the transactionID.
 	 */
-	public void addTransactionID(String code) {
+	public TransactionID addTransactionID(String code, Ticket ticket) {
 		LocalDateTime time = LocalDateTime.now();
 		int year = time.getYear();
 		int month = time.getMonthValue();
 		int day = time.getDayOfMonth();
 		int hour = time.getHour();
 		int minute = time.getMinute();
-		transactionIDs.add(new TransactionID(code, year, month, day, hour, minute));
+		TransactionID transactionID = new TransactionID(code, year, month, day, hour, minute);
+		transactionIDStorage.put(transactionID, ticket);
+		return transactionID;
 	}
 
 	/**
@@ -160,6 +163,28 @@ public class BookingManager implements Serializable{
 				iterator.remove();
 			}
 		}
+	}
+
+	/**
+	 * Get transaction ID from the ticket Given. Since each ticket is uniquely generated, this will return the correct transaction ID.
+	 * @param ticket The ticket of the moviegoer.
+	 * @return The Transaction ID that belongs to the ticket.
+	 */
+	public TransactionID getTransactionID(Ticket ticket) {
+		for (TransactionID transactionID: transactionIDStorage.keySet()) {
+			if (transactionIDStorage.get(transactionID).equals(ticket)) {
+				return transactionID;
+			}
+		}
+		return null;
+	}
+
+	public Ticket checkValidTickets(String transactionIDString) {
+		for (TransactionID transactionID: transactionIDStorage.keySet()) {
+			if (transactionID.toString().equals(transactionIDString))
+				return transactionIDStorage.get(transactionID);
+		}
+		return null;
 	}
 		
 }

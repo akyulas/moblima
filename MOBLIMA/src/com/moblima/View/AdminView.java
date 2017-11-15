@@ -42,9 +42,10 @@ public class AdminView {
             System.out.println("3. Create/Update/Remove cinema showtimes and the movies to be shown.");
             System.out.println("4. Configure system settings.");
             System.out.println("5. List The Top 5 ranking movies by ticket sales OR by reviewer's ratings");
+            System.out.println("6. Check tickets using transaction ID");
             System.out.println("0. Return back to login page.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -62,6 +63,9 @@ public class AdminView {
                         continueLoop = false;
                         break;
                     case 5:
+                        continueLoop = false;
+                        break;
+                    case 6:
                         continueLoop = false;
                         break;
                     default:
@@ -84,7 +88,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter new username:");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("")) {
                     throw new RuntimeException();
                 }
@@ -107,12 +111,12 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter new password:");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("")) {
                     throw new RuntimeException();
                 }
                 System.out.println("Please reenter the same password:");
-                tempinput = reader.nextLine();
+                tempinput = reader.nextLine().replaceAll("\\s","");
                 if (input.equals(tempinput)) {
                     continueLoop = false;
                 } else {
@@ -135,7 +139,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter the movie name.");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -161,7 +165,7 @@ public class AdminView {
             System.out.println("4. Remove a movie(Remove from movie pool available for showing in cinema and from history.");
             System.out.println("0. Back to main menu.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -200,7 +204,7 @@ public class AdminView {
             System.out.println("1. 3D");
             System.out.println("2. Blockbuster");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 1:
                         continueLoop = false;
@@ -232,7 +236,7 @@ public class AdminView {
             System.out.println("1. Continue to add entry.");
             System.out.println("0. Go back and choose another option.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -259,7 +263,7 @@ public class AdminView {
         if (movieList.size() == 0) {
             System.out.println("No movies are found.");
             System.out.println("Press enter to continue.");
-            reader.nextLine();
+            reader.nextLine().replaceAll("\\s","");
             return 0;
         }
 
@@ -272,7 +276,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please select the movie that you want to remove. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 if (input > movieList.size() || input < 0) {
                     System.out.println("Please choose the correct number.");
                 } else {
@@ -294,7 +298,7 @@ public class AdminView {
         if (movieList.size() == 0) {
             System.out.println("No movies are found.");
             System.out.println("Press enter to continue.");
-            reader.nextLine();
+            reader.nextLine().replaceAll("\\s","");
             return 0;
         }
 
@@ -307,7 +311,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please select the movie that you want to update. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 if (input > movieList.size() || input < 0) {
                     System.out.println("Please choose the correct number.");
                 } else {
@@ -330,7 +334,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter the synopsis.");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -351,7 +355,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter the director.");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -373,7 +377,7 @@ public class AdminView {
         System.out.println("Please enter at least 2 cast members. Please press enter with an empty line if you are done.");
         while (continueLoop) {
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("") && casts.size() < 2)
                     throw new RuntimeException();
                 if (input.equals(""))
@@ -402,7 +406,7 @@ public class AdminView {
             System.out.println("4. NC16");
             System.out.println("5. R21");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 1:
                         continueLoop = false;
@@ -442,7 +446,7 @@ public class AdminView {
             System.out.println("2. PREVIEW");
             System.out.println("3. NOW SHOWING");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 1:
                         continueLoop = false;
@@ -472,17 +476,17 @@ public class AdminView {
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = Utilities.getDateFormatter();
         while (continueLoop) {
-            System.out.println("Please enter a date in the format yyyy-MM-dd");
-            String input = reader.nextLine();
+            System.out.println("Please enter the end of showing date in the format yyyy-MM-dd");
+            String input = reader.nextLine().replaceAll("\\s","");
             try {
                 localDate = LocalDate.parse(input, formatter);
                 if (localDate.isBefore(LocalDate.now())) {
-                    System.out.println("Please enter a date that is after today.");
+                    System.out.println("Please enter a end of showing date that is after today.");
                 } else {
                     continueLoop = false;
                 }
             } catch(Exception e) {
-                System.out.println("Please enter a proper date in the format yyyy-MM-dd");
+                System.out.println("Please enter a proper end of showing date in the format yyyy-MM-dd");
             }
         }
         return localDate;
@@ -506,7 +510,7 @@ public class AdminView {
             System.out.println("7. Change End Of Showing Date");
             System.out.println("0. Return to select more movies.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -548,7 +552,7 @@ public class AdminView {
     public void tellUserMovieIsSuccesfullyRemoved() {
         System.out.println("The movie has been successfully removed.");
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -565,7 +569,7 @@ public class AdminView {
             System.out.println("3. Remove a movie listing from a cineplex.");
             System.out.println("0. Back to main menu.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -602,7 +606,7 @@ public class AdminView {
             System.out.println("1. Continue");
             System.out.println("0. Choose more options in the previous screen.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -630,7 +634,7 @@ public class AdminView {
         if (foundCineplexes.size() == 0) {
             System.out.println("No movies are found.");
             System.out.println("Press enter to continue.");
-            reader.nextLine();
+            reader.nextLine().replaceAll("\\s","");
             return 0;
         }
 
@@ -643,7 +647,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please select the cineplex you want to add movie to. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 if (input > foundCineplexes.size() || input < 0) {
                     System.out.println("Please choose the correct number.");
                 } else {
@@ -666,7 +670,7 @@ public class AdminView {
         if (foundCinemas.size() == 0) {
             System.out.println("No movies are found.");
             System.out.println("Press enter to continue.");
-            reader.nextLine();
+            reader.nextLine().replaceAll("\\s","");
             return 0;
         }
 
@@ -679,7 +683,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please select the cinema you want to add movie to. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 if (input > foundCinemas.size() || input < 0) {
                     System.out.println("Please choose the correct number.");
                 } else {
@@ -708,7 +712,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please select the movie. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 if (input > foundMovies.size() || input < 0) {
                     System.out.println("Please choose the correct number.");
                 } else {
@@ -732,7 +736,7 @@ public class AdminView {
         System.out.println("This is for the starting time.");
         while (continueLoop) {
             System.out.println("Please enter a date and time in the format yyyy-MM-dd HH:mm:ss");
-            String input = reader.nextLine();
+            String input = reader.nextLine().replaceAll("\\s","");
             try {
                 localDateTime = LocalDateTime.parse(input, formatter);
                 if (localDateTime.isBefore(LocalDateTime.now())) {
@@ -759,7 +763,7 @@ public class AdminView {
         System.out.println("This is for the ending time.");
         while (continueLoop) {
             System.out.println("Please enter a date and time in the format yyyy-MM-dd HH:mm:ss");
-            String input = reader.nextLine();
+            String input = reader.nextLine().replaceAll("\\s","");
             try {
                 localDateTime = LocalDateTime.parse(input, formatter);
                 if (localDateTime.isBefore(LocalDateTime.now())) {
@@ -790,7 +794,7 @@ public class AdminView {
             System.out.println("1. Continue");
             System.out.println("0. Choose more options in the previous screen.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -823,7 +827,7 @@ public class AdminView {
 	    while (continueLoop) {
 	    	System.out.println("Please select the movie listings. Enter 0 to go back to other commands.");
 	        try {
-	        	input = Integer.parseInt(reader.nextLine());
+	        	input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 	        	if (input > foundMovieListings.size() || input < 0) {
 	        		System.out.println("Press enter to continue.");
 	            } else {
@@ -850,7 +854,7 @@ public class AdminView {
     		System.out.println("3. The starting and ending times.");
     		System.out.println("0. Go back to the previous page.");
     		try {
-    			input = Integer.parseInt(reader.nextLine());
+    			input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
     			switch(input) {
     				case 0:
     					continueLoop = false;
@@ -888,7 +892,7 @@ public class AdminView {
             System.out.println("1. Continue");
             System.out.println("0. Choose more options in the previous screen.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -913,7 +917,7 @@ public class AdminView {
     public void tellUserMovieListingIsSuccessfullyAdded() {
         System.out.println("The movie has been successfully listed.");
         System.out.println("Press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -923,7 +927,7 @@ public class AdminView {
 	public void tellUserMovieListingIsSuccessfullyUpdated() {
 		System.out.println("The update of the movie listing is successfully.");
 		System.out.println("Please press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
     /**
@@ -933,7 +937,7 @@ public class AdminView {
 	public void tellUserMovieListingIsSuccessfullyRemoved() {
 		System.out.println("The movie has been successfully removed.");
 		System.out.println("Please press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
     /**
@@ -948,10 +952,12 @@ public class AdminView {
 		while (continueLoop) {
 			System.out.println("Please select an option.");
 			System.out.println("1. Change ticket price.");
-			System.out.println("2. Add/Remove holidays.");
+			System.out.println("2. List ticket price.");
+			System.out.println("3. Add/Remove holidays.");
+			System.out.println("4. List holidays.");
 			System.out.println("0. Go back to the previous screen.");
 			try {
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				switch(input) {
 					case 0:
 						continueLoop = false;
@@ -962,6 +968,12 @@ public class AdminView {
 					case 2:
 						continueLoop = false;
 						break;
+                    case 3:
+                        continueLoop = false;
+                        break;
+                    case 4:
+                        continueLoop = false;
+                        break;
 					default:
 						System.out.println("Please choose a valid option.");
 				}
@@ -997,7 +1009,7 @@ public class AdminView {
 			System.out.println("12. GST");
 			System.out.println("0. Go back to the previous menu.");
 			try {
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				if (input >= 0 && input <= 12) {
 					continueLoop = false;
 				} else {
@@ -1012,7 +1024,7 @@ public class AdminView {
 
     /**
      * Get the new cost.
-     * @param The old cost.
+     * @param oldCost The old cost.
      * @return The new cost.
      */
 	public double getNewCost(String oldCost) {
@@ -1022,7 +1034,7 @@ public class AdminView {
 			System.out.println("The old value is " + oldCost);
 			System.out.println("Please enter the new value.");
 			try {
-				input = Double.parseDouble(reader.nextLine());
+				input = Double.parseDouble(reader.nextLine().replaceAll("\\s",""));
 				if (input > 0) {
 					continueLoop = false;
 				} else {
@@ -1049,7 +1061,7 @@ public class AdminView {
 			System.out.println("2. Remove a Holiday.");
 			System.out.println("0. Go back to the previous menu.");
 			try {
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				switch(input) {
 					case 0:
 						continueLoop = false;
@@ -1079,7 +1091,7 @@ public class AdminView {
 		while (continueLoop) {
 			try {
 				System.out.println("Please enter the holiday date in a yyyy-MM-dd format.");
-				String input = reader.nextLine();
+				String input = reader.nextLine().replaceAll("\\s","");
 				holidayDate = LocalDate.parse(input, formatter);
 				if (holidayDate.isBefore(LocalDate.now())) 
 					System.out.println("Please do not enter a date before today's date.");
@@ -1102,7 +1114,7 @@ public class AdminView {
 		while (continueLoop) {
 			try {
 				System.out.println("Please enter the holdiay description.");
-				input = reader.nextLine();
+				input = reader.nextLine().replaceAll("\\s","");
 				if (input.equals(""))
 					throw new RuntimeException();
 				continueLoop = false;
@@ -1119,7 +1131,7 @@ public class AdminView {
 	public void tellUserNoHolidayDatesIsFound() {
 		System.out.println("No holiday dates can be found.");
 		System.out.println("Press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
     /**
@@ -1135,7 +1147,7 @@ public class AdminView {
 			}
 			System.out.println("0. Go back to the previous menu.");
 			try {
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				if (input < 0 || input > holidays.size()) {
 					System.out.println("Please choose the correct input.");
 				} else {
@@ -1154,7 +1166,7 @@ public class AdminView {
 	public void tellUserAdditionOfHolidayIsSuccessful() {
 		System.out.println("The addition of the holiday date is successful.");
 		System.out.println("Please press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
     /**
@@ -1163,7 +1175,7 @@ public class AdminView {
 	public void tellUserRemovalOfHolidayIsSuccessful() {
 		System.out.println("The removal of the holiday date is successful.");
 		System.out.println("Please press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
     /**
@@ -1180,7 +1192,7 @@ public class AdminView {
             System.out.println("2. Rank by reviewer's ratings");
             System.out.println("0. Go back to the previous page.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -1211,7 +1223,7 @@ public class AdminView {
             System.out.println(rankingList.get(i));
         }
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -1220,7 +1232,88 @@ public class AdminView {
     public void tellAdminUserNameIsChosen() {
         System.out.println("Please choose another username. The current username is already being used.");
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
-	
+
+    /**
+     * Get Transaction ID from the admin.
+     * @return The Transaction ID entered by the admin.
+     */
+    public String getTransactionID() {
+        boolean continueLoop = true;
+        String input = "";
+        while (continueLoop) {
+            try {
+                System.out.println("Please enter a transaction ID.");
+                input = reader.nextLine().replaceAll("\\s","");
+                if (input.equals(""))
+                    throw new RuntimeException();
+                continueLoop =false;
+            } catch(RuntimeException e) {
+                System.out.println("Please do not enter an empty string");
+            }
+        }
+        return input;
+    }
+
+    /**
+     * Tell Admin the Transaction ID is invalid. Ask to continue.
+     * @return 1 if the admin wants to continue. 0 if the admin do not want to continue.
+     */
+    public int tellUserTransactionIDIsValid() {
+        boolean continueLoop = true;
+        int input = 0;
+        while (continueLoop) {
+            System.out.println("The transaction ID is invalid.");
+            System.out.println("Do you want to continue? 1 for yes. 0 for no.");
+            try {
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
+                switch(input) {
+                    case 0:
+                        continueLoop = false;
+                        break;
+                    case 1:
+                        continueLoop = false;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid integer.");
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return input;
+    }
+
+    /**
+     * Show the ticket information of the ticket that the moviegoer bought to the admin.
+     * @param ticketInfo The ticket information that the moviegoer bought to the admin.
+     */
+    public void showAdminTicket(String ticketInfo) {
+        System.out.println(Utilities.breakLines(ticketInfo, 100));
+        System.out.println("Please press enter to continue.");
+        reader.nextLine().replaceAll("\\s","");
+    }
+
+    /**
+     * Show the ticket prices of the sytem to the admin.
+     * @param ticketPrices The ticket prices of the system.
+     */
+    public void showUserTicketPrices(String ticketPrices) {
+        System.out.println(ticketPrices);
+        System.out.println("Please press enter to continue.");
+        reader.nextLine().replaceAll("\\s","");
+    }
+
+    /**
+     * Show the holidays inside the system to the admin.
+     * @param holidays The holidays inside the system.
+     */
+    public void showHolidaysToAdmin(ArrayList<String> holidays) {
+        for (String holiday: holidays) {
+            System.out.println(holiday);
+        }
+        System.out.println("Please press enter to continue.");
+        reader.nextLine().replaceAll("\\s","");
+    }
 }

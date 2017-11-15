@@ -51,6 +51,26 @@ public class Ticket implements Serializable{
     private LocalDateTime bookedTiming;
 
 	/**
+	 * The name of the moviegoer.
+	 */
+	private String name;
+
+	/**
+	 * The mobile number of the moviegoer.
+	 */
+    private int mobileNumber;
+
+	/**
+	 * The email address of the moviegoer.
+	 */
+	private String emailAddress;
+
+	/**
+	 * The age group the moviegoer belongs to.
+	 */
+	private int ageGroup;
+
+	/**
 	 * Construction of the Ticket class
 	 * @param movie The movie that the moviegoer booked to see.
 	 * @param cineplex The cineplex the moviegoer booked to see the movie in.
@@ -58,9 +78,13 @@ public class Ticket implements Serializable{
 	 * @param startTiming The starting time of the movie.
 	 * @param bookedTiming The time the moviegoer booked the movie.
 	 * @param moviegoerUserName The username of the moviegoer that booked the movie.
+	 * @param name The name of the moviegoer.
+	 * @param mobileNumber The mobile number of the moviegoer.
+	 * @param emailAddress The email address of the moviegoer.
+	 * @param ageGroup The age group the moviegoer belongs to.
 	 */
-    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName) {
-        this(movie, cineplex, cinema, startTiming, bookedTiming, moviegoerUserName, 1);
+    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName, String name, int mobileNumber, String emailAddress, int ageGroup) {
+        this(movie, cineplex, cinema, startTiming, bookedTiming, moviegoerUserName, name, mobileNumber, emailAddress, ageGroup, 1);
     }
 
 	/**
@@ -71,9 +95,13 @@ public class Ticket implements Serializable{
 	 * @param startTiming The starting time of the movie.
 	 * @param bookedTiming The time the moviegoer booked the movie.
 	 * @param moviegoerUserName The username of the moviegoer that booked the movie.
+	 * @param name The name of the moviegoer.
+	 * @param mobileNumber The mobile number of the moviegoer.
+	 * @param emailAddress The email address of the moviegoer.
+	 * @param ageGroup The age group the moviegoer belongs to.
 	 * @param numberOfTickets The number of tickets the moviegoer booked during the booking.
 	 */
-    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName, int numberOfTickets) {
+    public Ticket(Movie movie, Cineplex cineplex, Cinema cinema, LocalDateTime startTiming, LocalDateTime bookedTiming, String moviegoerUserName, String name, int mobileNumber, String emailAddress, int ageGroup, int numberOfTickets) {
     	this.movie = movie;
     	this.cinema = cinema;
     	this.startTiming = startTiming;
@@ -81,6 +109,10 @@ public class Ticket implements Serializable{
     	this.cineplex = cineplex;
     	this.moviegoerUserName = moviegoerUserName;
     	this.numberOfTickets = numberOfTickets;
+    	this.name = name;
+    	this.mobileNumber = mobileNumber;
+    	this.emailAddress = emailAddress;
+    	this.ageGroup = ageGroup;
     }
 
 	/**
@@ -92,15 +124,39 @@ public class Ticket implements Serializable{
     }
 
 	/**
+	 * Get the name of the moviegoer.
+	 * @return The name of the moviegoer.
+	 */
+	public String getName() {return name;}
+
+	/**
+	 * Get the email address of the moviegoer.
+	 * @return The email address of the moviegoer.
+	 */
+    public String getEmailAddress() {return emailAddress;}
+
+	/**
+	 * Get the mobile number of the moviegoer.
+	 * @return The mobile number of the moviegoer.
+	 */
+	public int getMobileNumber() {return mobileNumber;}
+
+	/**
+	 * Get the age group of the moviegoer.
+	 * @return The age group of the moviegoer.
+	 */
+    public int getAgeGroup() {return ageGroup;}
+
+	/**
 	 * The calculation of the ticket price
 	 * @param movie The movie that the moviegoer booked to see.
 	 * @param cinema The cinema that the moviegoer booked to see the movie in.
 	 * @param startTiming The starting time of the movie.
-	 * @param age Age of the moviegoer.
+	 * @param ageGroup Age Group of the moviegoer.
 	 * @param holidays The holidays inside the system.
 	 * @return The price of the ticket.
 	 */
-    public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int age, Holidays holidays, TicketPriceConfiguration ticketPriceConfiguration) {
+    public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int ageGroup, Holidays holidays, TicketPriceConfiguration ticketPriceConfiguration) {
     	double result = 0.0;
     	switch(movie.getMovieType()) {
     		case _3D:
@@ -129,9 +185,9 @@ public class Ticket implements Serializable{
     	} else {
     		result += ticketPriceConfiguration.getWeekdayPrice();
     	}
-    	if (age < 18) {
+    	if (ageGroup == 1 || ageGroup == 2) {
     		result += ticketPriceConfiguration.getChildrenPrice();
-    	} else if (age < 55) {
+    	} else if (ageGroup == 3 || ageGroup == 4) {
     		result += ticketPriceConfiguration.getAdultPrice();
     	} else {
     		result += ticketPriceConfiguration.getSeniorCitizenPrice();

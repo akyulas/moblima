@@ -50,13 +50,12 @@ public class UserManager implements Serializable {
      * This is used to add new moviegoer into the system.
      * @param username The username of the moviegoer.
      * @param password The password of the moviegoer.
-     * @param age The age of the moviegoer.
      * @param name The name of the moviegoer.
      * @param mobileNumber The mobile number of the moviegoer.
      * @param email The email address of the moviegoer.
      */
-    public void addNewMoviegoer(String username, String password, int age, String name, int mobileNumber, String email) {
-    	Moviegoer moviegoer = new Moviegoer(username, password, age, name, mobileNumber, email);
+    public void addNewMoviegoer(String username, String password, String name, int mobileNumber, String email) {
+    	Moviegoer moviegoer = new Moviegoer(username, password, name, mobileNumber, email);
     	moviegoers.add(moviegoer);
     }
 
@@ -64,7 +63,6 @@ public class UserManager implements Serializable {
      * Add new admin into the system.
      * @param username The username of the admin.
      * @param password The password of the admin.
-     * @param id The admin ID of the admin.
      */
     public void addNewAdmin(String username, String password) {
         Admin admin = new Admin(username, password);
@@ -92,7 +90,6 @@ public class UserManager implements Serializable {
      * with that found inside the system.
      * @param username The username of the admin.
      * @param password The password of the admin.
-     * @param id The adminID of the admin.
      * @return The admin that is inside the system. Null if no admin of the given
      * information is found.
      */

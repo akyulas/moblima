@@ -11,7 +11,7 @@ public enum MovieRating {
 	/**
 	 * R18
 	 */
-	R18(18),
+	R18(3),
 	/**
 	 * PG13
 	 */
@@ -19,30 +19,30 @@ public enum MovieRating {
 	/**
 	 * NC16
 	 */
-	NC16(16),
+	NC16(2),
 	/**
 	 * R21
 	 */
-	R21(21);
+	R21(4);
 
 	/**
-	 * The minimum age that a movie goer needs to be to book to see this movie.
+	 * The minimum age group that a movie goer needs to belong to book to see this movie.
 	 */
-	private final int minimum_Age;
+	private final int minimum_AgeGroup;
 
 	/**
 	 * The constructor of the movie rating class.
-	 * @param age The minimum age of the movie goer.
+	 * @param ageGroup The minimum age group of the movie goer.
 	 */
-	private MovieRating(int age) {
-		minimum_Age = age;
+	private MovieRating(int ageGroup) {
+		minimum_AgeGroup = ageGroup;
 	}
 
 	/**
-	 * Get the minimum age the movie goer has to be to book the movie.
-	 * @return The minimum age the movie goer has to be to book the movie.
+	 * Get the minimum age group the movie goer has to belong to book the movie.
+	 * @return The minimum age group the movie goer has to belong to book the movie.
 	 */
-	public int getMinimumAge() {
-		return minimum_Age;
+	public int getMinimumAgeGroup() {
+		return minimum_AgeGroup;
 	}
 }

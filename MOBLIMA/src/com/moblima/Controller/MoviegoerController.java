@@ -1,5 +1,6 @@
 package com.moblima.Controller;
 
+import com.moblima.Model.BookingSystem.TransactionID;
 import com.moblima.View.MoviegoerView;
 import java.util.Scanner;
 import com.moblima.Model.MovieSystem.*;
@@ -285,17 +286,28 @@ public class MoviegoerController {
         while (continueLoop) {
         	bookingSuccessful = false;
             int input = moviegoerView.getBookingSearchInput();
+            int ageGroup;
             switch(input) {
                 case 0:
                     continueLoop = false;
                     break;
                 case 1:
-                    searchByMovie();
+                    ageGroup = moviegoerView.askMovieGoerForAgeGroup();
+                    if (ageGroup == 0) {
+                        continueLoop = false;
+                        break;
+                    }
+                    searchByMovie(ageGroup);
                     if (bookingSuccessful) 
                     	continueLoop = false;
                     break;
                 case 2:
-                	listMovieListings();
+                    ageGroup = moviegoerView.askMovieGoerForAgeGroup();
+                    if (ageGroup == 0) {
+                        continueLoop = false;
+                        break;
+                    }
+                	listMovieListings(ageGroup);
                 	if (bookingSuccessful) 
                 		continueLoop = false;
             }
@@ -306,10 +318,11 @@ public class MoviegoerController {
      * This is used to search for movie listings that the moviegoer
      * wants to check the seating availabilities and to book the ticket
      * for.
+     * @param ageGroup The age group of the moviegoer.
      */
-    private void searchByMovie() {
+    private void searchByMovie(int ageGroup) {
         String movieName = moviegoerView.getMovieName();
-        ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName, moviegoer.getAge());
+        ArrayList<MovieListing> movieListings = cineplexManager.getMovieList(movieName, ageGroup);
         boolean continueLoop = true;
         while (continueLoop) {
             ArrayList<String> tempList = new ArrayList<String>();
@@ -325,7 +338,7 @@ public class MoviegoerController {
             if (input == 0) {
                 continueLoop = false;
             } else {
-                viewMovieListingDetail(movieListings.get(input - 1));
+                viewMovieListingDetail(movieListings.get(input - 1), ageGroup);
                 if (bookingSuccessful)
                 	continueLoop = false;
             }
@@ -334,10 +347,11 @@ public class MoviegoerController {
     
     /**
      * This is used to show the moviegoer all the movie listings inside all the cinemas.
+     * @param ageGroup The age group of the moviegoer.
      */
-    public void listMovieListings() {
+    public void listMovieListings(int ageGroup) {
     	boolean continueLoop = true;
-    	ArrayList<MovieListing> movieListings = cineplexManager.getAllMovieListings();
+    	ArrayList<MovieListing> movieListings = cineplexManager.getAllMovieListings(ageGroup);
     	while (continueLoop) {
     		 ArrayList<String> tempList = new ArrayList<String>();
              int count = 1;
@@ -352,7 +366,7 @@ public class MoviegoerController {
     		 if (input == 0) {
                  continueLoop = false;
              } else {
-                 viewMovieListingDetail(movieListings.get(input - 1));
+                 viewMovieListingDetail(movieListings.get(input - 1), ageGroup);
                  if (bookingSuccessful)
                  	continueLoop = false;
              }
@@ -363,8 +377,9 @@ public class MoviegoerController {
      * This is used to view the details of the movie listing that the
      * moviegoer has selected.
      * @param movieListing The movie listing that the user has selected.
+     * @param ageGroup The age group of the moviegoer.
      */
-    private void viewMovieListingDetail(MovieListing movieListing) {
+    private void viewMovieListingDetail(MovieListing movieListing, int ageGroup) {
         boolean continueLoop = true;
         while (continueLoop) {
             int input = moviegoerView.getInputForBookingPage();
@@ -373,7 +388,7 @@ public class MoviegoerController {
                     continueLoop = false;
                     break;
                 case 1:
-                	giveUserSeats(movieListing);
+                	giveUserSeats(movieListing, ageGroup);
                 	if (bookingSuccessful)
                 		continueLoop = false;
                     break;
@@ -386,8 +401,9 @@ public class MoviegoerController {
      * to the movie goer and let the moviegoer choose
      * seats.
      * @param movieListing The movie listing the user has selected.
+     * @param ageGroup The age group of the moviegoer.
      */
-    private void giveUserSeats(MovieListing movieListing) {
+    private void giveUserSeats(MovieListing movieListing, int ageGroup) {
     	HashMap<String, Seat> seats = movieListing.getSeats();
     	ArrayList<String> seatPlan = new ArrayList<String>();
     	ArrayList<String> seatNames = movieListing.getSeatNames();
@@ -411,7 +427,7 @@ public class MoviegoerController {
     			if (chosenSeats.size() == 0) { // user wants to proceed but he have not chosen a seat
     				moviegoerView.informUserToChooseASeat();
     			} else { // proceed with the booking
-    				BookSeats(chosenSeats, movieListing);
+    				BookSeats(chosenSeats, movieListing, ageGroup);
     				if (bookingSuccessful)
     					continueLoop = false;
     				break;
@@ -437,8 +453,9 @@ public class MoviegoerController {
      * This is used to book the seats that the moviegoer has selected.
      * @param chosenSeats The chosen seats the user has selected.
      * @param movieListing The movie listing the user has selected.
+     * @param ageGroup  The age group of the moviegoer.
      */
-    public void BookSeats(ArrayList<String> chosenSeats, MovieListing movieListing) {
+    public void BookSeats(ArrayList<String> chosenSeats, MovieListing movieListing, int ageGroup) {
     	double price = 0.0;
     	Movie movie = movieListing.getMovie();
     	System.out.println(movie);
@@ -446,11 +463,10 @@ public class MoviegoerController {
     	Cineplex cineplex = movieListing.getCineplex();
     	LocalDateTime startTime = movieListing.getStartingTime();
     	LocalDateTime bookedTiming = LocalDateTime.now();
-    	int age = moviegoer.getAge();
     	Holidays holidays = bookingManager.getHolidays();
     	for (String chosenSeat: chosenSeats) {
     		TicketPriceConfiguration ticketPriceConfiguration = bookingManager.getTicketPriceConfiguration();
-    		price += Ticket.calculateTicketPrice(movie, cinema, startTime, age, holidays, ticketPriceConfiguration);
+    		price += Ticket.calculateTicketPrice(movie, cinema, startTime, ageGroup, holidays, ticketPriceConfiguration);
     	}
     	int input = moviegoerView.askToProceedWithBooking(chosenSeats, price);
     	switch(input) {
@@ -460,9 +476,11 @@ public class MoviegoerController {
     			System.out.println("Booking successful.");
     			for (String chosenSeat: chosenSeats)
     			    movie.increaseTicketSales();
-    			bookingManager.addHistory(moviegoer.getUsername(), new Ticket(movie, cineplex, cinema, startTime, bookedTiming, moviegoer.getUsername(), chosenSeats.size()));
-    			bookingManager.addTransactionID(cinema.getCode());
+    			Ticket ticket = new Ticket(movie, cineplex, cinema, startTime, bookedTiming, moviegoer.getUsername(), moviegoer.getName(), moviegoer.getMobileNumber(), moviegoer.getEmailAddress(), chosenSeats.size());
+    			bookingManager.addHistory(moviegoer.getUsername(), ticket);
+    			TransactionID transactionID = bookingManager.addTransactionID(cinema.getCode(), ticket);
     			movieListing.occupyTheSeats(chosenSeats);
+    			moviegoerView.showUserTransactionID(transactionID.toString());
     			bookingSuccessful = true; // ensure the user will end up on the main screen
     	}
     }
@@ -497,10 +515,12 @@ public class MoviegoerController {
      * @param tickets The ticket history that belongs to the user.
      */
     private void viewBookingHistory(ArrayList<Ticket> tickets) {
+        TransactionID transactionID;
     	ArrayList<String> temp = new ArrayList<String>();
     	int count = 1;
     	for (Ticket ticket: tickets) {
-    		temp.add(count + ". " + ticket.toString());
+    	    transactionID = bookingManager.getTransactionID(ticket);
+    		temp.add(count + ". " + ticket.toString() + " (" + transactionID + ")");
     		count++;
     	}
     	moviegoerView.showMoviegoerBookingHistory(temp);

@@ -37,20 +37,20 @@ public class CineplexManager implements Serializable {
      * Return the movie listings that have a similar movie name and those that
      * have an age limit that is lower than the user's age.
      * @param movieName The name of the movie being searched.
-     * @param age The age of the user.
+     * @param ageGroup The age group of the user.
      * @return Movie listings that have a similar movie name and those that
      * have an age limit that are lower than the user's age.
      */
-    public ArrayList<MovieListing> getMovieList(String movieName,int age) {
+    public ArrayList<MovieListing> getMovieList(String movieName,int ageGroup) {
         ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
         String tempString = movieName.toLowerCase();
         for (Cineplex cineplex: cineplexes) {
             for (MovieListing movieListing: cineplex.getMovieListing()) {
             	Movie movie = movieListing.getMovie();
-            	int minimumAge = movie.getMovieRating().getMinimumAge();
+            	int minimumAgeGroup = movie.getMovieRating().getMinimumAgeGroup();
             	boolean listableStatus = movie.getStatus().equals(StatusType.PREVIEW)  || movie.getStatus().equals(StatusType.NOW_SHOWING);
                 String tempMovieName = movieListing.getMovie().getName().toLowerCase();
-                if (tempMovieName.contains(tempString) && age > minimumAge && listableStatus) {
+                if (tempMovieName.contains(tempString) && ageGroup >= minimumAgeGroup && listableStatus) {
                     temp.add(movieListing);
                 }
             }
@@ -118,6 +118,23 @@ public class CineplexManager implements Serializable {
         ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
         for (Cineplex cineplex: cineplexes)
             temp.addAll(cineplex.getMovieListing());
+        return temp;
+    }
+
+    /**
+     * Return all of the movies listed inside all the cineplexes based on ageGroup;
+     * @param ageGroup The age group that the moviegoer belong to.
+     * @return All of the movies that the age group is eligible for.
+     */
+    public ArrayList<MovieListing> getAllMovieListings(int ageGroup) {
+        ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
+        for (Cineplex cineplex: cineplexes) {
+            for (MovieListing movieListing : cineplex.getMovieListing()) {
+                if (movieListing.getMovie().getMovieRating().getMinimumAgeGroup() <= ageGroup) {
+                    temp.add(movieListing);
+                }
+            }
+        }
         return temp;
     }
 

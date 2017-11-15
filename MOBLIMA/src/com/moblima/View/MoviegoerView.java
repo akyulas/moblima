@@ -3,6 +3,8 @@ package com.moblima.View;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import com.moblima.Model.BookingSystem.TransactionID;
 import com.moblima.Utilities.Utilities;
 
 /**
@@ -39,7 +41,7 @@ public class MoviegoerView {
             System.out.println("4. List The Top 5 ranking movies by ticket sales OR by reviewer's ratings");
             System.out.println("0. Return to login page");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -76,7 +78,7 @@ public class MoviegoerView {
         while (continueLoop) {
             try {
                 System.out.println("Please enter a movie name that you want to search.");
-                movieName = reader.nextLine();
+                movieName = reader.nextLine().replaceAll("\\s","");
                 if (movieName.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -96,7 +98,7 @@ public class MoviegoerView {
         if (movieList.size() == 0) {
             System.out.println("No movies are found.");
             System.out.println("Please press enter to continue.");
-            reader.nextLine();
+            reader.nextLine().replaceAll("\\s","");
             return 0;
         }
 
@@ -109,7 +111,7 @@ public class MoviegoerView {
         while (continueLoop) {
             System.out.println("Please select the movie that you want to watch. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 if (input > movieList.size() || input < 0) {
                     System.out.println("Please choose the correct number.");
                 } else {
@@ -141,7 +143,7 @@ public class MoviegoerView {
             System.out.println("7. Past reviews and reviewer's ratings");
             System.out.println("0. Choose more movies from search result");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -185,7 +187,7 @@ public class MoviegoerView {
         System.out.println("Name: " + name);
         System.out.println();
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -196,7 +198,7 @@ public class MoviegoerView {
         System.out.println("Status: " + status);
         System.out.println();
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -208,7 +210,7 @@ public class MoviegoerView {
         System.out.println(Utilities.breakLines(synopsis, 100));
         System.out.println();
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -219,7 +221,7 @@ public class MoviegoerView {
         System.out.println("Director: " + director);
         System.out.println();
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -239,7 +241,7 @@ public class MoviegoerView {
         System.out.println(Utilities.breakLines("Casts: " + resultString, 100));
         System.out.println();
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -249,7 +251,7 @@ public class MoviegoerView {
     public void showMovieGoerRatings(String ratings) {
         System.out.println("Ratings: " + ratings);
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -262,7 +264,7 @@ public class MoviegoerView {
             if (i != 0 && i % 3 == 0) {
                 System.out.println("Do you want more ratings?");
                 System.out.println("Type N for no, any other buttons for yes.");
-                String input = reader.nextLine();
+                String input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("N"))
                     return;
             }
@@ -270,7 +272,7 @@ public class MoviegoerView {
             System.out.println();
         }
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -285,7 +287,7 @@ public class MoviegoerView {
             System.out.println("2. List out all the movies being listed in cinema.");
             System.out.println("0. Enter 0 to go back to other commands.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -316,7 +318,7 @@ public class MoviegoerView {
         while (continueLoop) {
             System.out.println("Please give a movie name");
             try {
-                movieName = reader.nextLine();
+                movieName = reader.nextLine().replaceAll("\\s","");
                 if (movieName.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -339,7 +341,7 @@ public class MoviegoerView {
             System.out.println("1. Check seat availability and book seats.");
             System.out.println("0. Choose another movie listing from your search result.");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -362,7 +364,7 @@ public class MoviegoerView {
      * @param seatingPlan The seating plan of the cinema.
      */
     public void showUserSeats(ArrayList<String> seatingPlan) {
-    	System.out.println("========screen========");
+    	System.out.println("==================screen===================");
     	for (int i = 0; i < seatingPlan.size(); i++) {
     		if (i != 0 && i % 5 == 0 && i % 10 != 0) {
     			System.out.print("  ");
@@ -370,7 +372,7 @@ public class MoviegoerView {
     		if (i % 10 == 0) {
     			System.out.println();
     		}
-    		System.out.print(seatingPlan.get(i));
+    		System.out.print("|" + seatingPlan.get(i) + "|");
     	}
     	System.out.println();
     }
@@ -403,7 +405,7 @@ public class MoviegoerView {
     	boolean continueLoop = true;
     	while (continueLoop) {
     		try {
-    			input = reader.nextLine();
+    			input = reader.nextLine().replaceAll("\\s","");
     			if (input.equals("")) 
     				throw new RuntimeException();
     			continueLoop = false;
@@ -421,7 +423,7 @@ public class MoviegoerView {
     public void informUserToChooseASeat() {
     	System.out.println("Please choose a seat first before you proceed.");
     	System.out.println("Press enter to continue with the choosing process.");
-    	reader.nextLine();
+    	reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -430,7 +432,7 @@ public class MoviegoerView {
     public void informUserSeatIsTaken() {
     	System.out.println("That seat is already taken.");
     	System.out.println("Press enter to continue with the choosing process.");
-    	reader.nextLine();
+    	reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -440,7 +442,7 @@ public class MoviegoerView {
     	System.out.println("No such seat exist.");
     	System.out.println("Please enter a proper seat name.");
     	System.out.println("Press enter to continue with the choosing process.");
-    	reader.nextLine();
+    	reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -449,7 +451,7 @@ public class MoviegoerView {
     public void informUserHeAlreadyChoseTheSeat() {
     	System.out.println("Hello. The seat has already been chosen by you. Please choose another seat.");
     	System.out.println("Press enter to continue with the choosing process.");
-    	reader.nextLine();
+    	reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -475,7 +477,7 @@ public class MoviegoerView {
     		System.out.println("The total cost is: " + price);
     		System.out.println("Please press 1 to confirm you want to book the tickets. Press 0 to go back and choose more seats.");
     		try {
-    			input = Integer.parseInt(reader.nextLine());
+    			input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
     			switch(input) {
     				case 0:
     					continueLoop = false;
@@ -507,7 +509,7 @@ public class MoviegoerView {
     		}
     	}
     	System.out.println("Please press enter to continue.");
-    	reader.nextLine();
+    	reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -519,7 +521,7 @@ public class MoviegoerView {
     public int showMoviegoerReviewAndGetInput(ArrayList<String> movieList) {
     	System.out.println("Please take note that you can only add a review once to a movie you have watched.");
     	System.out.println("Please press enter to continue.");
-    	reader.nextLine();
+    	reader.nextLine().replaceAll("\\s","");
     	int input = 0;
     	boolean continueLoop = true;
     	while (continueLoop) {
@@ -527,7 +529,7 @@ public class MoviegoerView {
     			System.out.println("You are not allowed to add any reviews.");
     			System.out.println("You have either already add review to any movie that you have watched or you haven't watched any movie.");
     			System.out.println("Please press enter to continue.");
-    			reader.nextLine();
+    			reader.nextLine().replaceAll("\\s","");
     			continueLoop =false;
     			break;
     		}
@@ -537,7 +539,7 @@ public class MoviegoerView {
     			System.out.println("0. Go back to the previous screen.");
     		}
     		try {
-    			input = Integer.parseInt(reader.nextLine());
+    			input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
     			if (input < 0 || input > movieList.size()) {
     				System.out.println("Please choose a movie from the list.");
     			} else {
@@ -564,7 +566,7 @@ public class MoviegoerView {
     		System.out.println("2. Add review to a movie that you have watched.");
     		System.out.println("0. Return back to main menu.");
     		try {
-    			input = Integer.parseInt(reader.nextLine());
+    			input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
     			switch(input) {
     				case 0:
     					continueLoop = false;
@@ -595,7 +597,7 @@ public class MoviegoerView {
 		while (continueLoop) {
 			System.out.println("Please give a rating(0 - 5) to the movie.");
 			try {
-				input = Double.parseDouble(reader.nextLine());
+				input = Double.parseDouble(reader.nextLine().replaceAll("\\s",""));
 				if (input < 0 || input > 5) {
 					System.out.println("Please ensure that it is between 0 and 5.");
 				} else {
@@ -618,7 +620,7 @@ public class MoviegoerView {
 		while (continueLoop) {
 			System.out.println("Please enter a review to the movie.");
 			try {
-				input = reader.nextLine();
+				input = reader.nextLine().replaceAll("\\s","");
 				if (input.equals(""))
 					throw new RuntimeException();
 				continueLoop = false;
@@ -635,7 +637,7 @@ public class MoviegoerView {
 	public void tellUserReviewIsAdded() {
 		System.out.println("Reivew has been successfully added.");
 		System.out.println("Press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
     /**
@@ -652,7 +654,7 @@ public class MoviegoerView {
 			System.out.println("2. Rank by reviewer's ratings");
 			System.out.println("0. Go back to the previous page.");
 			try {
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				switch(input) {
 					case 0:
 						continueLoop = false;
@@ -683,7 +685,7 @@ public class MoviegoerView {
 			System.out.println(rankingList.get(i));
 		}
 		System.out.println("Please press enter to continue.");
-		reader.nextLine();
+		reader.nextLine().replaceAll("\\s","");
 	}
 
 	/**
@@ -699,7 +701,7 @@ public class MoviegoerView {
 				System.out.println("1. Search for a movie.");
 				System.out.println("2. List movies.");
 				System.out.println("0. Go back to the previous menu.");
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				switch(input) {
 					case 0:
 						continueLoop = false;
@@ -734,7 +736,7 @@ public class MoviegoerView {
 			}
 			System.out.println("Please select a movie you want to know more about. Enter 0 to go back to the previous page.");
 			try {
-				input = Integer.parseInt(reader.nextLine());
+				input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
 				if (input > movies.size() || input < 0) {
 					System.out.println("Please enter a valid option.");
 				} else {
@@ -747,4 +749,64 @@ public class MoviegoerView {
 		return input;
 	}
 
+    /***
+     * This is to get the age group that the user wants to buy the tickets for.
+     * @return The age group that the user wants to buy the tickets for.
+     */
+    public int askMovieGoerForAgeGroup() {
+	    boolean continueLoop = true;
+	    int ageGroup = 0;
+	    while (continueLoop) {
+            System.out.println("Please select an age group for tickets that you want to buy.");
+            System.out.println("Only movies that can be viewed by the age group will be shown.");
+            System.out.println("1. Children(Below 16)");
+            System.out.println("2. Children(Below 18)");
+            System.out.println("3. Adult (Below 21)");
+            System.out.println("4. Adult (Below 55)");
+            System.out.println("5. Senior Citizen (Above 55)");
+            System.out.println("0. Go Back");
+            System.out.println("Note: You can only buy the tickets for one age group at one time.");
+            System.out.println("Note: Please enter the correct age group as it will be validated before the entry into the cinema.");
+            try {
+                ageGroup = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
+                switch(ageGroup) {
+                    case 0:
+                        continueLoop = false;
+                        break;
+                    case 1:
+                        continueLoop = false;
+                        break;
+                    case 2:
+                        continueLoop = false;
+                        break;
+                    case 3:
+                        continueLoop = false;
+                        break;
+                    case 4:
+                        continueLoop = false;
+                        break;
+                    case 5:
+                        continueLoop = false;
+                        break;
+                    default:
+                        System.out.println("Please select a valid input.");
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter an integer.");
+            }
+        }
+        return ageGroup;
+    }
+
+    /**
+     * Show the transaction ID of the transaction to the user.
+     * @param transactionID The transaction ID of the transaction.
+     */
+    public void showUserTransactionID(String transactionID) {
+        System.out.println("This is your transactionID. Please take note of it since you have to show this before entry at the cinema.");
+        System.out.println("Transaction ID:");
+        System.out.println(transactionID);
+        System.out.println("Press enter to continue.");
+        reader.nextLine().replaceAll("\\s","");
+    }
 }

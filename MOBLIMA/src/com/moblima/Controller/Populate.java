@@ -374,11 +374,11 @@ public class Populate {
         admins.add(admin);
         
         ArrayList<Moviegoer> moviegoers = userManager.getMoviegoers();
-        Moviegoer moviegoer = new Moviegoer("apple", "123", 7, "Jonathan", 123456, "apple@ntu.edu.sg");
+        Moviegoer moviegoer = new Moviegoer("apple", "123","Jonathan", 123456, "apple@ntu.edu.sg");
         moviegoers.add(moviegoer);
-        moviegoer = new Moviegoer("banana", "456", 21, "Elliot", 123456, "banana@ntu.edu.sg");
+        moviegoer = new Moviegoer("banana", "456","Elliot", 123456, "banana@ntu.edu.sg");
         moviegoers.add(moviegoer);
-        moviegoer = new Moviegoer("cucumber", "789", 67, "Einstein", 123456, "cucumber@ntu.edu.sg");
+        moviegoer = new Moviegoer("cucumber", "789", "Einstein", 123456, "cucumber@ntu.edu.sg");
         moviegoers.add(moviegoer);
         
         
@@ -399,73 +399,82 @@ public class Populate {
         ticketPriceConfiguration.setGSTRate(0.07);
         
         HashMap<String, ArrayList<Ticket>> bookingHistory = bookingManager.getBookingHistories();
-        ArrayList<TransactionID> transactionIDs = bookingManager.getTransactionID();
+        HashMap<TransactionID, Ticket> transactionIDStorage = bookingManager.getTransactionIDStorage();
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint1");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
         LocalDateTime bookingTiming = LocalDateTime.of(2017, 11, 12, 14, 30);
-        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
-        transactionIDs.add(new TransactionID("JurongPoint1", 2017, 11, 15, 17, 30));
+        Ticket ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple", "Jonathan", 123456, "apple@ntu.edu.sg", 2);
+        bookingManager.addHistory("apple", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint1", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint2");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
-        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana"));
-        transactionIDs.add(new TransactionID("JurongPoint2", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana", "Elliot", 123456, "banana@ntu.edu.sg", 3);
+        bookingManager.addHistory("banana", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint2", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint3");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
-        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber"));
-        transactionIDs.add(new TransactionID("JurongPoint3", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber", "Einstein", 123456, "cucumber@ntu.edu.sg", 4);
+        bookingManager.addHistory("cucumber", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint3", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint1");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
         bookingTiming = LocalDateTime.of(2017, 11, 12, 14, 30);
-        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana"));
-        transactionIDs.add(new TransactionID("JurongPoint1", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana", "Elliot", 123456, "banana@ntu.edu.sg", 3);
+        bookingManager.addHistory("banana", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint1", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint2");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
-        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber"));
-        transactionIDs.add(new TransactionID("JurongPoint2", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber", "Einstein", 123456, "cucumber@ntu.edu.sg", 4);
+        bookingManager.addHistory("cucumber", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint2", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint3");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
-        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
-        transactionIDs.add(new TransactionID("JurongPoint3", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple", "Jonathan", 123456, "apple@ntu.edu.sg", 2);
+        bookingManager.addHistory("apple", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint3", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint1");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
         bookingTiming = LocalDateTime.of(2017, 11, 12, 14, 30);
-        bookingManager.addHistory("cucumber", new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber"));
-        transactionIDs.add(new TransactionID("JurongPoint1", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "cucumber", "Einstein", 123456, "cucumber@ntu.edu.sg", 4);
+        bookingManager.addHistory("cucumber", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint1", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint2");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
-        bookingManager.addHistory("apple", new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple"));
-        transactionIDs.add(new TransactionID("JurongPoint2", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "apple", "Jonathan", 123456, "apple@ntu.edu.sg", 2);
+        bookingManager.addHistory("apple", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint2", 2017, 11, 15, 17, 30), ticket);
         
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
         cineplex = cineplexManager.searchForCineplex("JurongPoint");
         cinema = cineplexManager.searchForCinema("JurongPoint3");
         start = LocalDateTime.of(2017, 11, 15, 17, 30);
-        bookingManager.addHistory("banana", new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana"));
-        transactionIDs.add(new TransactionID("JurongPoint3", 2017, 11, 15, 17, 30));
+        ticket = new Ticket(movie, cineplex, cinema, start, bookingTiming, "banana", "Elliot", 123456, "banana@ntu.edu.sg", 3);
+        bookingManager.addHistory("banana", ticket);
+        transactionIDStorage.put(new TransactionID("JurongPoint3", 2017, 11, 15, 17, 30), ticket);
         
         
         Holidays holidays = bookingManager.getHolidays();

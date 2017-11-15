@@ -37,7 +37,7 @@ public class LoginView {
             System.out.println("2.Admin");
             System.out.println("0.Exit");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch(input) {
                     case 0:
                         continueLoop = false;
@@ -71,7 +71,7 @@ public class LoginView {
             System.out.println("2. Register as a new user");
             System.out.println("0. Exit");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch (input) {
                     case 0:
                         continueLoop = false;
@@ -102,7 +102,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter your username:");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("")) {
                     throw new RuntimeException();
                 }
@@ -124,7 +124,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter your password:");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("")) {
                     throw new RuntimeException();
                 }
@@ -142,7 +142,7 @@ public class LoginView {
     public void tellUserLoginIsSuccessful() {
         System.out.println("The login is successful.");
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 
     /**
@@ -155,7 +155,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter new username:");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("")) {
                     throw new RuntimeException();
                 }
@@ -178,12 +178,12 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter new password:");
             try {
-                input = reader.nextLine();
+                input = reader.nextLine().replaceAll("\\s","");
                 if (input.equals("")) {
                     throw new RuntimeException();
                 }
                 System.out.println("Please reenter the same password:");
-                tempinput = reader.nextLine();
+                tempinput = reader.nextLine().replaceAll("\\s","");
                 if (input.equals(tempinput)) {
                     continueLoop = false;
                 } else {
@@ -206,7 +206,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter your age:");
             try {
-                age = Integer.parseInt(reader.nextLine());
+                age = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 continueLoop = false;
             } catch(Exception e) {
                 System.out.println("Please enter an integer");
@@ -225,7 +225,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter your name:");
             try {
-                name = reader.nextLine();
+                name = reader.nextLine().replaceAll("\\s","");
                 if (name.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -246,7 +246,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter your mobile number:");
             try {
-                mobileNumber = Integer.parseInt(reader.nextLine());
+                mobileNumber = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 continueLoop = false;
             } catch(Exception e) {
                 System.out.println("Please enter a series of integer");
@@ -265,7 +265,7 @@ public class LoginView {
         while (continueLoop) {
             try {
                 System.out.println("Please enter your email address:");
-                emailAddress = reader.nextLine();
+                emailAddress = reader.nextLine().replaceAll("\\s","");
                 if (emailAddress.equals("")) {
                     throw new RuntimeException();
                 }
@@ -287,7 +287,7 @@ public class LoginView {
         System.out.println("Do you want to continue with the login:");
         System.out.println("Enter 1 for yes, others for no");
         try {
-            int input = Integer.parseInt(reader.nextLine());
+            int input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
             switch(input) {
                 case 1:
                     continueWithLogin = true;
@@ -311,7 +311,7 @@ public class LoginView {
             System.out.println("1. Login as an existing admin");
             System.out.println("0. Exit");
             try {
-                input = Integer.parseInt(reader.nextLine());
+                input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
                 switch (input) {
                     case 0:
                         continueLoop = false;
@@ -335,6 +335,6 @@ public class LoginView {
     public void tellUserUserNameIsChosen() {
         System.out.println("Please choose another username. The current username is already being used.");
         System.out.println("Please press enter to continue.");
-        reader.nextLine();
+        reader.nextLine().replaceAll("\\s","");
     }
 }

@@ -8,10 +8,6 @@ import java.io.Serializable;
 public class Moviegoer extends User implements Serializable {
 
     /**
-     * The age of the moviegoer.
-     */
-    private int age;
-    /**
      * The name of the moviegoer.
      */
     private String name;
@@ -28,17 +24,39 @@ public class Moviegoer extends User implements Serializable {
      * The construction of the moviegoer class.
      * @param username The moviegoer's username.
      * @param password The moviegoer's password.
-     * @param age The moviegoer's age.
      * @param name The moviegoer's name.
      * @param mobileNumber The moviegoer's mobile number.
      * @param emailAddress The moviegoer's email address.
      */
-    public Moviegoer(String username, String password, int age, String name, int mobileNumber, String emailAddress) {
+    public Moviegoer(String username, String password, String name, int mobileNumber, String emailAddress) {
         super(username, password);
-        this.age = age;
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.emailAddress = emailAddress;
+    }
+
+    /**
+     * Return the moviegoer's name.
+     * @return Moviegoer's name.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Return the moviegoer's mobile number.
+     * @return Moviegoer's mobileNumber.
+     */
+    public int getMobileNumber() {
+        return this.mobileNumber;
+    }
+
+    /**
+     * Return the moviegoer's email address.
+     * @return The moviegoer's email address;
+     */
+    public String getEmailAddress() {
+        return this.emailAddress;
     }
 
     /**
@@ -52,14 +70,6 @@ public class Moviegoer extends User implements Serializable {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Get the age of the moviegoer.
-     * @return The age of the moviegoer.
-     */
-    public int getAge() {
-    	return age;
     }
 
     /**
