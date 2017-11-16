@@ -158,7 +158,8 @@ public class CineplexManager implements Serializable {
         for (Cineplex cineplex: cineplexes) {
             Iterator<MovieListing> iterator = cineplex.getMovieListing().iterator();
             while (iterator.hasNext())  {
-                if (iterator.next().getEndingTime().isBefore(currentDateTime))
+                MovieListing movieListing = iterator.next();
+                if (movieListing.getEndingTime().isBefore(currentDateTime) && movieListing.getMovie().getEndOfShowingDate().isBefore(LocalDate.now()))
                     iterator.remove();
             }
         }
