@@ -162,7 +162,7 @@ public class AdminView {
             System.out.println("1. Add a movie.");
             System.out.println("2. Update a movie.");
             System.out.println("3. Delist a movie(Remove from movie pool available for showing in cinema).");
-            System.out.println("4. Remove a movie(Remove from movie pool available for showing in cinema and from history.");
+            System.out.println("4. Remove a movie(Remove from movie pool available for showing in cinema and from history).");
             System.out.println("0. Back to main menu.");
             try {
                 input = Integer.parseInt(reader.nextLine().replaceAll("\\s",""));
@@ -480,11 +480,7 @@ public class AdminView {
             String input = reader.nextLine();
             try {
                 localDate = LocalDate.parse(input, formatter);
-                if (localDate.isBefore(LocalDate.now())) {
-                    System.out.println("Please enter a end of showing date that is after today.");
-                } else {
-                    continueLoop = false;
-                }
+                continueLoop = false;
             } catch(Exception e) {
                 System.out.println("Please enter a proper end of showing date in the format yyyy-MM-dd");
             }

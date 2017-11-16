@@ -308,7 +308,6 @@ public class AdminController {
                 case 7:
                     LocalDate endOfShowingDate = adminView.getEndOfShowingDate();
                     movie.setEndOfShowingDate(endOfShowingDate);
-
             }
         }
     }

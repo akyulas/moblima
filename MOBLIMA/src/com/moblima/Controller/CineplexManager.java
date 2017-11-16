@@ -3,6 +3,7 @@ package com.moblima.Controller;
 import com.moblima.Model.MovieSystem.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,8 +50,9 @@ public class CineplexManager implements Serializable {
             	Movie movie = movieListing.getMovie();
             	int minimumAgeGroup = movie.getMovieRating().getMinimumAgeGroup();
             	boolean listableStatus = movie.getStatus().equals(StatusType.PREVIEW)  || movie.getStatus().equals(StatusType.NOW_SHOWING);
+            	boolean canBeShown = !(movie.getEndOfShowingDate().isBefore(LocalDate.now()));
                 String tempMovieName = movieListing.getMovie().getName().toLowerCase();
-                if (tempMovieName.contains(tempString) && ageGroup >= minimumAgeGroup && listableStatus) {
+                if (tempMovieName.contains(tempString) && ageGroup >= minimumAgeGroup && listableStatus && canBeShown) {
                     temp.add(movieListing);
                 }
             }
@@ -130,7 +132,8 @@ public class CineplexManager implements Serializable {
         ArrayList<MovieListing> temp = new ArrayList<MovieListing>();
         for (Cineplex cineplex: cineplexes) {
             for (MovieListing movieListing : cineplex.getMovieListing()) {
-                if (movieListing.getMovie().getMovieRating().getMinimumAgeGroup() <= ageGroup) {
+                boolean canBeShown = !(movieListing.getMovie().getEndOfShowingDate().isBefore(LocalDate.now()));
+                if (movieListing.getMovie().getMovieRating().getMinimumAgeGroup() <= ageGroup && canBeShown) {
                     temp.add(movieListing);
                 }
             }
