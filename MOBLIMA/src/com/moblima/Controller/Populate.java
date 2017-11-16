@@ -138,22 +138,22 @@ public class Populate {
 
         Cinema cinema = cineplex.getCinema("JurongPoint1");
 
-        LocalDateTime start = LocalDateTime.of(2017, 11, 15, 14, 30);
-        LocalDateTime end = LocalDateTime.of(2017, 11, 15, 16, 30);
+        LocalDateTime start = LocalDateTime.of(2017, 11, 17, 14, 30);
+        LocalDateTime end = LocalDateTime.of(2017, 11, 17, 16, 30);
         Timetable timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 16, 30);
-        end = LocalDateTime.of(2017, 11, 15, 18, 30);
+        start = LocalDateTime.of(2017, 11, 17, 16, 30);
+        end = LocalDateTime.of(2017, 11, 17, 18, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
         
-        start = LocalDateTime.of(2017, 11, 15, 18, 30);
-        end = LocalDateTime.of(2017, 11, 15, 20, 30);
+        start = LocalDateTime.of(2017, 11, 17, 18, 30);
+        end = LocalDateTime.of(2017, 11, 17, 20, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
@@ -162,22 +162,22 @@ public class Populate {
 
         cinema = cineplex.getCinema("JurongPoint2");
 
-        start = LocalDateTime.of(2017, 11, 15, 14, 30);
-        end = LocalDateTime.of(2017, 11, 15, 16, 30);
+        start = LocalDateTime.of(2017, 11, 17, 14, 30);
+        end = LocalDateTime.of(2017, 11, 17, 16, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 16, 30);
-        end = LocalDateTime.of(2017, 11, 15, 18, 30);
+        start = LocalDateTime.of(2017, 11, 17, 16, 30);
+        end = LocalDateTime.of(2017, 11, 17, 18, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 18, 30);
-        end = LocalDateTime.of(2017, 11, 15, 20, 30);
+        start = LocalDateTime.of(2017, 11, 17, 18, 30);
+        end = LocalDateTime.of(2017, 11, 17, 20, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
@@ -185,22 +185,22 @@ public class Populate {
 
         cinema = cineplex.getCinema("JurongPoint3");
 
-        start = LocalDateTime.of(2017, 11, 15, 14, 30);
-        end = LocalDateTime.of(2017, 11, 15, 16, 30);
+        start = LocalDateTime.of(2017, 11, 17, 14, 30);
+        end = LocalDateTime.of(2017, 11, 17, 16, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
                 
-        start = LocalDateTime.of(2017, 11, 15, 16, 30);
-        end = LocalDateTime.of(2017, 11, 15, 18, 30);
+        start = LocalDateTime.of(2017, 11, 17, 16, 30);
+        end = LocalDateTime.of(2017, 11, 17, 18, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
         
-        start = LocalDateTime.of(2017, 11, 15, 18, 30);
-        end = LocalDateTime.of(2017, 11, 15, 20, 30);
+        start = LocalDateTime.of(2017, 11, 17, 18, 30);
+        end = LocalDateTime.of(2017, 11, 17, 20, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
@@ -215,22 +215,22 @@ public class Populate {
 
         cinema = cineplex.getCinema("VivoCity1");
 
-        start = LocalDateTime.of(2017, 11, 15, 14, 30);
-        end = LocalDateTime.of(2017, 11, 15, 16, 30);
+        start = LocalDateTime.of(2017, 11, 17, 14, 30);
+        end = LocalDateTime.of(2017, 11, 17, 16, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 16, 30);
-        end = LocalDateTime.of(2017, 11, 15, 18, 30);
+        start = LocalDateTime.of(2017, 11, 17, 16, 30);
+        end = LocalDateTime.of(2017, 11, 17, 18, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 18, 30);
-        end = LocalDateTime.of(2017, 11, 15, 20, 30);
+        start = LocalDateTime.of(2017, 11, 17, 18, 30);
+        end = LocalDateTime.of(2017, 11, 17, 20, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
@@ -238,22 +238,22 @@ public class Populate {
 
         cinema = cineplex.getCinema("VivoCity2");
 
-        start = LocalDateTime.of(2017, 11, 15, 14, 30);
-        end = LocalDateTime.of(2017, 11, 15, 16, 30);
+        start = LocalDateTime.of(2017, 11, 17, 14, 30);
+        end = LocalDateTime.of(2017, 11, 17, 16, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 16, 30);
-        end = LocalDateTime.of(2017, 11, 15, 18, 30);
+        start = LocalDateTime.of(2017, 11, 17, 16, 30);
+        end = LocalDateTime.of(2017, 11, 17, 18, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 18, 30);
-        end = LocalDateTime.of(2017, 11, 15, 20, 30);
+        start = LocalDateTime.of(2017, 11, 17, 18, 30);
+        end = LocalDateTime.of(2017, 11, 17, 20, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);
@@ -261,22 +261,22 @@ public class Populate {
 
         cinema = cineplex.getCinema("VivoCity3");
 
-        start = LocalDateTime.of(2017, 11, 15, 14, 30);
-        end = LocalDateTime.of(2017, 11, 15, 16, 30);
+        start = LocalDateTime.of(2017, 11, 17, 14, 30);
+        end = LocalDateTime.of(2017, 11, 17, 16, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("American Assassin", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 16, 30);
-        end = LocalDateTime.of(2017, 11, 15, 18, 30);
+        start = LocalDateTime.of(2017, 11, 17, 16, 30);
+        end = LocalDateTime.of(2017, 11, 17, 18, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Flatliners", BlockBuster);
         movieListings.add(new MovieListing(cineplex, movie, cinema, start, end));
 
-        start = LocalDateTime.of(2017, 11, 15, 18, 30);
-        end = LocalDateTime.of(2017, 11, 15, 20, 30);
+        start = LocalDateTime.of(2017, 11, 17, 18, 30);
+        end = LocalDateTime.of(2017, 11, 17, 20, 30);
         timetable = new Timetable(start, end);
         cinema.addTimetable(timetable);
         movie = movieManager.searchForSpecificMovie("Marvel's Thor: Ragnarok", _3D);

@@ -154,7 +154,6 @@ public class LoginController {
             continueLoop = userManager.checkIfMovieGoerUserNameExist(username);
         }
         String password = loginView.getNewPassword();
-        int age = loginView.getMoviegoerAge();
         String name = loginView.getMoviegoerName();
         int mobileNumber = loginView.getMoviegoerMobileNumber();
         String emailAddress = loginView.getEmailAddress();
