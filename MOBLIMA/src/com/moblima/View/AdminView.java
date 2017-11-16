@@ -477,7 +477,7 @@ public class AdminView {
         DateTimeFormatter formatter = Utilities.getDateFormatter();
         while (continueLoop) {
             System.out.println("Please enter the end of showing date in the format yyyy-MM-dd");
-            String input = reader.nextLine().replaceAll("\\s","");
+            String input = reader.nextLine();
             try {
                 localDate = LocalDate.parse(input, formatter);
                 if (localDate.isBefore(LocalDate.now())) {
@@ -736,7 +736,7 @@ public class AdminView {
         System.out.println("This is for the starting time.");
         while (continueLoop) {
             System.out.println("Please enter a date and time in the format yyyy-MM-dd HH:mm:ss");
-            String input = reader.nextLine().replaceAll("\\s","");
+            String input = reader.nextLine();
             try {
                 localDateTime = LocalDateTime.parse(input, formatter);
                 if (localDateTime.isBefore(LocalDateTime.now())) {
@@ -763,7 +763,7 @@ public class AdminView {
         System.out.println("This is for the ending time.");
         while (continueLoop) {
             System.out.println("Please enter a date and time in the format yyyy-MM-dd HH:mm:ss");
-            String input = reader.nextLine().replaceAll("\\s","");
+            String input = reader.nextLine();
             try {
                 localDateTime = LocalDateTime.parse(input, formatter);
                 if (localDateTime.isBefore(LocalDateTime.now())) {
@@ -1091,7 +1091,7 @@ public class AdminView {
 		while (continueLoop) {
 			try {
 				System.out.println("Please enter the holiday date in a yyyy-MM-dd format.");
-				String input = reader.nextLine().replaceAll("\\s","");
+				String input = reader.nextLine();
 				holidayDate = LocalDate.parse(input, formatter);
 				if (holidayDate.isBefore(LocalDate.now())) 
 					System.out.println("Please do not enter a date before today's date.");
