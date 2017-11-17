@@ -139,7 +139,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter the movie name.");
             try {
-                input = reader.nextLine().replaceAll("\\s","");
+                input = reader.nextLine();
                 if (input.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -334,7 +334,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter the synopsis.");
             try {
-                input = reader.nextLine().replaceAll("\\s","");
+                input = reader.nextLine();
                 if (input.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -355,7 +355,7 @@ public class AdminView {
         while (continueLoop) {
             System.out.println("Please enter the director.");
             try {
-                input = reader.nextLine().replaceAll("\\s","");
+                input = reader.nextLine();
                 if (input.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -377,7 +377,7 @@ public class AdminView {
         System.out.println("Please enter at least 2 cast members. Please press enter with an empty line if you are done.");
         while (continueLoop) {
             try {
-                input = reader.nextLine().replaceAll("\\s","");
+                input = reader.nextLine();
                 if (input.equals("") && casts.size() < 2)
                     throw new RuntimeException();
                 if (input.equals(""))
@@ -1110,7 +1110,7 @@ public class AdminView {
 		while (continueLoop) {
 			try {
 				System.out.println("Please enter the holdiay description.");
-				input = reader.nextLine().replaceAll("\\s","");
+				input = reader.nextLine();
 				if (input.equals(""))
 					throw new RuntimeException();
 				continueLoop = false;

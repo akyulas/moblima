@@ -18,7 +18,7 @@ public class ImportController {
 	
 	private AllTheManagers allTheManagers;
 
-	private String allTheManagerFileString = "../moblima/MOBLIMA/src/com/moblima/Textfiles/allTheManager.dat";
+	private String allTheManagerFileString = "allTheManager.dat";
 	/**
 	 * This is used to import the data from the textfiles.
 	 */

@@ -143,7 +143,7 @@ public class BookingManager implements Serializable{
 		ArrayList<Ticket> tickets = getHistoryOfMoviegoer(moviegoer);
 		for (Ticket ticket: tickets) {
 			Movie movie = ticket.getMovie();
-			if (!movie.hasMoviegoerAddedReview(moviegoer)) {
+			if (!movie.hasMoviegoerAddedReview(moviegoer) && !temp.contains(movie)) {
 				temp.add(movie);
 			}
 		}

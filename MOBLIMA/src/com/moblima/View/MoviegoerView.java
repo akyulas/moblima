@@ -78,7 +78,7 @@ public class MoviegoerView {
         while (continueLoop) {
             try {
                 System.out.println("Please enter a movie name that you want to search.");
-                movieName = reader.nextLine().replaceAll("\\s","");
+                movieName = reader.nextLine();
                 if (movieName.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -318,7 +318,7 @@ public class MoviegoerView {
         while (continueLoop) {
             System.out.println("Please give a movie name");
             try {
-                movieName = reader.nextLine().replaceAll("\\s","");
+                movieName = reader.nextLine();
                 if (movieName.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;
@@ -620,7 +620,7 @@ public class MoviegoerView {
 		while (continueLoop) {
 			System.out.println("Please enter a review to the movie.");
 			try {
-				input = reader.nextLine().replaceAll("\\s","");
+				input = reader.nextLine();
 				if (input.equals(""))
 					throw new RuntimeException();
 				continueLoop = false;

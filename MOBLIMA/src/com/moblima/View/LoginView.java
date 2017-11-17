@@ -225,7 +225,7 @@ public class LoginView {
         while (continueLoop) {
             System.out.println("Please enter your name:");
             try {
-                name = reader.nextLine().replaceAll("\\s","");
+                name = reader.nextLine();
                 if (name.equals(""))
                     throw new RuntimeException();
                 continueLoop = false;

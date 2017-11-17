@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="MOBLIMA/src"/>
+	<classpathentry kind="src" path="Textfile"/>
 	<classpathentry kind="output" path="MOBLIMA/out/production/MOBLIMA"/>
 </classpath>

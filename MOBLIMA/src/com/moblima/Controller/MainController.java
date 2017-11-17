@@ -39,7 +39,7 @@ public class MainController{
 	 */
     public MainController() {
     	importController = new ImportController();
-    	Populate populate = new Populate(importController);
+    	//Populate populate = new Populate(importController);
 		reader = new Scanner(System.in);
 	}
 
