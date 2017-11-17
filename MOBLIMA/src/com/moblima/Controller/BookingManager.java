@@ -108,6 +108,7 @@ public class BookingManager implements Serializable{
 	 * Add the transactionID from a booking to the system.
 	 * @param code The transactionID
 	 * @param ticket The ticket that belongs with the transactionID.
+	 * @return Return the TransactionID
 	 */
 	public TransactionID addTransactionID(String code, Ticket ticket) {
 		LocalDateTime time = LocalDateTime.now();
@@ -179,6 +180,11 @@ public class BookingManager implements Serializable{
 		return null;
 	}
 
+	/**
+	 * Used to check if the transaction ID supplied is inside the system and will return the ticket information to the caller.
+	 * @param transactionIDString The transaction ID String that will be supplied by the caller.
+	 * @return The ticket information that belongs to the transaction ID.
+	 */
 	public Ticket checkValidTickets(String transactionIDString) {
 		for (TransactionID transactionID: transactionIDStorage.keySet()) {
 			if (transactionID.toString().equals(transactionIDString))

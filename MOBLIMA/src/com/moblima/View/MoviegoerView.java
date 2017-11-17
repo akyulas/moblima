@@ -723,8 +723,13 @@ public class MoviegoerView {
 	}
 
 	/**
+	 * 
+	 * @return 
+	 */
+	/**
 	 * This is used to show the movies that were found through list to the moviegoer 
 	 * and to get the input from the moviegoer.
+	 * @param movies Show the user the movies that was found.
 	 * @return The integer that indicates the option the moviegoer has chosen.
 	 */
 	public int showUserTheMoviesAndGetInput(ArrayList<String> movies) {

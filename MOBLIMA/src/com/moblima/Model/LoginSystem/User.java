@@ -43,7 +43,12 @@ public abstract class User implements Serializable{
         return password;
     }
     
-
+    /**
+     * Abstract function that all user subclass should have to verify username and password.
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @return The boolean value that indicates if the user exist in the system.
+     */
 	public abstract boolean verify(String username, String password);
 
 }

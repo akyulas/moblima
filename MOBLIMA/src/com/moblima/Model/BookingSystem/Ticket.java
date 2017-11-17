@@ -155,6 +155,7 @@ public class Ticket implements Serializable{
 	 * @param ageGroup Age Group of the moviegoer.
 	 * @param holidays The holidays inside the system.
 	 * @return The price of the ticket.
+	 * @param ticketPriceConfiguration The ticket price configuration that stores all the ticket price.
 	 */
     public static double calculateTicketPrice(Movie movie, Cinema cinema, LocalDateTime startTiming, int ageGroup, Holidays holidays, TicketPriceConfiguration ticketPriceConfiguration) {
     	double result = 0.0;

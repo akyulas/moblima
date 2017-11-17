@@ -27,17 +27,24 @@ public class ImportController {
 	}
 
 	/**
-	 * This is used to remove all the old data from the managers.
+	 * This is used to export all the managers class.
 	 */
-	
 	public void export() {
 		writeSerializedObject(allTheManagerFileString, allTheManagers);
 	}
 	
+	/**
+	 * Return all the managers to the caller.
+	 * @return All the Managers class
+	 */
 	public AllTheManagers getAllTheManagers() {
 		return allTheManagers;
 	}
 
+	/**
+	 * Set all the managers class to the one that is inside the parameter.
+	 * @param allTheManagers All the managers class that will be used to set.
+	 */
 	public void setAllTheManagers(AllTheManagers allTheManagers) {
 		this.allTheManagers = allTheManagers;
 	}
@@ -45,7 +52,7 @@ public class ImportController {
 	/**
 	 * This is used to read the serialized file of the movie manager.
 	 * @param filename The path to the movie manager text file.
-	 * @return The movie manager that is deserialized
+	 * @return The all the managers class that is deserialized
 	 */
 	private AllTheManagers readSerializedObject(String filename) {
 	        AllTheManagers pDetails = null;
@@ -70,7 +77,7 @@ public class ImportController {
 	/**
 	 * This is used to create the serialized file of the movie manager.
 	 * @param filename The path to the movie manager text file.
-	 * @param movieManager The movie manager that will be exported.
+	 * @param allTheManager The all the manager class that will be exported.
 	 */
 	 private void writeSerializedObject(String filename, AllTheManagers allTheManager) {
 	        FileOutputStream fos = null;
